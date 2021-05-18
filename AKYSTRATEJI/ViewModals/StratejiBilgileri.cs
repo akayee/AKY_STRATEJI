@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace AKYSTRATEJI.ViewModals
+{
+    public class StratejiBilgileri
+    {
+        public VMBirimler Birim { get; set; }
+        public string BirimTipi { get; set; }
+
+        public List<VMPerformanslar> Performanslar { get; set; }
+        public VMAmaclar StratejikAmac { get; set; }
+        public List<VMHedefler> Hedefler { get; set; }
+        public List<VMIsturleri> Isturleri { get; set; }
+        public List<VMIsler> Isler { get; set; }
+        public List<VMMaliFaaliyetTurleri> MaliFaaliyetTurleri { get; set; }
+        public List<VMMaliFaaliyet> MaaliFaliyetler { get; set; }
+        public List<VMFaaliyetTurleri> VMFaaliyetTurleri { get; set; }
+        public List<VMFaaliyet> Faaliyetler { get; set; }
+        public VMBirimler UstBirim { get; set; }
+
+    }
+}

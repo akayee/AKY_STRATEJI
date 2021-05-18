@@ -1,4 +1,4 @@
-﻿using AKYSTRATEJI.Models;
+﻿using AKYSTRATEJI.Model;
 using AKYSTRATEJI.ViewModals;
 using AutoMapper;
 using System;
