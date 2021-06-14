@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AKYSTRATEJI\AKYSTRATEJI.csproj" />
+    <ProjectReference Include="..\REPOSITORYCORE\REPOSITORYCORE.csproj" />
   </ItemGroup>
 
 </Project>
