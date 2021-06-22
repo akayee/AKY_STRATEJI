@@ -26,8 +26,6 @@ namespace AKYSTRATEJI.Model
         public virtual DbSet<BrPersoneller> BrPersonellers { get; set; }
         public virtual DbSet<BrYazilimlar> BrYazilimlars { get; set; }
         public virtual DbSet<BrYetkiGorevTanimlari> BrYetkiGorevTanimlaris { get; set; }
-        public virtual DbSet<FlFaaliyet> FlFaaliyets { get; set; }
-        public virtual DbSet<FlFaaliyetturleri> FlFaaliyetturleris { get; set; }
         public virtual DbSet<GnOlcubirimi> GnOlcubirimis { get; set; }
         public virtual DbSet<Kullanicilar> Kullanicilars { get; set; }
         public virtual DbSet<KullanicilarBirimler> KullanicilarBirimlers { get; set; }
@@ -38,7 +36,13 @@ namespace AKYSTRATEJI.Model
         public virtual DbSet<StIsler> StIslers { get; set; }
         public virtual DbSet<StIsturlerİ> StIsturlerİs { get; set; }
         public virtual DbSet<StPerformanslar> StPerformanslars { get; set; }
+        public virtual DbSet<StStratejiyili> StStratejiyilis { get; set; }
         public virtual DbSet<StYillikhedef> StYillikhedefs { get; set; }
+        public virtual DbSet<StratejiyiliAmaclar> StratejiyiliAmaclars { get; set; }
+        public virtual DbSet<StratejiyiliFaaliyetler> StratejiyiliFaaliyetlers { get; set; }
+        public virtual DbSet<StratejiyiliHedefler> StratejiyiliHedeflers { get; set; }
+        public virtual DbSet<StratejiyiliIsturleri> StratejiyiliIsturleris { get; set; }
+        public virtual DbSet<StratejiyiliPerformanslar> StratejiyiliPerformanslars { get; set; }
         public virtual DbSet<YtYetkigruplari> YtYetkigruplaris { get; set; }
         public virtual DbSet<YtYetkiler> YtYetkilers { get; set; }
         public virtual DbSet<YtYetkilerYetkigruplari> YtYetkilerYetkigruplaris { get; set; }
@@ -48,7 +52,7 @@ namespace AKYSTRATEJI.Model
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=.;Database=AKYSTRATEJI; Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Data Source=MAS-MLI-083\\MSSQLSERVER01;Initial Catalog=AKYSTRATEJI;Integrated Security=True");
             }
         }
 
@@ -297,66 +301,6 @@ namespace AKYSTRATEJI.Model
                     .HasConstraintName("FK_BR_YETKI_GOREV_TANIMLARI_BR_BIRIMLER");
             });
 
-            modelBuilder.Entity<FlFaaliyet>(entity =>
-            {
-                entity.ToTable("FL_FAALIYET");
-
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
-
-                entity.Property(e => e.BaslangicTarihi).HasColumnType("date");
-
-                entity.Property(e => e.BitisTarihi).HasColumnType("date");
-
-                entity.Property(e => e.FaaliyetId).HasColumnName("FaaliyetID");
-
-                entity.Property(e => e.FaaliyetTurleriId).HasColumnName("FaaliyetTurleriID");
-
-                entity.Property(e => e.OlusturmaTarihi).HasColumnType("date");
-
-                entity.HasOne(d => d.FaaliyetTurleri)
-                    .WithMany(p => p.FlFaaliyets)
-                    .HasForeignKey(d => d.FaaliyetTurleriId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_FL_FAALIYET_FL_FAALIYETTURLERI");
-            });
-
-            modelBuilder.Entity<FlFaaliyetturleri>(entity =>
-            {
-                entity.ToTable("FL_FAALIYETTURLERI");
-
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
-
-                entity.Property(e => e.Aciklama)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Adi)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.BirimId).HasColumnName("BirimID");
-
-                entity.Property(e => e.FaaliyetTuruId).HasColumnName("FaaliyetTuruID");
-
-                entity.Property(e => e.OlusturmaTarihi).HasColumnType("date");
-
-                entity.HasOne(d => d.Birim)
-                    .WithMany(p => p.FlFaaliyetturleris)
-                    .HasForeignKey(d => d.BirimId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_FL_FAALIYETTURLERI_BR_BIRIMLER");
-
-                entity.HasOne(d => d.OlcuBirimiNavigation)
-                    .WithMany(p => p.FlFaaliyetturleris)
-                    .HasForeignKey(d => d.OlcuBirimi)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_FL_FAALIYETTURLERI_GN_OLCUBIRIMI");
-            });
-
             modelBuilder.Entity<GnOlcubirimi>(entity =>
             {
                 entity.ToTable("GN_OLCUBIRIMI");
@@ -432,7 +376,7 @@ namespace AKYSTRATEJI.Model
                     .HasColumnName("id");
 
                 entity.Property(e => e.Adi)
-                    .HasMaxLength(50)
+                    .HasMaxLength(250)
                     .IsUnicode(false);
 
                 entity.Property(e => e.AmacId).HasColumnName("AmacID");
@@ -502,12 +446,6 @@ namespace AKYSTRATEJI.Model
                     .HasForeignKey(d => d.PerformansId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ST_FAALİYETLER_ST_PERFORMANSLAR");
-
-                entity.HasOne(d => d.YillikHedef)
-                    .WithMany(p => p.StFaalİyetlers)
-                    .HasForeignKey(d => d.YillikHedefId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ST_FAALİYETLER_ST_YILLIKHEDEF");
             });
 
             modelBuilder.Entity<StHedefler>(entity =>
@@ -526,7 +464,7 @@ namespace AKYSTRATEJI.Model
 
                 entity.Property(e => e.Tanim)
                     .IsRequired()
-                    .HasMaxLength(50);
+                    .HasMaxLength(250);
 
                 entity.HasOne(d => d.Amaclar)
                     .WithMany(p => p.StHedeflers)
@@ -606,7 +544,7 @@ namespace AKYSTRATEJI.Model
                     .WithMany(p => p.StIsturlerİs)
                     .HasForeignKey(d => d.YillikHedefId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ST_ISTURLERİ_ST_YILLIKHEDEF");
+                    .HasConstraintName("FK_ST_ISTURLERİ_ST_YILLIKHEDEF1");
             });
 
             modelBuilder.Entity<StPerformanslar>(entity =>
@@ -634,19 +572,126 @@ namespace AKYSTRATEJI.Model
                     .HasConstraintName("FK_ST_PERFORMANSLAR_ST_HEDEFLER");
             });
 
-            modelBuilder.Entity<StYillikhedef>(entity =>
+            modelBuilder.Entity<StStratejiyili>(entity =>
             {
-                entity.ToTable("ST_YILLIKHEDEF");
+                entity.ToTable("ST_STRATEJIYILI");
 
                 entity.Property(e => e.Id)
                     .ValueGeneratedNever()
                     .HasColumnName("id");
+            });
+
+            modelBuilder.Entity<StYillikhedef>(entity =>
+            {
+                entity.HasKey(e => e.YillikHedefId)
+                    .HasName("PK_ST_YILLIKHEDEF_1");
+
+                entity.ToTable("ST_YILLIKHEDEF");
+
+                entity.Property(e => e.YillikHedefId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("YillikHedefID");
 
                 entity.Property(e => e.HedefNn).HasColumnName("HedefNN");
 
-                entity.Property(e => e.OlusturmaTarihi).HasColumnType("date");
+                entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.YillikHedefId).HasColumnName("YillikHedefID");
+                entity.Property(e => e.OlusturmaTarihi).HasColumnType("date");
+            });
+
+            modelBuilder.Entity<StratejiyiliAmaclar>(entity =>
+            {
+                entity.HasKey(e => new { e.AmaclarId, e.StratejiyiliId });
+
+                entity.ToTable("STRATEJIYILI_AMACLAR");
+
+                entity.HasOne(d => d.Amaclar)
+                    .WithMany(p => p.StratejiyiliAmaclars)
+                    .HasForeignKey(d => d.AmaclarId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_STRATEJIYILI_AMACLAR_ST_AMACLAR");
+
+                entity.HasOne(d => d.Stratejiyili)
+                    .WithMany(p => p.StratejiyiliAmaclars)
+                    .HasForeignKey(d => d.StratejiyiliId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_STRATEJIYILI_AMACLAR_ST_STRATEJIYILI");
+            });
+
+            modelBuilder.Entity<StratejiyiliFaaliyetler>(entity =>
+            {
+                entity.HasKey(e => new { e.FaaliyetId, e.StratejiyiliId });
+
+                entity.ToTable("STRATEJIYILI_FAALIYETLER");
+
+                entity.HasOne(d => d.Faaliyet)
+                    .WithMany(p => p.StratejiyiliFaaliyetlers)
+                    .HasForeignKey(d => d.FaaliyetId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_STRATEJIYILI_FAALIYETLER_ST_FAALİYETLER");
+
+                entity.HasOne(d => d.Stratejiyili)
+                    .WithMany(p => p.StratejiyiliFaaliyetlers)
+                    .HasForeignKey(d => d.StratejiyiliId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_STRATEJIYILI_FAALIYETLER_ST_STRATEJIYILI");
+            });
+
+            modelBuilder.Entity<StratejiyiliHedefler>(entity =>
+            {
+                entity.HasKey(e => new { e.HedeflerId, e.StratejiyiliId });
+
+                entity.ToTable("STRATEJIYILI_HEDEFLER");
+
+                entity.HasOne(d => d.Hedefler)
+                    .WithMany(p => p.StratejiyiliHedeflers)
+                    .HasForeignKey(d => d.HedeflerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_STRATEJIYILI_HEDEFLER_ST_HEDEFLER");
+
+                entity.HasOne(d => d.Stratejiyili)
+                    .WithMany(p => p.StratejiyiliHedeflers)
+                    .HasForeignKey(d => d.StratejiyiliId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_STRATEJIYILI_HEDEFLER_ST_STRATEJIYILI");
+            });
+
+            modelBuilder.Entity<StratejiyiliIsturleri>(entity =>
+            {
+                entity.HasKey(e => new { e.IsturuId, e.StratejiyiliId });
+
+                entity.ToTable("STRATEJIYILI_ISTURLERI");
+
+                entity.HasOne(d => d.Isturu)
+                    .WithMany(p => p.StratejiyiliIsturleris)
+                    .HasForeignKey(d => d.IsturuId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_STRATEJIYILI_ISTURLERI_ST_ISTURLERİ");
+
+                entity.HasOne(d => d.Stratejiyili)
+                    .WithMany(p => p.StratejiyiliIsturleris)
+                    .HasForeignKey(d => d.StratejiyiliId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_STRATEJIYILI_ISTURLERI_ST_STRATEJIYILI");
+            });
+
+            modelBuilder.Entity<StratejiyiliPerformanslar>(entity =>
+            {
+                entity.HasKey(e => new { e.PerformanslarId, e.StratejiyiliId });
+
+                entity.ToTable("STRATEJIYILI_PERFORMANSLAR");
+
+                entity.HasOne(d => d.Performanslar)
+                    .WithMany(p => p.StratejiyiliPerformanslars)
+                    .HasForeignKey(d => d.PerformanslarId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_STRATEJIYILI_PERFORMANSLAR_ST_PERFORMANSLAR");
+
+                entity.HasOne(d => d.Stratejiyili)
+                    .WithMany(p => p.StratejiyiliPerformanslars)
+                    .HasForeignKey(d => d.StratejiyiliId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_STRATEJIYILI_PERFORMANSLAR_ST_STRATEJIYILI");
             });
 
             modelBuilder.Entity<YtYetkigruplari>(entity =>

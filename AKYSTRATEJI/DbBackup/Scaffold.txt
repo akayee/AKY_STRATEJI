@@ -1,0 +1,1 @@
+﻿Scaffold-DbContext "Data Source=MAS-MLI-083\MSSQLSERVER01;Initial Catalog=AKYSTRATEJI;Integrated Security=True" Microsoft.EntityFrameworkCore.SqlServer -Project AKYSTRATEJI -OutputDir Model -Force

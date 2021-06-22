@@ -11,6 +11,7 @@ namespace AKYSTRATEJI.Model
         {
             StFaalİyetlers = new HashSet<StFaalİyetler>();
             StIsturlerİs = new HashSet<StIsturlerİ>();
+            StratejiyiliPerformanslars = new HashSet<StratejiyiliPerformanslar>();
         }
 
         public int Id { get; set; }
@@ -22,5 +23,6 @@ namespace AKYSTRATEJI.Model
         public virtual StHedefler Hedefler { get; set; }
         public virtual ICollection<StFaalİyetler> StFaalİyetlers { get; set; }
         public virtual ICollection<StIsturlerİ> StIsturlerİs { get; set; }
+        public virtual ICollection<StratejiyiliPerformanslar> StratejiyiliPerformanslars { get; set; }
     }
 }
