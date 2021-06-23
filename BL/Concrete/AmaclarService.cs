@@ -12,11 +12,11 @@ namespace BL.Concrete
 {
     public class AmaclarService : ABBEntityServis<StAmaclar, AKYSTRATEJIContext>, IAmaclarService
     {
-        private readonly ILogger<ABBEntityServis<StAmaclar, AKYSTRATEJIContext>> _logger;
+        private readonly ILogger<AmaclarService> _logger;
 
-        public AmaclarService(ILogger<StAmaclar> logger) : base((ILogger<ABBEntityServis<StAmaclar, AKYSTRATEJIContext>>)logger)
+        public AmaclarService(ILogger<AmaclarService> logger) : base(logger)
         {
-            _logger = (ILogger<ABBEntityServis<StAmaclar, AKYSTRATEJIContext>>)logger;
+            _logger = logger;
         }
 
         public StAmaclar AmacGetir(int AmacId)
