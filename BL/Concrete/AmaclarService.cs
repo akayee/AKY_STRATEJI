@@ -31,7 +31,7 @@ namespace BL.Concrete
 
         public override void Validate(StAmaclar entity)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public bool Sil(StAmaclar guncellenece_amac)
@@ -43,12 +43,10 @@ namespace BL.Concrete
         bool IAmaclarService.Ekle(StAmaclar amac)
         {
 
-            amac.AmacId = Listele().Count;
-            amac.Id= Listele().Count;
-            amac.StHedeflers =null;
-            amac.StratejiyiliAmaclars = null;
+            amac.AmacId = Listele().Count+1;
+            amac.Id= Listele().Count+1;
+
             Ekle(amac);
-            Console.WriteLine("Amaclar Servisi");
           throw new NotImplementedException("Servisde hata");
 
         }

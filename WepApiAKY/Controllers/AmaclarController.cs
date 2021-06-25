@@ -47,16 +47,17 @@ namespace WepApiAKY.Controllers
             return new JsonResult(amaclar);
         }
         [HttpPost]
-        public IActionResult Ekle(VMAmaclar eklenecek)
+        public IActionResult Ekle(StAmaclar eklenecek)
         {
-            var model = new StAmaclar()
+            /*var model = new StAmaclar()
             {
                 Adi = eklenecek.Adi,
-                OlusturmaTarihi = DateTime.Now
-            };
+                OlusturmaTarihi = DateTime.Now,
+                StHedeflers = null
+            };*/
             try
             {
-                _amaclar.Ekle(model);
+                _amaclar.Ekle(eklenecek);
                 return new ABBJsonResponse("Taşınır Girişi Başarıyla Eklendi");
             }
             catch(Exception e)
