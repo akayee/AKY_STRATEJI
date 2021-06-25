@@ -11,6 +11,10 @@ namespace BL.Abstract
     public interface IAmaclarService:IABBEntityServis<StAmaclar>
     {
         StAmaclar AmacGetir(int AmacId);
+        List<StAmaclar> Listele();
+        bool Ekle(StAmaclar amac);
+        bool Sil(StAmaclar amac);
+        StAmaclar Guncelle(StAmaclar amac);
 
     }
 }

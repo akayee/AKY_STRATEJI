@@ -1,4 +1,5 @@
-﻿using AKYSTRATEJI.Model;
+﻿using ABB.WebMvcUI.Models;
+using AKYSTRATEJI.Model;
 using AKYSTRATEJI.ViewModals;
 using AutoMapper;
 using BL.Abstract;
@@ -44,6 +45,24 @@ namespace WepApiAKY.Controllers
             List<StAmaclar> amaclar = _amaclar.DetayliListe();
 
             return new JsonResult(amaclar);
+        }
+        [HttpPost]
+        public IActionResult Ekle(VMAmaclar eklenecek)
+        {
+            var model = new StAmaclar()
+            {
+                Adi = eklenecek.Adi,
+                OlusturmaTarihi = DateTime.Now
+            };
+            try
+            {
+                _amaclar.Ekle(model);
+                return new ABBJsonResponse("Taşınır Girişi Başarıyla Eklendi");
+            }
+            catch(Exception e)
+            {
+                return new ABBErrorJsonResponse(e.Message);
+            }
         }
     }
 }

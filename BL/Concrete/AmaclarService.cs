@@ -24,8 +24,38 @@ namespace BL.Concrete
             return Getir(amac => amac.Id == AmacId);
         }
 
+        public List<StAmaclar> Listele()
+        {
+            return DetayliListe();
+        }
+
         public override void Validate(StAmaclar entity)
         {
+            throw new NotImplementedException();
+        }
+
+        public bool Sil(StAmaclar guncellenece_amac)
+        {
+            Guncelle(guncellenece_amac);
+            throw new NotImplementedException();
+        }
+
+        bool IAmaclarService.Ekle(StAmaclar amac)
+        {
+
+            amac.AmacId = Listele().Count;
+            amac.Id= Listele().Count;
+            amac.StHedeflers =null;
+            amac.StratejiyiliAmaclars = null;
+            Ekle(amac);
+            Console.WriteLine("Amaclar Servisi");
+          throw new NotImplementedException("Servisde hata");
+
+        }
+
+        StAmaclar IAmaclarService.Guncelle(StAmaclar amac)
+        {
+            Guncelle(amac);
             throw new NotImplementedException();
         }
     }
