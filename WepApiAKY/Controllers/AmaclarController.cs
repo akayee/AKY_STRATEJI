@@ -42,22 +42,21 @@ namespace WepApiAKY.Controllers
         [HttpGet("GetAll")]
         public JsonResult AmacListe()
         {
-            List<StAmaclar> amaclar = _amaclar.DetayliListe();
+            List<StAmaclar> amaclar = _amaclar.Listele();
 
             return new JsonResult(amaclar);
         }
         [HttpPost]
-        public IActionResult Ekle(StAmaclar eklenecek)
+        public IActionResult Ekle(VMAmaclar eklenecek)
         {
-            /*var model = new StAmaclar()
+            var model = new StAmaclar()//VMAmaclar to StAmaclar mapleme işlemi
             {
                 Adi = eklenecek.Adi,
-                OlusturmaTarihi = DateTime.Now,
-                StHedeflers = null
-            };*/
+                OlusturmaTarihi = DateTime.Now
+            };
             try
             {
-                _amaclar.Ekle(eklenecek);
+                _amaclar.Ekle(model);
                 return new ABBJsonResponse("Taşınır Girişi Başarıyla Eklendi");
             }
             catch(Exception e)

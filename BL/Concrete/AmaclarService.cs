@@ -45,9 +45,22 @@ namespace BL.Concrete
 
             amac.AmacId = Listele().Count+1;
             amac.Id= Listele().Count+1;
+            System.Diagnostics.Debug.WriteLine(amac.Adi);
+            System.Diagnostics.Debug.WriteLine(amac.AmacId);
+            System.Diagnostics.Debug.WriteLine(amac.Id);
+            System.Diagnostics.Debug.WriteLine(amac.OlusturmaTarihi);
 
-            Ekle(amac);
-          throw new NotImplementedException("Servisde hata");
+            try
+            {
+
+                Ekle(amac);
+                throw new NotImplementedException("Başarıyla Eklendi");
+            }
+            catch(Exception e)
+            {
+                throw new NotImplementedException(e.Message);
+            }
+          
 
         }
 
