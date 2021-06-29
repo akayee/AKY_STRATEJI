@@ -27,6 +27,7 @@ namespace AKYSTRATEJI.Model
         public DateTime OlustumraTarihi { get; set; }
         public int BirimId { get; set; }
         public int? BirimTipiId { get; set; }
+        public bool? Deleted { get; set; }
 
         public virtual BrBirimtipleri BirimTipi { get; set; }
         public virtual ICollection<BrAraclar> BrAraclars { get; set; }

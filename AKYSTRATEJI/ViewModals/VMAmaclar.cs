@@ -10,6 +10,7 @@ namespace AKYSTRATEJI.ViewModals
         public int id { get; set; }
         public string Adi { get; set; }
         public DateTime OlusturmaTarihi { get; set; }
+        public bool Deleted { get; set; }
         public List<VMHedefler> Hedefler { get; set; }
     }
 }

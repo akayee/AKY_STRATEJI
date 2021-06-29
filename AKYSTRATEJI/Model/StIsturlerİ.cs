@@ -24,6 +24,7 @@ namespace AKYSTRATEJI.Model
         public DateTime OlusturmaTarihi { get; set; }
         public int IsTurleriId { get; set; }
         public bool Strateji { get; set; }
+        public bool? Deleted { get; set; }
 
         public virtual BrBirimler Birim { get; set; }
         public virtual GnOlcubirimi OlcuBirimiNavigation { get; set; }

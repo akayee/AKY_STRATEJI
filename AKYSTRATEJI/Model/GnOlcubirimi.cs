@@ -15,6 +15,7 @@ namespace AKYSTRATEJI.Model
 
         public int Id { get; set; }
         public string Tanim { get; set; }
+        public bool? Deleted { get; set; }
 
         public virtual ICollection<StFaalİyetler> StFaalİyetlers { get; set; }
         public virtual ICollection<StIsturlerİ> StIsturlerİs { get; set; }

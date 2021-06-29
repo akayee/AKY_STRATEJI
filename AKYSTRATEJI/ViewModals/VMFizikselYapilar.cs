@@ -12,6 +12,7 @@ namespace AKYSTRATEJI.ViewModals
         public string Konum { get; set; }
         public int MetreKare { get; set; }
         public int BirimId { get; set; }
+        public bool Deleted { get; set; }
         public DateTime OlusturmaTarihi { get; set; }
         public VMBirimler Birim { get; set; }
     }

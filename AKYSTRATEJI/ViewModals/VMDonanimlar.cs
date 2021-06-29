@@ -12,5 +12,6 @@ namespace AKYSTRATEJI.ViewModals
         public short Sayi { get; set; }
         public VMBirimler Birim { get; set; }
         public int BirimId { get; set; }
+        public bool Deleted { get; set; }
     }
 }

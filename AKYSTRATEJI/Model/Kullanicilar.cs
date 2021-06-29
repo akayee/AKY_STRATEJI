@@ -18,6 +18,7 @@ namespace AKYSTRATEJI.Model
         public string Password { get; set; }
         public int? PersonelId { get; set; }
         public int? YetkiGruplariId { get; set; }
+        public bool? Deleted { get; set; }
 
         public virtual YtYetkigruplari YetkiGruplari { get; set; }
         public virtual ICollection<KullanicilarBirimler> KullanicilarBirimlers { get; set; }

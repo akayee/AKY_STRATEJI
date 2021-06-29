@@ -9,6 +9,7 @@ namespace AKYSTRATEJI.Model
     {
         public int FaaliyetId { get; set; }
         public int StratejiyiliId { get; set; }
+        public bool? Deleted { get; set; }
 
         public virtual StFaalİyetler Faaliyet { get; set; }
         public virtual StStratejiyili Stratejiyili { get; set; }

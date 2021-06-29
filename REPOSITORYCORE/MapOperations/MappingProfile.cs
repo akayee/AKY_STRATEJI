@@ -20,10 +20,6 @@ namespace REPOSITORYCORE.MapOperations
             CreateMap<BrBirimler, VMBirimler>();
             CreateMap<VMDonanimlar, BrDonanimlar>();
             CreateMap<BrDonanimlar, VMDonanimlar>();
-            CreateMap<VMFaaliyet, FlFaaliyet>();
-            CreateMap<FlFaaliyet, VMFaaliyet>();
-            CreateMap<VMFaaliyetTurleri, FlFaaliyetturleri>();
-            CreateMap<FlFaaliyetturleri, VMFaaliyetTurleri>();
             CreateMap<VMFizikselYapilar, BrFizikselYapilar>();
             CreateMap<BrFizikselYapilar, VMFizikselYapilar>();
             CreateMap<VMHedefler, StHedefler>();

@@ -20,6 +20,7 @@ namespace AKYSTRATEJI.Model
         public int? KullaniciId { get; set; }
         public int PersonelId { get; set; }
         public DateTime OlusturmaTarihi { get; set; }
+        public bool? Deleted { get; set; }
 
         public virtual BrBirimler Birim { get; set; }
     }

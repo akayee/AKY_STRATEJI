@@ -16,9 +16,10 @@ namespace WepApiAKY.Controllers
     [Route("[controller]")]
     public class AmaclarController : ControllerBase
     {
+        //loglama servisi
         private readonly ILogger<AmaclarController> _logger;
+        //Stratejik Amaclar işlemlerini yaptığımız servis
         private readonly IAmaclarService _amaclar;
-        private readonly IMapper _mapper;
         public AmaclarController(ILogger<AmaclarController> logger, IAmaclarService amaclar)
         {
             _logger = logger;
@@ -29,7 +30,9 @@ namespace WepApiAKY.Controllers
         public JsonResult GetAmaclar()
         {
             int id = 1;
+            //Tek Amac getirme.
             StAmaclar amaclar = _amaclar.AmacGetir(id);
+            //Mapleme işlemi.
             var model = new VMAmaclar(){
                 id = amaclar.AmacId,
                 Adi = amaclar.Adi,
@@ -42,6 +45,7 @@ namespace WepApiAKY.Controllers
         [HttpGet("GetAll")]
         public JsonResult AmacListe()
         {
+            //Veritabanından StAmaclar tablosunun listesini almaişlemi.
             List<StAmaclar> amaclar = _amaclar.Listele();
 
             return new JsonResult(amaclar);
@@ -49,17 +53,63 @@ namespace WepApiAKY.Controllers
         [HttpPost]
         public IActionResult Ekle(VMAmaclar eklenecek)
         {
-            var model = new StAmaclar()//VMAmaclar to StAmaclar mapleme işlemi
+            //VMAmaclar to StAmaclar mapleme işlemi
+            var model = new StAmaclar()
             {
                 Adi = eklenecek.Adi,
                 OlusturmaTarihi = DateTime.Now
             };
             try
             {
+                //Veri tabanına ekleme işlemi.
                 _amaclar.Ekle(model);
-                return new ABBJsonResponse("Taşınır Girişi Başarıyla Eklendi");
+                return new ABBJsonResponse("Stratejik Amaç Başarıyla Eklendi");
             }
             catch(Exception e)
+            {
+                return new ABBErrorJsonResponse(e.Message);
+            }
+        }
+        [HttpPut]
+        public IActionResult AmacGuncelle(VMAmaclar guncellenecek)
+        {
+            
+            var model = new StAmaclar()
+            {
+                Adi = guncellenecek.Adi,
+                OlusturmaTarihi = guncellenecek.OlusturmaTarihi,
+                Id = guncellenecek.id,
+                Deleted=guncellenecek.Deleted,
+                AmacId=guncellenecek.id
+            };
+            try
+            {
+                _amaclar.Guncelle(model);
+                return new ABBJsonResponse("Stratejik Amaç Başarıyla Güncellendi");
+            }
+            catch (Exception e)
+            {
+                return new ABBErrorJsonResponse(e.Message);
+            }
+        }
+        [HttpPut("Delete")]
+        public IActionResult AmacDelete(VMAmaclar guncellenecek)
+        {
+
+            var model = new StAmaclar()
+            {
+                Adi = guncellenecek.Adi,
+                OlusturmaTarihi = guncellenecek.OlusturmaTarihi,
+                Id = guncellenecek.id,
+                Deleted = true,
+                AmacId = guncellenecek.id
+            };
+            try
+            {
+                _amaclar.Guncelle(model);
+                return new ABBJsonResponse("Stratejik Amaç Başarıyla Silindi");
+            }
+            catch (Exception e)
             {
                 return new ABBErrorJsonResponse(e.Message);
             }

@@ -14,6 +14,7 @@ namespace AKYSTRATEJI.Model
 
         public int Id { get; set; }
         public string BirimTipi { get; set; }
+        public bool? Deleted { get; set; }
 
         public virtual ICollection<BrBirimler> BrBirimlers { get; set; }
     }

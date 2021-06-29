@@ -13,6 +13,7 @@ namespace AKYSTRATEJI.ViewModals
         public int? HedefN { get; set; }
         public int? HedefNN { get; set; }
         public DateTime OlusturmaTarihi { get; set; }
+        public bool Deleted { get; set; }
         public List<VMMaliFaaliyetTurleri> MaliFaaliyetler { get; set; }
         public List<VMIsturleri> IsTurleri { get; set; }
 

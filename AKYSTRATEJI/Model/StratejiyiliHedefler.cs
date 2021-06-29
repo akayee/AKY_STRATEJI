@@ -9,6 +9,7 @@ namespace AKYSTRATEJI.Model
     {
         public int HedeflerId { get; set; }
         public int StratejiyiliId { get; set; }
+        public bool? Deleted { get; set; }
 
         public virtual StHedefler Hedefler { get; set; }
         public virtual StStratejiyili Stratejiyili { get; set; }

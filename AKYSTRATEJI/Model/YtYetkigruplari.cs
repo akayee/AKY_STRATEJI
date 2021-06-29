@@ -16,6 +16,7 @@ namespace AKYSTRATEJI.Model
         public int Id { get; set; }
         public string Adi { get; set; }
         public int YetkilerId { get; set; }
+        public bool? Deleted { get; set; }
 
         public virtual ICollection<Kullanicilar> Kullanicilars { get; set; }
         public virtual ICollection<YtYetkilerYetkigruplari> YtYetkilerYetkigruplaris { get; set; }

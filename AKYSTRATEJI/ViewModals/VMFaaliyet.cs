@@ -14,6 +14,7 @@ namespace AKYSTRATEJI.ViewModals
         public int Deger { get; set; }
         public enums.Ilceler Ilce { get; set; }
         public enums.Mahalleler Mahalle { get; set; }
+        public bool Deleted { get; set; }
         public VMFaaliyetTurleri FaaliyetTurleri { get; set; }
     }
 }

@@ -18,6 +18,7 @@ namespace AKYSTRATEJI.Model
 
         public int Id { get; set; }
         public int Yil { get; set; }
+        public bool? Deleted { get; set; }
 
         public virtual ICollection<StratejiyiliAmaclar> StratejiyiliAmaclars { get; set; }
         public virtual ICollection<StratejiyiliFaaliyetler> StratejiyiliFaaliyetlers { get; set; }

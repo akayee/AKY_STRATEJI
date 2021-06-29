@@ -18,6 +18,7 @@ namespace AKYSTRATEJI.ViewModals
         public DateTime DogumTarihi { get; set; }
         public short Tel { get; set; }
         public int KullaniciId { get; set; }
+        public bool Deleted { get; set; }
         public VMBirimler Birim { get; set; }
     }
 }

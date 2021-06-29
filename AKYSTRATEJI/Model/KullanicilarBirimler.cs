@@ -9,6 +9,7 @@ namespace AKYSTRATEJI.Model
     {
         public int BirimId { get; set; }
         public int KullaniciId { get; set; }
+        public bool? Deleted { get; set; }
 
         public virtual BrBirimler Birim { get; set; }
         public virtual Kullanicilar Kullanici { get; set; }

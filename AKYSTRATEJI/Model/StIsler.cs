@@ -16,6 +16,7 @@ namespace AKYSTRATEJI.Model
         public int? Ilce { get; set; }
         public int? Mahalle { get; set; }
         public int IslerId { get; set; }
+        public bool? Deleted { get; set; }
 
         public virtual StIsturlerİ IsTuru { get; set; }
     }

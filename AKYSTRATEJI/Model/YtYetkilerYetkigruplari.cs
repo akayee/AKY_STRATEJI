@@ -9,6 +9,7 @@ namespace AKYSTRATEJI.Model
     {
         public int YetkiGruplariId { get; set; }
         public int YetkilerId { get; set; }
+        public bool? Deleted { get; set; }
 
         public virtual YtYetkigruplari YetkiGruplari { get; set; }
         public virtual YtYetkiler Yetkiler { get; set; }

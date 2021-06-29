@@ -9,6 +9,7 @@ namespace AKYSTRATEJI.ViewModals
     {
         public int YetkiGruplariId { get; set; }
         public int YetkilerId { get; set; }
+        public bool Deleted { get; set; }
         public VMYetkiGruplari YetkiGruplari { get; set; }
         public VMYetkiler Yetkiler { get; set; }
     }

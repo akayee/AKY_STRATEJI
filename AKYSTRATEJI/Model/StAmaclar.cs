@@ -17,6 +17,7 @@ namespace AKYSTRATEJI.Model
         public string Adi { get; set; }
         public DateTime OlusturmaTarihi { get; set; }
         public int AmacId { get; set; }
+        public bool? Deleted { get; set; }
 
         public virtual ICollection<StHedefler> StHedeflers { get; set; }
         public virtual ICollection<StratejiyiliAmaclar> StratejiyiliAmaclars { get; set; }

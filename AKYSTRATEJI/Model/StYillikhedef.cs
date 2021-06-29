@@ -20,6 +20,7 @@ namespace AKYSTRATEJI.Model
         public int? HedefNn { get; set; }
         public DateTime OlusturmaTarihi { get; set; }
         public int FaaliyetId { get; set; }
+        public bool? Deleted { get; set; }
 
         public virtual ICollection<StIsturlerİ> StIsturlerİs { get; set; }
     }

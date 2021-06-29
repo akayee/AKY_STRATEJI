@@ -21,12 +21,12 @@ namespace BL.Concrete
 
         public StAmaclar AmacGetir(int AmacId)
         {
-            return Getir(amac => amac.Id == AmacId);
+            return Getir(amac => amac.Id == AmacId && amac.Deleted != true);
         }
 
         public List<StAmaclar> Listele()
         {
-            return DetayliListe();
+            return DetayliListe(amaclar => amaclar.Deleted!=true);
         }
 
         public override void Validate(StAmaclar entity)
@@ -36,6 +36,7 @@ namespace BL.Concrete
 
         public bool Sil(StAmaclar guncellenece_amac)
         {
+            guncellenece_amac.Deleted = true;
             Guncelle(guncellenece_amac);
             throw new NotImplementedException();
         }
@@ -45,10 +46,7 @@ namespace BL.Concrete
 
             amac.AmacId = Listele().Count+1;
             amac.Id= Listele().Count+1;
-            System.Diagnostics.Debug.WriteLine(amac.Adi);
-            System.Diagnostics.Debug.WriteLine(amac.AmacId);
-            System.Diagnostics.Debug.WriteLine(amac.Id);
-            System.Diagnostics.Debug.WriteLine(amac.OlusturmaTarihi);
+            //System.Diagnostics.Debug.WriteLine(amac.Adi);
 
             try
             {
@@ -66,7 +64,9 @@ namespace BL.Concrete
 
         StAmaclar IAmaclarService.Guncelle(StAmaclar amac)
         {
-            Guncelle(amac);
+            System.Diagnostics.Debug.WriteLine(amac.Adi);
+            System.Diagnostics.Debug.WriteLine(amac.Deleted);
+            base.Guncelle(amac);
             throw new NotImplementedException();
         }
     }

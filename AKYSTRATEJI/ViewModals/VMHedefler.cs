@@ -10,6 +10,7 @@ namespace AKYSTRATEJI.ViewModals
         public int id { get; set; }
         public string Tanim { get; set; }
         public int AmaclarId { get; set; }
+        public bool Deleted { get; set; }
         public DateTime OlusturmaTarihi { get; set; }
         public VMAmaclar Amac { get; set; }
     }
