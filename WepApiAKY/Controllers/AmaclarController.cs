@@ -27,16 +27,21 @@ namespace WepApiAKY.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetAmaclar()
+        public JsonResult GetAmaclar(int id)
         {
-            int id = 1;
+            
             //Tek Amac getirme.
             StAmaclar amaclar = _amaclar.AmacGetir(id);
+            System.Diagnostics.Debug.WriteLine(amaclar.Adi);
+            System.Diagnostics.Debug.WriteLine(amaclar.Id);
+            System.Diagnostics.Debug.WriteLine(amaclar.OlusturmaTarihi);
+            System.Diagnostics.Debug.WriteLine(amaclar.Deleted);
             //Mapleme işlemi.
             var model = new VMAmaclar(){
-                id = amaclar.AmacId,
+                id = amaclar.Id,
                 Adi = amaclar.Adi,
-                OlusturmaTarihi = amaclar.OlusturmaTarihi
+                OlusturmaTarihi = amaclar.OlusturmaTarihi,
+                Deleted= (bool)amaclar.Deleted
            };
             
 

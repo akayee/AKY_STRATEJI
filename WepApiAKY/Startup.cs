@@ -37,6 +37,8 @@ namespace WepApiAKY
             });
 
             services.AddScoped<IAmaclarService, AmaclarService >();
+            services.AddScoped<IHedeflerServices, HedeflerServices>();
+            services.AddScoped<IPerformanslarServices, PerformansService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

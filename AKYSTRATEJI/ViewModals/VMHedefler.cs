@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AKYSTRATEJI.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,6 +13,6 @@ namespace AKYSTRATEJI.ViewModals
         public int AmaclarId { get; set; }
         public bool Deleted { get; set; }
         public DateTime OlusturmaTarihi { get; set; }
-        public VMAmaclar Amac { get; set; }
+        public StAmaclar Amac { get; set; }
     }
 }

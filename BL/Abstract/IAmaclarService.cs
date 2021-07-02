@@ -14,7 +14,7 @@ namespace BL.Abstract
         List<StAmaclar> Listele();
         bool Ekle(StAmaclar amac);
         bool Sil(StAmaclar amac);
-        StAmaclar Guncelle(StAmaclar amac);
+        bool Guncelle(StAmaclar amac);
 
     }
 }

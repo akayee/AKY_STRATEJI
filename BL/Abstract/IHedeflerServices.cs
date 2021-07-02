@@ -9,7 +9,10 @@ namespace BL.Abstract
 {
     public interface IHedeflerServices: IABBEntityServis<StHedefler>
     {
-        StHedefler Getir(int hedefId);
-        List<StHedefler> Listele();
+        StHedefler TekHedefGetir(int HedefId);
+        List<StHedefler> HedefleriListele();
+        bool YeniHedefEkle(StHedefler hedef);
+        bool HedefSil(StHedefler hedef);
+        bool HedefGuncelle(StHedefler hedef);
     }
 }

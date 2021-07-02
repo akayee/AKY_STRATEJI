@@ -1,12 +1,9 @@
 ﻿using ABB.Core.DataAccess;
 using AKYSTRATEJI.Model;
-using AKYSTRATEJI.ViewModals;
 using BL.Abstract;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BL.Concrete
 {
@@ -21,6 +18,7 @@ namespace BL.Concrete
 
         public StAmaclar AmacGetir(int AmacId)
         {
+
             return Getir(amac => amac.Id == AmacId && amac.Deleted != true);
         }
 
@@ -36,16 +34,27 @@ namespace BL.Concrete
 
         public bool Sil(StAmaclar guncellenece_amac)
         {
-            guncellenece_amac.Deleted = true;
-            Guncelle(guncellenece_amac);
-            throw new NotImplementedException();
+            try
+            {
+
+                guncellenece_amac.Deleted = true;
+                Guncelle(guncellenece_amac);
+                throw new NotImplementedException("Kayıt silme başarılı");
+            }
+            catch(Exception e)
+            {
+                throw new NotImplementedException(e.Message);
+            }
+
+            
         }
 
         bool IAmaclarService.Ekle(StAmaclar amac)
         {
-
-            amac.AmacId = Listele().Count+1;
-            amac.Id= Listele().Count+1;
+            int counted = Listele().Count + 1;
+            amac.AmacId = counted;
+            amac.Id= counted;
+            amac.Deleted = false;
             //System.Diagnostics.Debug.WriteLine(amac.Adi);
 
             try
@@ -62,12 +71,18 @@ namespace BL.Concrete
 
         }
 
-        StAmaclar IAmaclarService.Guncelle(StAmaclar amac)
+        bool IAmaclarService.Guncelle(StAmaclar amac)
         {
-            System.Diagnostics.Debug.WriteLine(amac.Adi);
-            System.Diagnostics.Debug.WriteLine(amac.Deleted);
-            base.Guncelle(amac);
-            throw new NotImplementedException();
+            try
+            {
+
+                base.Guncelle(amac);
+                throw new NotImplementedException("Kayıt güncelleme başarılı");
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException(e.Message);
+            } 
         }
     }
 }

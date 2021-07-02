@@ -17,19 +17,67 @@ namespace BL.Concrete
         {
             _logger = logger;
         }
-        public StHedefler Getir(int hedefId)
+        public StHedefler TekHedefGetir(int HedefId)
         {
-            return Getir(i => i.Id == hedefId);
+            return Getir(hedef => hedef.Id == HedefId && hedef.Deleted != true);
         }
 
-        public List<StHedefler> Listele()
+        public List<StHedefler> HedefleriListele()
         {
-            return DetayliListe();
+            return DetayliListe(hedefler => hedefler.Deleted != true);
         }
 
         public override void Validate(StHedefler entity)
         {
             throw new NotImplementedException();
+        }
+
+        public bool YeniHedefEkle(StHedefler hedef)
+        {
+            int counted = HedefleriListele().Count + 1;
+            hedef.HedeflerId = counted;
+            hedef.Id = counted;
+            //System.Diagnostics.Debug.WriteLine(amac.Adi);
+
+            try
+            {
+
+                Ekle(hedef);
+                throw new NotImplementedException("Başarıyla Eklendi");
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException(e.Message);
+            }
+        }
+
+        public bool HedefSil(StHedefler hedef)
+        {
+            try
+            {
+
+                hedef.Deleted = true;
+                Guncelle(hedef);
+                throw new NotImplementedException("Kayıt silme başarılı");
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException(e.Message);
+            }
+        }
+
+        public bool HedefGuncelle(StHedefler hedef)
+        {
+            try
+            {
+
+                base.Guncelle(hedef);
+                throw new NotImplementedException("Kayıt güncelleme başarılı");
+            }
+            catch (Exception e)
+            {
+                throw new NotImplementedException(e.Message);
+            }
         }
     }
 }
