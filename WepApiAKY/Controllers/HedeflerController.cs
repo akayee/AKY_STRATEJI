@@ -106,13 +106,38 @@ namespace WepApiAKY.Controllers
                 OlusturmaTarihi = guncellenecek.OlusturmaTarihi,
                 Id = guncellenecek.id,
                 Deleted = guncellenecek.Deleted,
-                AmaclarId = guncellenecek.id,
+                AmaclarId = guncellenecek.AmaclarId,
                 Amaclar= _amaclar.Getir(amac => amac.Id == guncellenecek.AmaclarId)
             };
             try
             {
                 _hedefler.Guncelle(model);
                 return new ABBJsonResponse("Stratejik Amaç Başarıyla Güncellendi");
+            }
+            catch (Exception e)
+            {
+                return new ABBErrorJsonResponse(e.Message);
+            }
+        }
+
+        [HttpPut("Delete")]
+        public IActionResult HedefDelete(VMHedefler guncellenecek)
+        {
+
+            var model = new StHedefler()
+            {
+                Tanim = guncellenecek.Tanim,
+                OlusturmaTarihi = guncellenecek.OlusturmaTarihi,
+                Id = guncellenecek.id,
+                Deleted = true,
+                HedeflerId = guncellenecek.id,
+                AmaclarId=guncellenecek.AmaclarId,
+                Amaclar = _amaclar.Getir(amac => amac.Id == guncellenecek.AmaclarId)
+            };
+            try
+            {
+                _hedefler.Guncelle(model);
+                return new ABBJsonResponse("Stratejik Amaç Başarıyla Silindi");
             }
             catch (Exception e)
             {

@@ -1,0 +1,142 @@
+﻿using ABB.WebMvcUI.Models;
+using AKYSTRATEJI.Model;
+using AKYSTRATEJI.ViewModals;
+using BL.Abstract;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace WepApiAKY.Controllers
+{
+    [ApiController]
+    [Route("[controller]")]
+    public class PerformanslarController : ControllerBase
+    {
+        private readonly ILogger<PerformanslarController> _logger;
+        //Stratejik Amaclar işlemlerini yaptığımız servis
+        private readonly IHedeflerServices _hedefler;
+        private readonly IPerformanslarServices _performanslar;
+
+        public PerformanslarController(ILogger<PerformanslarController> logger, IHedeflerServices hedefler, IPerformanslarServices performanslar)
+        {
+            _logger = logger;
+            _hedefler = hedefler;
+            _performanslar = performanslar;
+        }
+        [HttpGet]
+        public JsonResult GetPerformans(int id)
+        {
+            //Tek Hedef getirme.
+            StPerformanslar performanslar = _performanslar.TekPerformansGetir(id);
+            //Hedefin bağlı olduğu amaç getirme.
+            StHedefler performansinHedefi = _hedefler.TekHedefGetir(performanslar.HedeflerId);
+            //ViewModal Mapleme işlemi.
+            var model = new VMPerformanslar()
+            {
+                id = performanslar.Id,
+                Adi = performanslar.Adi,
+                OlusturmaTarihi = performanslar.OlusturmaTarihi,
+                Deleted = (bool)performanslar.Deleted,
+                HedeflerId = performanslar.HedeflerId,
+                Hedefler = performansinHedefi
+            };
+
+            return new JsonResult(model);
+        }
+        [HttpGet("GetListofPerformanslar")]
+        public JsonResult PerformansListele()
+        {
+            //Veritabanından StAmaclar tablosunun listesini almaişlemi.
+            List<StPerformanslar> performanslar = _performanslar.PerformanslariListele();
+            //View Model tipinde liste oluşturuluyor. Güvenlik Amaçlı
+            List<VMPerformanslar> vmListe = new List<VMPerformanslar>();
+            //İlgili Listeler birbirlerine mapleniyor ve relationlar çekilerek ekleniyor.
+            foreach (StPerformanslar performans in performanslar)
+            {
+                vmListe.Add(new VMPerformanslar()
+                {
+                    id = performans.Id,
+                    Adi = performans.Adi,
+                    HedeflerId = performans.HedeflerId,
+                    Hedefler = _hedefler.Getir(hedef => hedef.Id == performans.HedeflerId),
+                    Deleted = (bool)performans.Deleted,
+                    OlusturmaTarihi = performans.OlusturmaTarihi
+                });
+            }
+
+            return new JsonResult(performanslar);
+        }
+        [HttpPost]
+        public IActionResult YeniPerformansEkle(VMPerformanslar eklenecek)
+        {
+            //VMAmaclar to StAmaclar mapleme işlemi
+            var model = new StPerformanslar()
+            {
+                Adi = eklenecek.Adi,
+                OlusturmaTarihi = DateTime.Now,
+                HedeflerId = eklenecek.HedeflerId,
+                Hedefler = _hedefler.Getir(hedef => hedef.Id == eklenecek.HedeflerId),
+                Deleted = false
+            };
+            try
+            {
+                //Veri tabanına ekleme işlemi.
+                _performanslar.Ekle(model);
+                return new ABBJsonResponse("Stratejik Hedef Başarıyla Eklendi");
+            }
+            catch (Exception e)
+            {
+                return new ABBErrorJsonResponse(e.Message);
+            }
+        }
+        [HttpPut]
+        public IActionResult PerformansGuncelle(VMPerformanslar guncellenecek)
+        {
+
+            var model = new StPerformanslar()
+            {
+                Adi = guncellenecek.Adi,
+                OlusturmaTarihi = guncellenecek.OlusturmaTarihi,
+                Id = guncellenecek.id,
+                Deleted = guncellenecek.Deleted,
+                HedeflerId = guncellenecek.HedeflerId,
+                Hedefler=_hedefler.Getir(amac => amac.Id == guncellenecek.HedeflerId)
+            };
+            try
+            {
+                _performanslar.Guncelle(model);
+                return new ABBJsonResponse("Stratejik Amaç Başarıyla Güncellendi");
+            }
+            catch (Exception e)
+            {
+                return new ABBErrorJsonResponse(e.Message);
+            }
+        }
+        [HttpPut("Delete")]
+        public IActionResult PerformansDelete(VMPerformanslar guncellenecek)
+        {
+
+            var model = new StPerformanslar()
+            {
+                Adi = guncellenecek.Adi,
+                OlusturmaTarihi = guncellenecek.OlusturmaTarihi,
+                Id = guncellenecek.id,
+                Deleted = true,
+                HedeflerId = guncellenecek.HedeflerId,
+                Hedefler = _hedefler.Getir(hedef => hedef.Id == guncellenecek.HedeflerId)
+            };
+            try
+            {
+                _performanslar.Guncelle(model);
+                return new ABBJsonResponse("Stratejik Amaç Başarıyla Silindi");
+            }
+            catch (Exception e)
+            {
+                return new ABBErrorJsonResponse(e.Message);
+            }
+        }
+    }
+}

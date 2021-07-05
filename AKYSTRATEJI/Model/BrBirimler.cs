@@ -17,8 +17,8 @@ namespace AKYSTRATEJI.Model
             BrYazilimlars = new HashSet<BrYazilimlar>();
             BrYetkiGorevTanimlaris = new HashSet<BrYetkiGorevTanimlari>();
             KullanicilarBirimlers = new HashSet<KullanicilarBirimler>();
-            StFaalİyetlers = new HashSet<StFaalİyetler>();
-            StIsturlerİs = new HashSet<StIsturlerİ>();
+            StFaalİyetlers = new HashSet<StFaaliyetler>();
+            StIsturlerİs = new HashSet<StIsturleri>();
         }
 
         public int Id { get; set; }
@@ -38,7 +38,7 @@ namespace AKYSTRATEJI.Model
         public virtual ICollection<BrYazilimlar> BrYazilimlars { get; set; }
         public virtual ICollection<BrYetkiGorevTanimlari> BrYetkiGorevTanimlaris { get; set; }
         public virtual ICollection<KullanicilarBirimler> KullanicilarBirimlers { get; set; }
-        public virtual ICollection<StFaalİyetler> StFaalİyetlers { get; set; }
-        public virtual ICollection<StIsturlerİ> StIsturlerİs { get; set; }
+        public virtual ICollection<StFaaliyetler> StFaalİyetlers { get; set; }
+        public virtual ICollection<StIsturleri> StIsturlerİs { get; set; }
     }
 }

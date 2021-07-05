@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AKYSTRATEJI.Model
 {
-    public partial class StFaalİyet
+    public partial class StFaaliyet
     {
         public int Id { get; set; }
         public int Deger { get; set; }
@@ -15,6 +15,6 @@ namespace AKYSTRATEJI.Model
         public int FaaliyetId { get; set; }
         public bool? Deleted { get; set; }
 
-        public virtual StFaalİyetler Faaliyetler { get; set; }
+        public virtual StFaaliyetler Faaliyetler { get; set; }
     }
 }

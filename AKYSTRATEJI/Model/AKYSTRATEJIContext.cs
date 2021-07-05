@@ -30,11 +30,11 @@ namespace AKYSTRATEJI.Model
         public virtual DbSet<Kullanicilar> Kullanicilars { get; set; }
         public virtual DbSet<KullanicilarBirimler> KullanicilarBirimlers { get; set; }
         public virtual DbSet<StAmaclar> StAmaclars { get; set; }
-        public virtual DbSet<StFaalİyet> StFaalİyets { get; set; }
-        public virtual DbSet<StFaalİyetler> StFaalİyetlers { get; set; }
+        public virtual DbSet<StFaaliyet> StFaalİyets { get; set; }
+        public virtual DbSet<StFaaliyetler> StFaalİyetlers { get; set; }
         public virtual DbSet<StHedefler> StHedeflers { get; set; }
         public virtual DbSet<StIsler> StIslers { get; set; }
-        public virtual DbSet<StIsturlerİ> StIsturlerİs { get; set; }
+        public virtual DbSet<StIsturleri> StIsturlerİs { get; set; }
         public virtual DbSet<StPerformanslar> StPerformanslars { get; set; }
         public virtual DbSet<StStratejiyili> StStratejiyilis { get; set; }
         public virtual DbSet<StYillikhedef> StYillikhedefs { get; set; }
@@ -384,7 +384,7 @@ namespace AKYSTRATEJI.Model
                 entity.Property(e => e.OlusturmaTarihi).HasColumnType("date");
             });
 
-            modelBuilder.Entity<StFaalİyet>(entity =>
+            modelBuilder.Entity<StFaaliyet>(entity =>
             {
                 entity.ToTable("ST_FAALİYET");
 
@@ -405,7 +405,7 @@ namespace AKYSTRATEJI.Model
                     .HasConstraintName("FK_ST_FAALİYET_ST_FAALİYETLER");
             });
 
-            modelBuilder.Entity<StFaalİyetler>(entity =>
+            modelBuilder.Entity<StFaaliyetler>(entity =>
             {
                 entity.ToTable("ST_FAALİYETLER");
 
@@ -498,7 +498,7 @@ namespace AKYSTRATEJI.Model
                     .HasConstraintName("FK_ST_ISLER_ST_ISTURLERİ");
             });
 
-            modelBuilder.Entity<StIsturlerİ>(entity =>
+            modelBuilder.Entity<StIsturleri>(entity =>
             {
                 entity.ToTable("ST_ISTURLERİ");
 

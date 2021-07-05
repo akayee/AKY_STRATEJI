@@ -5,29 +5,32 @@ using System.Collections.Generic;
 
 namespace AKYSTRATEJI.Model
 {
-    public partial class StFaalİyetler
+    public partial class StIsturleri
     {
-        public StFaalİyetler()
+        public StIsturleri()
         {
-            StFaalİyets = new HashSet<StFaalİyet>();
-            StratejiyiliFaaliyetlers = new HashSet<StratejiyiliFaaliyetler>();
+            StIslers = new HashSet<StIsler>();
+            StratejiyiliIsturleris = new HashSet<StratejiyiliIsturleri>();
         }
 
         public int Id { get; set; }
-        public string Aciklama { get; set; }
         public string Adi { get; set; }
+        public string Aciklama { get; set; }
         public int OlcuBirimi { get; set; }
         public int YillikHedefId { get; set; }
         public int PerformansId { get; set; }
         public int BirimId { get; set; }
+        public int? Maaliyet { get; set; }
         public DateTime OlusturmaTarihi { get; set; }
-        public int FaaliyetlerId { get; set; }
+        public int IsTurleriId { get; set; }
+        public bool Strateji { get; set; }
         public bool? Deleted { get; set; }
 
         public virtual BrBirimler Birim { get; set; }
         public virtual GnOlcubirimi OlcuBirimiNavigation { get; set; }
         public virtual StPerformanslar Performans { get; set; }
-        public virtual ICollection<StFaalİyet> StFaalİyets { get; set; }
-        public virtual ICollection<StratejiyiliFaaliyetler> StratejiyiliFaaliyetlers { get; set; }
+        public virtual StYillikhedef YillikHedef { get; set; }
+        public virtual ICollection<StIsler> StIslers { get; set; }
+        public virtual ICollection<StratejiyiliIsturleri> StratejiyiliIsturleris { get; set; }
     }
 }

@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 
 namespace BL.Abstract
 {
-    public interface KullaniciServis:IABBEntityServis<Kullanicilar>
+    public interface IKullaniciServis:IABBEntityServis<Kullanicilar>
     {
         VMKullanicilar KullaniciBilgileriniGetir();
         VMYetkilervYetkiGruplari YetkileriGetir();
+        VMKullanicilar KullaniciOlustur();
+        bool SifreDegistir();
     }
 }

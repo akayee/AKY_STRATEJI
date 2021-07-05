@@ -18,6 +18,6 @@ namespace AKYSTRATEJI.Model
         public int IslerId { get; set; }
         public bool? Deleted { get; set; }
 
-        public virtual StIsturlerİ IsTuru { get; set; }
+        public virtual StIsturleri IsTuru { get; set; }
     }
 }

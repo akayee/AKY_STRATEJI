@@ -26,14 +26,14 @@ namespace REPOSITORYCORE.MapOperations
             CreateMap<StHedefler, VMHedefler>();
             CreateMap<VMIsler, StIsler>();
             CreateMap<StIsler, VMIsler>();
-            CreateMap<VMIsturleri, StIsturlerİ>();
+            CreateMap<VMIsturleri, StIsturleri>();
             CreateMap<VMKullanicilar, Kullanicilar>();
             CreateMap<Kullanicilar, VMKullanicilar>();
             CreateMap<VMKullanicilarBirimler, KullanicilarBirimler>();
             CreateMap<KullanicilarBirimler, VMKullanicilarBirimler>();
-            CreateMap<VMMaliFaaliyet, StFaalİyet>();
-            CreateMap<StFaalİyet, VMMaliFaaliyet>();
-            CreateMap<VMMaliFaaliyetTurleri, StFaalİyetler>();
+            CreateMap<VMMaliFaaliyet, StFaaliyet>();
+            CreateMap<StFaaliyet, VMMaliFaaliyet>();
+            CreateMap<VMMaliFaaliyetTurleri, StFaaliyetler>();
             CreateMap<VMMevzuatlar, BrMevzuatlar>();
             CreateMap<BrMevzuatlar, BrMevzuatlar>();
             CreateMap<VMOlcuBirimi, GnOlcubirimi>();

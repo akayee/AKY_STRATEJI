@@ -9,8 +9,8 @@ namespace AKYSTRATEJI.Model
     {
         public StPerformanslar()
         {
-            StFaalİyetlers = new HashSet<StFaalİyetler>();
-            StIsturlerİs = new HashSet<StIsturlerİ>();
+            StFaalİyetlers = new HashSet<StFaaliyetler>();
+            StIsturlerİs = new HashSet<StIsturleri>();
             StratejiyiliPerformanslars = new HashSet<StratejiyiliPerformanslar>();
         }
 
@@ -22,8 +22,8 @@ namespace AKYSTRATEJI.Model
         public bool? Deleted { get; set; }
 
         public virtual StHedefler Hedefler { get; set; }
-        public virtual ICollection<StFaalİyetler> StFaalİyetlers { get; set; }
-        public virtual ICollection<StIsturlerİ> StIsturlerİs { get; set; }
+        public virtual ICollection<StFaaliyetler> StFaalİyetlers { get; set; }
+        public virtual ICollection<StIsturleri> StIsturlerİs { get; set; }
         public virtual ICollection<StratejiyiliPerformanslar> StratejiyiliPerformanslars { get; set; }
     }
 }
