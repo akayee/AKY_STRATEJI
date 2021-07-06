@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AKYSTRATEJI.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace AKYSTRATEJI.ViewModals
         public string Adi { get; set; }
         public DateTime OlusturmaTarihi { get; set; }
         public bool Deleted { get; set; }
-        public List<VMHedefler> Hedefler { get; set; }
+        public List<StHedefler> Hedefler { get; set; }
+        public StStratejiyili StratejiYili{ get; set; }
     }
 }

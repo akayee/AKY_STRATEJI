@@ -9,7 +9,7 @@ namespace AKYSTRATEJI.Model
     {
         public StYillikhedef()
         {
-            StIsturlerİs = new HashSet<StIsturleri>();
+            StIsturleris = new HashSet<StIsturleri>();
         }
 
         public int Id { get; set; }
@@ -22,6 +22,6 @@ namespace AKYSTRATEJI.Model
         public int FaaliyetId { get; set; }
         public bool? Deleted { get; set; }
 
-        public virtual ICollection<StIsturleri> StIsturlerİs { get; set; }
+        public virtual ICollection<StIsturleri> StIsturleris { get; set; }
     }
 }

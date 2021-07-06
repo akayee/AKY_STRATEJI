@@ -9,7 +9,7 @@ namespace AKYSTRATEJI.Model
     {
         public StFaaliyetler()
         {
-            StFaalİyets = new HashSet<StFaaliyet>();
+            StFaaliyets = new HashSet<StFaaliyet>();
             StratejiyiliFaaliyetlers = new HashSet<StratejiyiliFaaliyetler>();
         }
 
@@ -27,7 +27,7 @@ namespace AKYSTRATEJI.Model
         public virtual BrBirimler Birim { get; set; }
         public virtual GnOlcubirimi OlcuBirimiNavigation { get; set; }
         public virtual StPerformanslar Performans { get; set; }
-        public virtual ICollection<StFaaliyet> StFaalİyets { get; set; }
+        public virtual ICollection<StFaaliyet> StFaaliyets { get; set; }
         public virtual ICollection<StratejiyiliFaaliyetler> StratejiyiliFaaliyetlers { get; set; }
     }
 }

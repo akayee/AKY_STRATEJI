@@ -16,7 +16,7 @@ namespace WepApiAKY.Controllers
     public class PerformanslarController : ControllerBase
     {
         private readonly ILogger<PerformanslarController> _logger;
-        //Stratejik Amaclar işlemlerini yaptığımız servis
+        //Performanslar işlemlerini yaptığımız servis
         private readonly IHedeflerServices _hedefler;
         private readonly IPerformanslarServices _performanslar;
 
@@ -29,9 +29,9 @@ namespace WepApiAKY.Controllers
         [HttpGet]
         public JsonResult GetPerformans(int id)
         {
-            //Tek Hedef getirme.
+            //Tek Performans getirme.
             StPerformanslar performanslar = _performanslar.TekPerformansGetir(id);
-            //Hedefin bağlı olduğu amaç getirme.
+            //Performansın bağlı olduğu hedef getirme.
             StHedefler performansinHedefi = _hedefler.TekHedefGetir(performanslar.HedeflerId);
             //ViewModal Mapleme işlemi.
             var model = new VMPerformanslar()
@@ -49,7 +49,7 @@ namespace WepApiAKY.Controllers
         [HttpGet("GetListofPerformanslar")]
         public JsonResult PerformansListele()
         {
-            //Veritabanından StAmaclar tablosunun listesini almaişlemi.
+            //Veritabanından StPerformanslar tablosunun listesini almaişlemi.
             List<StPerformanslar> performanslar = _performanslar.PerformanslariListele();
             //View Model tipinde liste oluşturuluyor. Güvenlik Amaçlı
             List<VMPerformanslar> vmListe = new List<VMPerformanslar>();
@@ -72,7 +72,7 @@ namespace WepApiAKY.Controllers
         [HttpPost]
         public IActionResult YeniPerformansEkle(VMPerformanslar eklenecek)
         {
-            //VMAmaclar to StAmaclar mapleme işlemi
+            //VMPerformanslar to StPerformanslar mapleme işlemi
             var model = new StPerformanslar()
             {
                 Adi = eklenecek.Adi,

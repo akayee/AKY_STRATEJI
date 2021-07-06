@@ -30,11 +30,11 @@ namespace AKYSTRATEJI.Model
         public virtual DbSet<Kullanicilar> Kullanicilars { get; set; }
         public virtual DbSet<KullanicilarBirimler> KullanicilarBirimlers { get; set; }
         public virtual DbSet<StAmaclar> StAmaclars { get; set; }
-        public virtual DbSet<StFaaliyet> StFaalİyets { get; set; }
-        public virtual DbSet<StFaaliyetler> StFaalİyetlers { get; set; }
+        public virtual DbSet<StFaaliyet> StFaaliyets { get; set; }
+        public virtual DbSet<StFaaliyetler> StFaaliyetlers { get; set; }
         public virtual DbSet<StHedefler> StHedeflers { get; set; }
         public virtual DbSet<StIsler> StIslers { get; set; }
-        public virtual DbSet<StIsturleri> StIsturlerİs { get; set; }
+        public virtual DbSet<StIsturleri> StIsturleris { get; set; }
         public virtual DbSet<StPerformanslar> StPerformanslars { get; set; }
         public virtual DbSet<StStratejiyili> StStratejiyilis { get; set; }
         public virtual DbSet<StYillikhedef> StYillikhedefs { get; set; }
@@ -386,7 +386,7 @@ namespace AKYSTRATEJI.Model
 
             modelBuilder.Entity<StFaaliyet>(entity =>
             {
-                entity.ToTable("ST_FAALİYET");
+                entity.ToTable("ST_FAALIYET");
 
                 entity.Property(e => e.Id)
                     .ValueGeneratedNever()
@@ -399,7 +399,7 @@ namespace AKYSTRATEJI.Model
                 entity.Property(e => e.OlusturmaTarihi).HasColumnType("date");
 
                 entity.HasOne(d => d.Faaliyetler)
-                    .WithMany(p => p.StFaalİyets)
+                    .WithMany(p => p.StFaaliyets)
                     .HasForeignKey(d => d.FaaliyetlerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ST_FAALİYET_ST_FAALİYETLER");
@@ -407,7 +407,7 @@ namespace AKYSTRATEJI.Model
 
             modelBuilder.Entity<StFaaliyetler>(entity =>
             {
-                entity.ToTable("ST_FAALİYETLER");
+                entity.ToTable("ST_FAALIYETLER");
 
                 entity.Property(e => e.Id)
                     .ValueGeneratedNever()
@@ -430,19 +430,19 @@ namespace AKYSTRATEJI.Model
                 entity.Property(e => e.YillikHedefId).HasColumnName("YillikHedefID");
 
                 entity.HasOne(d => d.Birim)
-                    .WithMany(p => p.StFaalİyetlers)
+                    .WithMany(p => p.StFaaliyetlers)
                     .HasForeignKey(d => d.BirimId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ST_FAALİYETLER_BR_BIRIMLER");
 
                 entity.HasOne(d => d.OlcuBirimiNavigation)
-                    .WithMany(p => p.StFaalİyetlers)
+                    .WithMany(p => p.StFaaliyetlers)
                     .HasForeignKey(d => d.OlcuBirimi)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ST_FAALİYETLER_GN_OLCUBIRIMI");
 
                 entity.HasOne(d => d.Performans)
-                    .WithMany(p => p.StFaalİyetlers)
+                    .WithMany(p => p.StFaaliyetlers)
                     .HasForeignKey(d => d.PerformansId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ST_FAALİYETLER_ST_PERFORMANSLAR");
@@ -500,7 +500,7 @@ namespace AKYSTRATEJI.Model
 
             modelBuilder.Entity<StIsturleri>(entity =>
             {
-                entity.ToTable("ST_ISTURLERİ");
+                entity.ToTable("ST_ISTURLERI");
 
                 entity.Property(e => e.Id)
                     .ValueGeneratedNever()
@@ -523,25 +523,25 @@ namespace AKYSTRATEJI.Model
                 entity.Property(e => e.YillikHedefId).HasColumnName("YillikHedefID");
 
                 entity.HasOne(d => d.Birim)
-                    .WithMany(p => p.StIsturlerİs)
+                    .WithMany(p => p.StIsturleris)
                     .HasForeignKey(d => d.BirimId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ST_ISTURLERİ_BR_BIRIMLER");
 
                 entity.HasOne(d => d.OlcuBirimiNavigation)
-                    .WithMany(p => p.StIsturlerİs)
+                    .WithMany(p => p.StIsturleris)
                     .HasForeignKey(d => d.OlcuBirimi)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ST_ISTURLERİ_GN_OLCUBIRIMI");
 
                 entity.HasOne(d => d.Performans)
-                    .WithMany(p => p.StIsturlerİs)
+                    .WithMany(p => p.StIsturleris)
                     .HasForeignKey(d => d.PerformansId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ST_ISTURLERİ_ST_PERFORMANSLAR");
 
                 entity.HasOne(d => d.YillikHedef)
-                    .WithMany(p => p.StIsturlerİs)
+                    .WithMany(p => p.StIsturleris)
                     .HasForeignKey(d => d.YillikHedefId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ST_ISTURLERİ_ST_YILLIKHEDEF1");

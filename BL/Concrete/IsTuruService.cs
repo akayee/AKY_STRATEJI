@@ -55,7 +55,7 @@ namespace BL.Concrete
 
         public StIsturleri TekIsTuruGetir(int IsturuId)
         {
-            return Getir(isTuru => isTuru.Id == IsturuId && isTuru.Deleted != true);
+            return Getir(isTuru => isTuru.Id == IsturuId && isTuru.Deleted != true,isturu=>isturu.Performans);
         }
 
         public override void Validate(StIsturleri entity)

@@ -9,15 +9,15 @@ namespace AKYSTRATEJI.Model
     {
         public GnOlcubirimi()
         {
-            StFaalİyetlers = new HashSet<StFaaliyetler>();
-            StIsturlerİs = new HashSet<StIsturleri>();
+            StFaaliyetlers = new HashSet<StFaaliyetler>();
+            StIsturleris = new HashSet<StIsturleri>();
         }
 
         public int Id { get; set; }
         public string Tanim { get; set; }
         public bool? Deleted { get; set; }
 
-        public virtual ICollection<StFaaliyetler> StFaalİyetlers { get; set; }
-        public virtual ICollection<StIsturleri> StIsturlerİs { get; set; }
+        public virtual ICollection<StFaaliyetler> StFaaliyetlers { get; set; }
+        public virtual ICollection<StIsturleri> StIsturleris { get; set; }
     }
 }
