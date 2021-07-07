@@ -33,6 +33,12 @@ namespace WepApiAKY.Controllers
             StPerformanslar performanslar = _performanslar.TekPerformansGetir(id);
             //Performansın bağlı olduğu hedef getirme.
             StHedefler performansinHedefi = _hedefler.TekHedefGetir(performanslar.HedeflerId);
+            VMHedefler vmhedef = new VMHedefler()
+            {
+                Tanim = performansinHedefi.Tanim,
+                id = performansinHedefi.Id,
+                Deleted= (bool)performansinHedefi.Deleted
+            };
             //ViewModal Mapleme işlemi.
             var model = new VMPerformanslar()
             {
@@ -41,7 +47,7 @@ namespace WepApiAKY.Controllers
                 OlusturmaTarihi = performanslar.OlusturmaTarihi,
                 Deleted = (bool)performanslar.Deleted,
                 HedeflerId = performanslar.HedeflerId,
-                Hedefler = performansinHedefi
+                Hedefler = vmhedef
             };
 
             return new JsonResult(model);
@@ -53,15 +59,24 @@ namespace WepApiAKY.Controllers
             List<StPerformanslar> performanslar = _performanslar.PerformanslariListele();
             //View Model tipinde liste oluşturuluyor. Güvenlik Amaçlı
             List<VMPerformanslar> vmListe = new List<VMPerformanslar>();
+
             //İlgili Listeler birbirlerine mapleniyor ve relationlar çekilerek ekleniyor.
             foreach (StPerformanslar performans in performanslar)
             {
+                StHedefler performansinHedefi = _hedefler.Getir(hedef => hedef.Id == performans.HedeflerId);
+                VMHedefler vmhedef = new VMHedefler()
+                {
+                    Tanim = performansinHedefi.Tanim,
+                    id = performansinHedefi.Id,
+                    Deleted = (bool)performansinHedefi.Deleted
+                };
+
                 vmListe.Add(new VMPerformanslar()
                 {
                     id = performans.Id,
                     Adi = performans.Adi,
                     HedeflerId = performans.HedeflerId,
-                    Hedefler = _hedefler.Getir(hedef => hedef.Id == performans.HedeflerId),
+                    Hedefler = vmhedef,
                     Deleted = (bool)performans.Deleted,
                     OlusturmaTarihi = performans.OlusturmaTarihi
                 });

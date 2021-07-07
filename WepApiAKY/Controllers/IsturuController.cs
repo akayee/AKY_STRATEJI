@@ -33,6 +33,12 @@ namespace WepApiAKY.Controllers
             StIsturleri stIsturleri = _isturleri.TekIsTuruGetir(id);
             //Isturunun bağlı olduğu performans getirme.
             StPerformanslar isturuPerformansi = stIsturleri.Performans;
+            VMPerformanslar vmperformans = new VMPerformanslar()
+            {
+                Adi=isturuPerformansi.Adi,
+                id=isturuPerformansi.Id,
+                Deleted= (bool)isturuPerformansi.Deleted
+            };
             //ViewModal Mapleme işlemi.
             var model = new VMIsturleri()
             {
@@ -41,7 +47,7 @@ namespace WepApiAKY.Controllers
                 OlusturmaTarihi = stIsturleri.OlusturmaTarihi,
                 Deleted = (bool)stIsturleri.Deleted,
                 PerformansId = stIsturleri.PerformansId,
-                Performans = isturuPerformansi,
+                Performans = vmperformans,
                 
             };
 
@@ -57,18 +63,35 @@ namespace WepApiAKY.Controllers
             //İlgili Listeler birbirlerine mapleniyor ve relationlar çekilerek ekleniyor.
             foreach (StIsturleri isturu in isTurleri)
             {
+                StPerformanslar isturuPerformansi = _performanslar.Getir(performans => performans.Id == isturu.PerformansId);
+                VMPerformanslar vmperformans = new VMPerformanslar()
+                {
+                    Adi = isturuPerformansi.Adi,
+                    id = isturuPerformansi.Id,
+                    Deleted = (bool)isturuPerformansi.Deleted
+                };
                 vmListe.Add(new VMIsturleri()
                 {
                     id = isturu.Id,
                     Adi = isturu.Adi,
                     PerformansId = isturu.PerformansId,
-                    Performans = _performanslar.Getir(performans => performans.Id == isturu.PerformansId),
+                    Performans = vmperformans,
                     Deleted = (bool)isturu.Deleted,
                     OlusturmaTarihi = isturu.OlusturmaTarihi
                 });
             }
 
             return new JsonResult(isTurleri);
+        }
+        [HttpPost]
+        public IActionResult YeniIsTuruEkle(VMIsturleri eklenecek)
+        {
+            //VMIsturleri to StIsturleri
+            var model = new StIsturleri()
+            {
+                Adi= eklenecek.Adi,
+
+            };
         }
 
 

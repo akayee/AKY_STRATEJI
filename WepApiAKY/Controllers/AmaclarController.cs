@@ -32,7 +32,6 @@ namespace WepApiAKY.Controllers
             
             //Tek Amac getirme.
             StAmaclar amaclar = _amaclar.AmacGetir(id);
-            List<StHedefler> hedef = amaclar.StHedeflers.ToList();
             System.Diagnostics.Debug.WriteLine(amaclar.Adi);
             System.Diagnostics.Debug.WriteLine(amaclar.Id);
             System.Diagnostics.Debug.WriteLine(amaclar.OlusturmaTarihi);
@@ -42,8 +41,7 @@ namespace WepApiAKY.Controllers
                 id = amaclar.Id,
                 Adi = amaclar.Adi,
                 OlusturmaTarihi = amaclar.OlusturmaTarihi,
-                Deleted= (bool)amaclar.Deleted,
-                Hedefler = hedef
+                Deleted= (bool)amaclar.Deleted
            };
             
 

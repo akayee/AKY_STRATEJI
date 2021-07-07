@@ -34,6 +34,11 @@ namespace WepApiAKY.Controllers
             StHedefler hedefler = _hedefler.TekHedefGetir(id);
             //Hedefin bağlı olduğu amaç getirme.
             StAmaclar hedefinamaci = _amaclar.AmacGetir(hedefler.AmaclarId);
+            VMAmaclar vmamac = new VMAmaclar()
+            {
+                Adi=hedefinamaci.Adi,
+                id=hedefinamaci.Id
+            };
             //ViewModal Mapleme işlemi.
             var model = new VMHedefler()
             {
@@ -42,7 +47,7 @@ namespace WepApiAKY.Controllers
                 OlusturmaTarihi = hedefler.OlusturmaTarihi,
                 Deleted = (bool)hedefler.Deleted,
                 AmaclarId = hedefler.AmaclarId,
-                Amac = hedefinamaci
+                Amac = vmamac
             };
 
             return new JsonResult(model);
@@ -56,14 +61,21 @@ namespace WepApiAKY.Controllers
             //View Model tipinde liste oluşturuluyor. Güvenlik Amaçlı
             List<VMHedefler> vmListe = new List<VMHedefler>();
             //İlgili Listeler birbirlerine mapleniyor ve relationlar çekilerek ekleniyor.
+
             foreach(StHedefler hedef in hedefler)
             {
+                StAmaclar hedefinamaci = _amaclar.AmacGetir(hedef.AmaclarId);
+                VMAmaclar vmamac = new VMAmaclar()
+                {
+                    Adi = hedefinamaci.Adi,
+                    id = hedefinamaci.Id
+                };
                 vmListe.Add(new VMHedefler()
                 {
                     id = hedef.Id,
                     Tanim=hedef.Tanim,
                     AmaclarId=hedef.AmaclarId,
-                    Amac=_amaclar.Getir(amac=> amac.Id==hedef.AmaclarId),
+                    Amac= vmamac,
                     Deleted= (bool)hedef.Deleted,
                     OlusturmaTarihi=hedef.OlusturmaTarihi
                 });

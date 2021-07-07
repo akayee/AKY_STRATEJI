@@ -13,6 +13,6 @@ namespace AKYSTRATEJI.ViewModals
         public int AmaclarId { get; set; }
         public bool Deleted { get; set; }
         public DateTime OlusturmaTarihi { get; set; }
-        public StAmaclar Amac { get; set; }
+        public VMAmaclar Amac { get; set; }
     }
 }

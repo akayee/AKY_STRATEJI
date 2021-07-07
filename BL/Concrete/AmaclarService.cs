@@ -19,7 +19,7 @@ namespace BL.Concrete
         public StAmaclar AmacGetir(int AmacId)
         {
 
-            return Getir(amac => amac.Id == AmacId && amac.Deleted != true,amac=>amac.StHedeflers);
+            return Getir(amac => amac.Id == AmacId && amac.Deleted != true);
         }
 
         public List<StAmaclar> Listele()

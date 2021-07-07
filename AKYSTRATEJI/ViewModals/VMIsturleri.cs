@@ -17,12 +17,12 @@ namespace AKYSTRATEJI.ViewModals
         public int BirimId { get; set; }
         public int? Maaliyet { get; set; }
         public DateTime OlusturmaTarihi { get; set; }
-        public BrBirimler Birim { get; set; }
-        public List<StIsler> Isler { get; set; }
-        public StPerformanslar Performans { get; set; }
-        public GnOlcubirimi OlcuBirimi { get; set; }
-        public StStratejiyili StratejiYili { get; set; }
-        public StYillikhedef YillikHedef { get; set; }
+        public VMBirimler Birim { get; set; }
+        public List<VMIsler> Isler { get; set; }
+        public VMPerformanslar Performans { get; set; }
+        public VMOlcuBirimi OlcuBirimi { get; set; }
+        public VMStratejiYili StratejiYili { get; set; }
+        public VMYillikHedefler YillikHedef { get; set; }
 
     }
 }
