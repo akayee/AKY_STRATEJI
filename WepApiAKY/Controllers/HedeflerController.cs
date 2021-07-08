@@ -95,6 +95,7 @@ namespace WepApiAKY.Controllers
                 AmaclarId=eklenecek.AmaclarId,
                 Amaclar=_amaclar.Getir(amac=> amac.Id==eklenecek.AmaclarId),
                 Deleted=false
+                
             };
             try
             {
@@ -124,7 +125,7 @@ namespace WepApiAKY.Controllers
             try
             {
                 _hedefler.Guncelle(model);
-                return new ABBJsonResponse("Stratejik Amaç Başarıyla Güncellendi");
+                return new ABBJsonResponse("Stratejik Hedef Başarıyla Güncellendi");
             }
             catch (Exception e)
             {
@@ -149,7 +150,7 @@ namespace WepApiAKY.Controllers
             try
             {
                 _hedefler.Guncelle(model);
-                return new ABBJsonResponse("Stratejik Amaç Başarıyla Silindi");
+                return new ABBJsonResponse("Stratejik Hedef Başarıyla Silindi");
             }
             catch (Exception e)
             {

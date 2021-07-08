@@ -100,7 +100,7 @@ namespace WepApiAKY.Controllers
             {
                 //Veri tabanına ekleme işlemi.
                 _performanslar.Ekle(model);
-                return new ABBJsonResponse("Stratejik Hedef Başarıyla Eklendi");
+                return new ABBJsonResponse("Stratejik Performans Başarıyla Eklendi");
             }
             catch (Exception e)
             {
@@ -123,7 +123,7 @@ namespace WepApiAKY.Controllers
             try
             {
                 _performanslar.Guncelle(model);
-                return new ABBJsonResponse("Stratejik Amaç Başarıyla Güncellendi");
+                return new ABBJsonResponse("Stratejik Performans Başarıyla Güncellendi");
             }
             catch (Exception e)
             {
@@ -146,7 +146,7 @@ namespace WepApiAKY.Controllers
             try
             {
                 _performanslar.Guncelle(model);
-                return new ABBJsonResponse("Stratejik Amaç Başarıyla Silindi");
+                return new ABBJsonResponse("Stratejik Performans Başarıyla Silindi");
             }
             catch (Exception e)
             {

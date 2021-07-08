@@ -1,4 +1,5 @@
-﻿using AKYSTRATEJI.Model;
+﻿using ABB.WebMvcUI.Models;
+using AKYSTRATEJI.Model;
 using AKYSTRATEJI.ViewModals;
 using BL.Abstract;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,7 @@ namespace WepApiAKY.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class IsturuController:ControllerBase
+    public class IsturuController : ControllerBase
     {
         private readonly ILogger<IsturuController> _logger;
         //Stratejik Amaclar işlemlerini yaptığımız servis
@@ -29,15 +30,15 @@ namespace WepApiAKY.Controllers
         public JsonResult GetIsturu(int id)
         {
             //Tek Isturu getirme.
-            
+
             StIsturleri stIsturleri = _isturleri.TekIsTuruGetir(id);
             //Isturunun bağlı olduğu performans getirme.
             StPerformanslar isturuPerformansi = stIsturleri.Performans;
             VMPerformanslar vmperformans = new VMPerformanslar()
             {
-                Adi=isturuPerformansi.Adi,
-                id=isturuPerformansi.Id,
-                Deleted= (bool)isturuPerformansi.Deleted
+                Adi = isturuPerformansi.Adi,
+                id = isturuPerformansi.Id,
+                Deleted = (bool)isturuPerformansi.Deleted
             };
             //ViewModal Mapleme işlemi.
             var model = new VMIsturleri()
@@ -48,7 +49,7 @@ namespace WepApiAKY.Controllers
                 Deleted = (bool)stIsturleri.Deleted,
                 PerformansId = stIsturleri.PerformansId,
                 Performans = vmperformans,
-                
+
             };
 
             return new JsonResult(model);
@@ -89,8 +90,61 @@ namespace WepApiAKY.Controllers
             //VMIsturleri to StIsturleri
             var model = new StIsturleri()
             {
-                Adi= eklenecek.Adi,
-
+                Adi = eklenecek.Adi,
+                Aciklama = eklenecek.Aciklama,
+                YillikHedefId = eklenecek.YillikHedefId,
+                PerformansId = eklenecek.PerformansId,
+                Deleted = eklenecek.Deleted,
+                Maaliyet = eklenecek.Maaliyet,
+                OlusturmaTarihi = DateTime.Now
+            };
+            try
+            {
+                _isturleri.Ekle(model);
+                return new ABBJsonResponse("Stratejik Isturu Başarıyla Eklendi");
+            }
+            catch (Exception e)
+            {
+                return new ABBErrorJsonResponse(e.Message);
+            }
+        }
+        [HttpPut]
+        public IActionResult IsturuGunceller(VMIsturleri guncellenecek)
+        {
+            var model = new StIsturleri()
+            {
+                Adi = guncellenecek.Adi,
+                Aciklama = guncellenecek.Aciklama,
+                YillikHedefId = guncellenecek.YillikHedefId,
+                PerformansId = guncellenecek.PerformansId,
+                Deleted = guncellenecek.Deleted,
+                Maaliyet = guncellenecek.Maaliyet,
+                OlusturmaTarihi = guncellenecek.OlusturmaTarihi,
+                BirimId=guncellenecek.BirimId
+            };
+            try
+            {
+                _isturleri.Guncelle(model);
+                return new ABBJsonResponse("Stratejik Isturu Başarıyla Güncellendi");
+            }
+            catch (Exception e)
+            {
+                return new ABBErrorJsonResponse(e.Message);
+            }
+        }
+        [HttpPut("Delete")]
+        public IActionResult IsturuSil(VMIsturleri silinecek)
+        {
+            StIsturleri model =_isturleri.Getir(isturu => isturu.Id == silinecek.id);
+            model.Deleted = true;
+            try
+            {
+                _isturleri.Guncelle(model);
+                return new ABBJsonResponse("Stratejik Isturu Başarıyla Silindi");
+            }
+            catch(Exception e)
+            {
+                return new ABBErrorJsonResponse(e.Message);
             };
         }
 
