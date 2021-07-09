@@ -16,7 +16,7 @@ namespace WepApiAKY.Controllers
     public class IsturuController : ControllerBase
     {
         private readonly ILogger<IsturuController> _logger;
-        //Stratejik Amaclar işlemlerini yaptığımız servis
+        //Stratejik Isler işlemlerini yaptığımız servis
         private readonly IIsturleriServices _isturleri;
         private readonly IPerformanslarServices _performanslar;
         public IsturuController(ILogger<IsturuController> logger, IIsturleriServices isturleri, IPerformanslarServices performanslar)
@@ -82,11 +82,13 @@ namespace WepApiAKY.Controllers
                 });
             }
 
-            return new JsonResult(isTurleri);
+            return new JsonResult(vmListe);
         }
         [HttpPost]
         public IActionResult YeniIsTuruEkle(VMIsturleri eklenecek)
         {
+
+            //Yeni veri id si service tarafından atanmaktadır.
             //VMIsturleri to StIsturleri
             var model = new StIsturleri()
             {

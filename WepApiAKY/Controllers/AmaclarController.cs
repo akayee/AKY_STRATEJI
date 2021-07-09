@@ -58,6 +58,8 @@ namespace WepApiAKY.Controllers
         [HttpPost]
         public IActionResult Ekle(VMAmaclar eklenecek)
         {
+
+            //Yeni veri id si service tarafından atanmaktadır.
             //VMAmaclar to StAmaclar mapleme işlemi
             var model = new StAmaclar()
             {

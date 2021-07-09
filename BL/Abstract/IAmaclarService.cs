@@ -12,9 +12,9 @@ namespace BL.Abstract
     {
         StAmaclar AmacGetir(int AmacId);
         List<StAmaclar> Listele();
-        bool Ekle(StAmaclar amac);
+        bool AmacEkle(StAmaclar amac);
         bool Sil(StAmaclar amac);
-        bool Guncelle(StAmaclar amac);
+        bool AmacGuncelle(StAmaclar amac);
 
     }
 }

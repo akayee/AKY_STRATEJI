@@ -87,6 +87,8 @@ namespace WepApiAKY.Controllers
         [HttpPost]
         public IActionResult YeniHedefEkle(VMHedefler eklenecek)
         {
+
+            //Yeni veri id si service tarafından atanmaktadır.
             //VMAmaclar to StAmaclar mapleme işlemi
             var model = new StHedefler()
             {

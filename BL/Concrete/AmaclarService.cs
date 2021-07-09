@@ -49,7 +49,7 @@ namespace BL.Concrete
             
         }
 
-        bool IAmaclarService.Ekle(StAmaclar amac)
+        public bool AmacEkle(StAmaclar amac)
         {
             int counted = Listele().Count + 1;
             amac.AmacId = counted;
@@ -71,7 +71,7 @@ namespace BL.Concrete
 
         }
 
-        bool IAmaclarService.Guncelle(StAmaclar amac)
+        public bool AmacGuncelle(StAmaclar amac)
         {
             try
             {

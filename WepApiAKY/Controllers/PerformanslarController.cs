@@ -87,6 +87,8 @@ namespace WepApiAKY.Controllers
         [HttpPost]
         public IActionResult YeniPerformansEkle(VMPerformanslar eklenecek)
         {
+
+            //Yeni veri id si service tarafından atanmaktadır.
             //VMPerformanslar to StPerformanslar mapleme işlemi
             var model = new StPerformanslar()
             {
