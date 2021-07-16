@@ -15,8 +15,6 @@ namespace AKYSTRATEJI.ViewModals
         public List<VMHedefler> Hedefler { get; set; }
         public List<VMIsturleri> Isturleri { get; set; }
         public List<VMIsler> Isler { get; set; }
-        public List<VMMaliFaaliyetTurleri> MaliFaaliyetTurleri { get; set; }
-        public List<VMMaliFaaliyet> MaaliFaliyetler { get; set; }
         public List<VMFaaliyetTurleri> VMFaaliyetTurleri { get; set; }
         public List<VMFaaliyet> Faaliyetler { get; set; }
         public VMBirimler UstBirim { get; set; }

@@ -21,7 +21,6 @@ namespace AKYSTRATEJI.ViewModals
         public List<VMYetkiGorevTanimlari> YetkiGorevTanimlari { get; set; }
         public List<VMFaaliyetTurleri> FaaliyetTurleri { get; set; }
         public List<VMKullanicilar> Kullanicilar { get; set; }
-        public List<VMMaliFaaliyetTurleri> MaliFaaliyetTurleri { get; set; }
         public List<VMIsturleri> Isturleri { get; set; }
 
 

@@ -40,6 +40,24 @@ namespace WepApiAKY
             services.AddScoped<IHedeflerServices, HedeflerServices>();
             services.AddScoped<IPerformanslarServices, PerformansService>();
             services.AddScoped<IIsturleriServices, IsTuruService>();
+            services.AddScoped<IAraclarServices, AraclarService>();
+            services.AddScoped<IBirimServis, BirimlerService>();
+            services.AddScoped<IBirimTipleriServices, BirimTipiService>();
+            services.AddScoped<IDonanimServices, DonanimService>();
+            services.AddScoped<IFaaliyetServices, FaaliyetService>();
+            services.AddScoped<IFizikselYapilarServices, FizikselYapilarService>();
+            services.AddScoped<IIslerServices, IsService>();
+            services.AddScoped<IKullaniciServices, KullaniciService>();
+            services.AddScoped<IKullaniciBirimlerServices, KullaniciBirimiService>();
+            services.AddScoped<IMervzuatlarServices, MevzuatlarService>();
+            services.AddScoped<IOlcuBirimiServices, OlcuBirimiService>();
+            services.AddScoped<IPersonellerServices, PersonelService>();
+            services.AddScoped<IStratejiYiliServices,StratejiYiliService >();
+            services.AddScoped<IYazilimlarServices, YazilimService>();
+            services.AddScoped<IYetkiGorevTanimlariServices, YetkiGorevTanimService>();
+            services.AddScoped<IYetkiGruplariServices, YetkiGruplariService>();
+            services.AddScoped<IYetkilerServices, YetkiService>();
+            services.AddScoped<IYillikHedefServices, YillikHedefService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

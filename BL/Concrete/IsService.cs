@@ -34,7 +34,7 @@ namespace BL.Concrete
             }
         }
         //İslerin listelenme işlemi
-        public List<StIsler> IsleriListele(Expression<Func<StIsler, bool>> filter = null, params Expression<Func<StIsturleri, object>>[] includeProperties)
+        public List<StIsler> IsleriListele(Expression<Func<StIsler, bool>> filter = null, params Expression<Func<StIsler, object>>[] includeProperties)
         {
             try
             {
@@ -47,6 +47,9 @@ namespace BL.Concrete
             }
             
         }
+
+        
+
         //İşlerin silinme işlemi
         public bool IsSil(StIsler isler)
         {

@@ -31,9 +31,6 @@ namespace REPOSITORYCORE.MapOperations
             CreateMap<Kullanicilar, VMKullanicilar>();
             CreateMap<VMKullanicilarBirimler, KullanicilarBirimler>();
             CreateMap<KullanicilarBirimler, VMKullanicilarBirimler>();
-            CreateMap<VMMaliFaaliyet, StFaaliyet>();
-            CreateMap<StFaaliyet, VMMaliFaaliyet>();
-            CreateMap<VMMaliFaaliyetTurleri, StFaaliyetler>();
             CreateMap<VMMevzuatlar, BrMevzuatlar>();
             CreateMap<BrMevzuatlar, BrMevzuatlar>();
             CreateMap<VMOlcuBirimi, GnOlcubirimi>();
