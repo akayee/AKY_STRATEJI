@@ -11,6 +11,7 @@ namespace AKYSTRATEJI.ViewModals
         public string Adi { get; set; }
         public int UstBirimId { get; set; }
         public bool Deleted { get; set; }
+        public int BirimTipiId { get; set; }
         public DateTime OlusturmaTarihi { get; set; }
         public List<VMAraclar> Araclar { get; set; }
         public List<VMDonanimlar> Donanimlar { get; set; }

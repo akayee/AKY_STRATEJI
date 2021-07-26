@@ -435,6 +435,11 @@ namespace AKYSTRATEJI.Model
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ST_FAALİYETLER_BR_BIRIMLER");
 
+                entity.HasOne(d => d.IsTuru)
+                    .WithMany(p => p.StFaaliyetlers)
+                    .HasForeignKey(d => d.IsTuruId)
+                    .HasConstraintName("FK_ST_FAALIYETLER_ST_ISTURLERI");
+
                 entity.HasOne(d => d.OlcuBirimiNavigation)
                     .WithMany(p => p.StFaaliyetlers)
                     .HasForeignKey(d => d.OlcuBirimi)
@@ -446,6 +451,11 @@ namespace AKYSTRATEJI.Model
                     .HasForeignKey(d => d.PerformansId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ST_FAALİYETLER_ST_PERFORMANSLAR");
+
+                entity.HasOne(d => d.YillikHedef)
+                    .WithMany(p => p.StFaaliyetlers)
+                    .HasForeignKey(d => d.YillikHedefId)
+                    .HasConstraintName("FK_ST_FAALIYETLER_ST_YILLIKHEDEF");
             });
 
             modelBuilder.Entity<StHedefler>(entity =>
@@ -527,6 +537,11 @@ namespace AKYSTRATEJI.Model
                     .HasForeignKey(d => d.BirimId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ST_ISTURLERİ_BR_BIRIMLER");
+
+                entity.HasOne(d => d.Faaliyet)
+                    .WithMany(p => p.StIsturleris)
+                    .HasForeignKey(d => d.FaaliyetId)
+                    .HasConstraintName("FK_ST_ISTURLERI_ST_FAALIYETLER");
 
                 entity.HasOne(d => d.OlcuBirimiNavigation)
                     .WithMany(p => p.StIsturleris)

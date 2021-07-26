@@ -44,7 +44,7 @@ namespace BL.Concrete
             {
 
                 isTuru.Deleted = true;
-                Guncelle(isTuru);
+                base.Guncelle(isTuru);
                 throw new NotImplementedException("Kayıt silme başarılı");
             }
             catch (Exception e)

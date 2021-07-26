@@ -9,6 +9,7 @@ namespace AKYSTRATEJI.Model
     {
         public StIsturleri()
         {
+            StFaaliyetlers = new HashSet<StFaaliyetler>();
             StIslers = new HashSet<StIsler>();
             StratejiyiliIsturleris = new HashSet<StratejiyiliIsturleri>();
         }
@@ -25,11 +26,14 @@ namespace AKYSTRATEJI.Model
         public int IsTurleriId { get; set; }
         public bool Strateji { get; set; }
         public bool? Deleted { get; set; }
+        public int? FaaliyetId { get; set; }
 
         public virtual BrBirimler Birim { get; set; }
+        public virtual StFaaliyetler Faaliyet { get; set; }
         public virtual GnOlcubirimi OlcuBirimiNavigation { get; set; }
         public virtual StPerformanslar Performans { get; set; }
         public virtual StYillikhedef YillikHedef { get; set; }
+        public virtual ICollection<StFaaliyetler> StFaaliyetlers { get; set; }
         public virtual ICollection<StIsler> StIslers { get; set; }
         public virtual ICollection<StratejiyiliIsturleri> StratejiyiliIsturleris { get; set; }
     }

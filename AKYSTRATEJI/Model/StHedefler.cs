@@ -23,10 +23,5 @@ namespace AKYSTRATEJI.Model
         public virtual StAmaclar Amaclar { get; set; }
         public virtual ICollection<StPerformanslar> StPerformanslars { get; set; }
         public virtual ICollection<StratejiyiliHedefler> StratejiyiliHedeflers { get; set; }
-
-        public static implicit operator List<object>(StHedefler v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
