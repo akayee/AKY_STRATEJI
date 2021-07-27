@@ -44,7 +44,7 @@ namespace WepApiAKY.Controllers
             _birimtipleri = birimTipleri;
         }
 
-        [HttpGet]
+        [HttpGet("GetAnIs")]
         public JsonResult GetIs(int id)
         {
             //Tek Is getirme.
@@ -110,8 +110,8 @@ namespace WepApiAKY.Controllers
 
             return new JsonResult(vmListe);
         }
-        [HttpPost]
-        public IActionResult YeniIsTuruEkle(VMIsler eklenecek)
+        [HttpPost("AddNewIs")]
+        public IActionResult YeniIsEkle(VMIsler eklenecek)
         {
 
             //Yeni veri id si service tarafından atanmaktadır.
@@ -137,8 +137,8 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut]
-        public IActionResult IsturuGunceller(VMIsler guncellenecek)
+        [HttpPut("UpdateAnIs")]
+        public IActionResult IsGunceller(VMIsler guncellenecek)
         {
             var model = new StIsler()
             {
@@ -161,8 +161,8 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("Delete")]
-        public IActionResult IsturuSil(VMIsler silinecek)
+        [HttpPut("DeleteAnIs")]
+        public IActionResult IsSil(VMIsler silinecek)
         {
             StIsler model = _isler.Getir(isturu => isturu.Id == silinecek.id);
             model.Deleted = true;

@@ -23,7 +23,7 @@ namespace WepApiAKY.Controllers
             _logger = logger;
             _birim = birim;
         }
-        [HttpGet]
+        [HttpGet("GetaBirim")]
         public JsonResult GetBirim(int id)
         {
             //Tek Birim getirme.
@@ -82,7 +82,7 @@ namespace WepApiAKY.Controllers
             }
             return new JsonResult(vmListe);
         }
-        [HttpPost]
+        [HttpPost("AddNewBirim")]
         public IActionResult YeniBirimEkle(VMBirimler eklenecek)
         {
 
@@ -116,7 +116,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut]
+        [HttpPut("UpdateaBirim")]
         public IActionResult BirimGuncelle(VMBirimler guncellenecek)
         {
             var model = new BrBirimler()
@@ -147,7 +147,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("Delete")]
+        [HttpPut("DeleteaBirim")]
         public IActionResult BirimSil(VMBirimler silinecek)
         {
             BrBirimler model = _birim.Getir(birim => birim.Id == silinecek.id);

@@ -24,7 +24,7 @@ namespace WepApiAKY.Controllers
             _logger = logger;
             _donanimlar = donanimlar;
         }
-        [HttpGet]
+        [HttpGet("GetaDonanim")]
         public JsonResult GetDonanim(int id)
         {
             //Tek Arac getirme.
@@ -68,7 +68,7 @@ namespace WepApiAKY.Controllers
             }
             return new JsonResult(vmListe);
         }
-        [HttpPost]
+        [HttpPost("AddNewDonanim")]
         public IActionResult YeniDonanimEkle(VMDonanimlar eklenecek)
         {
             //Yeni veri id si service tarafından atanmaktadır.
@@ -92,7 +92,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut]
+        [HttpPut("UpdateaDonanim")]
         public IActionResult DonanimGuncelle(VMDonanimlar guncellenecek)
         {
             var model = new BrDonanimlar()
@@ -114,7 +114,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("Delete")]
+        [HttpPut("DeleteaDonanim")]
         public IActionResult DonanimSil(VMDonanimlar silinecek)
         {
             BrDonanimlar model = _donanimlar.Getir(donanim => donanim.Id == silinecek.id);

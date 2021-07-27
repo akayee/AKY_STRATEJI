@@ -14,6 +14,7 @@ namespace AKYSTRATEJI.ViewModals
         public int? Maaliyet { get; set; }
         public DateTime OlusturmaTarihi { get; set; }
         public bool Deleted { get; set; }
+        public int IsturleriId { get; set; }
         public VMBirimler Birim { get; set; }
         public VMOlcuBirimi OlcuBirimi { get; set; }
         public List<VMFaaliyet> Faaliyets { get; set; }

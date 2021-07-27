@@ -24,7 +24,7 @@ namespace WepApiAKY.Controllers
             _logger = logger;
             _birimtipleri = birimtipleri;
         }
-        [HttpGet]
+        [HttpGet("GetaBirimTipi")]
         public JsonResult GetBirimTipi(int id)
         {
             //Tek Arac getirme.
@@ -61,7 +61,7 @@ namespace WepApiAKY.Controllers
             }
             return new JsonResult(vmListe);
         }
-        [HttpPost]
+        [HttpPost("AddNewBirimTipi")]
         public IActionResult YeniBirimTipiEkle(VMBirimTipleri eklenecek)
         {
             //Yeni veri id si service tarafından atanmaktadır.
@@ -82,7 +82,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut]
+        [HttpPut("UpdateaBirimTipi")]
         public IActionResult BirimTipiGuncelle(VMBirimTipleri guncellenecek)
         {
             var model = new BrBirimtipleri()
@@ -101,7 +101,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("Delete")]
+        [HttpPut("DeleteaBirimTipi")]
         public IActionResult BirimTipiSil(VMBirimTipleri silinecek)
         {
             BrBirimtipleri model = _birimtipleri.Getir(birimtipi => birimtipi.Id == silinecek.Id);

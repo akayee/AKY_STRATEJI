@@ -26,7 +26,7 @@ namespace WepApiAKY.Controllers
             _amaclar = amaclar;
         }
 
-        [HttpGet]
+        [HttpGet("GetAmac")]
         public JsonResult GetAmaclar(int id)
         {
             
@@ -47,7 +47,7 @@ namespace WepApiAKY.Controllers
 
             return new JsonResult(model);
         }
-        [HttpGet("GetAll")]
+        [HttpGet("GetListofAmaclar")]
         public JsonResult AmacListe()
         {
             //Veritabanından StAmaclar tablosunun listesini almaişlemi.
@@ -55,7 +55,7 @@ namespace WepApiAKY.Controllers
 
             return new JsonResult(amaclar);
         }
-        [HttpPost]
+        [HttpPost("AddNewAmac")]
         public IActionResult Ekle(VMAmaclar eklenecek)
         {
 
@@ -77,7 +77,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut]
+        [HttpPut("UpdateAnAmac")]
         public IActionResult AmacGuncelle(VMAmaclar guncellenecek)
         {
             
@@ -99,7 +99,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("Delete")]
+        [HttpPut("DeleteAnAmac")]
         public IActionResult AmacDelete(VMAmaclar guncellenecek)
         {
 

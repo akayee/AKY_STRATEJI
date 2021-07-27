@@ -26,7 +26,7 @@ namespace WepApiAKY.Controllers
             _performanslar = performanslar;
         }
 
-        [HttpGet]
+        [HttpGet("GetIsTuru")]
         public JsonResult GetIsturu(int id)
         {
             //Tek Isturu getirme.
@@ -49,6 +49,7 @@ namespace WepApiAKY.Controllers
                 Deleted = (bool)stIsturleri.Deleted,
                 PerformansId = stIsturleri.PerformansId,
                 Performans = vmperformans,
+                FaaliyetId= (int)stIsturleri.FaaliyetId
 
             };
 
@@ -78,13 +79,14 @@ namespace WepApiAKY.Controllers
                     PerformansId = isturu.PerformansId,
                     Performans = vmperformans,
                     Deleted = (bool)isturu.Deleted,
-                    OlusturmaTarihi = isturu.OlusturmaTarihi
+                    OlusturmaTarihi = isturu.OlusturmaTarihi,
+                    FaaliyetId= (int)isturu.FaaliyetId
                 });
             }
 
             return new JsonResult(vmListe);
         }
-        [HttpPost]
+        [HttpPost("AddNewIsTuru")]
         public IActionResult YeniIsTuruEkle(VMIsturleri eklenecek)
         {
 
@@ -98,7 +100,9 @@ namespace WepApiAKY.Controllers
                 PerformansId = eklenecek.PerformansId,
                 Deleted = eklenecek.Deleted,
                 Maaliyet = eklenecek.Maaliyet,
-                OlusturmaTarihi = DateTime.Now
+                OlusturmaTarihi = DateTime.Now,
+                FaaliyetId=eklenecek.FaaliyetId
+                
             };
             try
             {
@@ -110,7 +114,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut]
+        [HttpPut("UpdateAnIsTuru")]
         public IActionResult IsturuGunceller(VMIsturleri guncellenecek)
         {
             var model = new StIsturleri()
@@ -122,7 +126,8 @@ namespace WepApiAKY.Controllers
                 Deleted = guncellenecek.Deleted,
                 Maaliyet = guncellenecek.Maaliyet,
                 OlusturmaTarihi = guncellenecek.OlusturmaTarihi,
-                BirimId=guncellenecek.BirimId
+                BirimId=guncellenecek.BirimId,
+                FaaliyetId = guncellenecek.FaaliyetId
             };
             try
             {
@@ -134,7 +139,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("Delete")]
+        [HttpPut("DeleteAnIsTuru")]
         public IActionResult IsturuSil(VMIsturleri silinecek)
         {
             StIsturleri model =_isturleri.Getir(isturu => isturu.Id == silinecek.id);

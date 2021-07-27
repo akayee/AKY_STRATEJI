@@ -23,7 +23,7 @@ namespace WepApiAKY.Controllers
             _logger = logger;
             _araclar = araclar;
         }
-        [HttpGet]
+        [HttpGet("GetAnArac")]
         public JsonResult GetArac(int id)
         {
             //Tek Arac getirme.
@@ -84,7 +84,7 @@ namespace WepApiAKY.Controllers
             }
             return new JsonResult(vmListe);
         }
-        [HttpPost]
+        [HttpPost("AddNewarac")]
         public IActionResult YeniAracEkle(VMAraclar eklenecek)
         {
             //Yeni veri id si service tarafından atanmaktadır.
@@ -109,7 +109,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut]
+        [HttpPut("UpdateanArac")]
         public IActionResult AracGuncelle(VMAraclar guncellenecek)
         {
             var model = new BrAraclar()
@@ -131,7 +131,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("Delete")]
+        [HttpPut("DeleteanArac")]
         public IActionResult AracSil(VMAraclar silinecek)
         {
             BrAraclar model = _araclar.Getir(arac => arac.Id == silinecek.id);
