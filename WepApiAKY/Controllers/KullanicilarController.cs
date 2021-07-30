@@ -24,7 +24,7 @@ namespace WepApiAKY.Controllers
             _logger = logger;
             _kullanici = kullanici;
         }
-        [HttpGet]
+        [HttpGet("GetKullanici")]
         public JsonResult KullaniciGetir(int id)
         {
             //Tek Kullanıcı getirme.
@@ -65,7 +65,7 @@ namespace WepApiAKY.Controllers
             }
             return new JsonResult(vmListe);
         }
-        [HttpPost]
+        [HttpPost("AddNewKullanici")]
         public IActionResult YeniKullaniciEkle(VMKullanicilar eklenecek)
         {
             //Yeni veri id si service tarafından atanmaktadır.
@@ -89,7 +89,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut]
+        [HttpPut("UpdateaKullanici")]
         public IActionResult KullaniciGuncelle(VMKullanicilar guncellenecek)
         {
             var model = new Kullanicilar()
@@ -111,7 +111,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("Delete")]
+        [HttpPut("DeleteaKullanici")]
         public IActionResult KullaniciSil(VMKullanicilar silinecek)
         {
             Kullanicilar model = _kullanici.Getir(kullanici => kullanici.Id == silinecek.id);

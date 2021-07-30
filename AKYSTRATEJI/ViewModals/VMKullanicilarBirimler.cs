@@ -10,7 +10,5 @@ namespace AKYSTRATEJI.ViewModals
         public int BirimId { get; set; }
         public int KullaniciId { get; set; }
         public bool Deleted { get; set; }
-        public VMBirimler Birim { get; set; }
-        public VMKullanicilar Kullanici { get; set; }
     }
 }

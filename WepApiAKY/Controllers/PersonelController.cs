@@ -24,7 +24,7 @@ namespace WepApiAKY.Controllers
             _logger = logger;
             _personelServices = personelServices;
         }
-        [HttpGet]
+        [HttpGet("GetaPersonel")]
         public JsonResult PersonelGetir(int id)
         {
             //Tek Personel getirme.
@@ -79,7 +79,7 @@ namespace WepApiAKY.Controllers
             }
             return new JsonResult(vmListe);
         }
-        [HttpPost]
+        [HttpPost("AddNewPersonel")]
         public IActionResult YeniPersonelEkle(VMPersoneller eklenecek)
         {
             //Yeni veri id si service tarafından atanmaktadır.
@@ -110,7 +110,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut]
+        [HttpPut("UpdateaPersonel")]
         public IActionResult PersonelGuncelle(VMPersoneller guncellenecek)
         {
             var model = new BrPersoneller()
@@ -139,7 +139,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("Delete")]
+        [HttpPut("DeleteaPersonel")]
         public IActionResult PersonelSil(VMPersoneller silinecek)
         {
             BrPersoneller model = _personelServices.Getir(personel => personel.Id == silinecek.id);

@@ -27,7 +27,7 @@ namespace WepApiAKY.Controllers
             _hedefler = hedefler;
             _amaclar = amaclar;
         }
-        [HttpGet]
+        [HttpGet("GetHedef")]
         public JsonResult GetHedef(int id)
         {
             //Tek Hedef getirme.
@@ -46,8 +46,7 @@ namespace WepApiAKY.Controllers
                 Tanim = hedefler.Tanim,
                 OlusturmaTarihi = hedefler.OlusturmaTarihi,
                 Deleted = (bool)hedefler.Deleted,
-                AmaclarId = hedefler.AmaclarId,
-                Amac = vmamac
+                AmaclarId = hedefler.AmaclarId
             };
 
             return new JsonResult(model);
@@ -75,7 +74,6 @@ namespace WepApiAKY.Controllers
                     id = hedef.Id,
                     Tanim=hedef.Tanim,
                     AmaclarId=hedef.AmaclarId,
-                    Amac= vmamac,
                     Deleted= (bool)hedef.Deleted,
                     OlusturmaTarihi=hedef.OlusturmaTarihi
                 });
@@ -84,7 +82,7 @@ namespace WepApiAKY.Controllers
             return new JsonResult(hedefler);
         }
 
-        [HttpPost]
+        [HttpPost("AddNewHedef")]
         public IActionResult YeniHedefEkle(VMHedefler eklenecek)
         {
 
@@ -111,7 +109,7 @@ namespace WepApiAKY.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("UpdateaHedef")]
         public IActionResult HedefGuncelle(VMHedefler guncellenecek)
         {
 
@@ -135,7 +133,7 @@ namespace WepApiAKY.Controllers
             }
         }
 
-        [HttpPut("Delete")]
+        [HttpPut("DeleteaHedef")]
         public IActionResult HedefDelete(VMHedefler guncellenecek)
         {
 

@@ -10,7 +10,6 @@ namespace AKYSTRATEJI.ViewModals
         public int id { get; set; }
         public string Adi { get; set; }
         public short Sayi { get; set; }
-        public VMBirimler Birim { get; set; }
         public int BirimId { get; set; }
         public bool Deleted { get; set; }
         public DateTime OlusturmaTarihi { get; set; }

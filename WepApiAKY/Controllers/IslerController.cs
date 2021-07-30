@@ -64,7 +64,6 @@ namespace WepApiAKY.Controllers
                 id = stIsler.Id,
                 OlusturmaTarihi = stIsler.OlusturmaTarihi,
                 Deleted = (bool)stIsler.Deleted,
-                IsTurleri = vmIsturu,
                 IsturuId = stIsler.IsTuruId,
                 BaslangicTarihi = stIsler.BaslangicTarihi,
                 BitisTarihi = stIsler.BitisTarihi,
@@ -97,7 +96,6 @@ namespace WepApiAKY.Controllers
                 {
                     id = isturu.Id,
                     IsturuId = isturu.IsTuruId,
-                    IsTurleri = vmIsturleri,
                     Deleted = (bool)isturu.Deleted,
                     OlusturmaTarihi = isturu.OlusturmaTarihi,
                     BaslangicTarihi = isturu.BaslangicTarihi,

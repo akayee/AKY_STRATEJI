@@ -11,7 +11,6 @@ namespace AKYSTRATEJI.ViewModals
         public string Adi { get; set; }
         public enums.AracCinsi AracCinsi { get; set; }
         public enums.TahsisTuru TahsisTuru { get; set; }
-        public VMBirimler Birim { get; set; }
         public DateTime OlusturmaTarihi { get; set; }
         public int BirimId { get; set; }
         public bool Deleted { get; set; }

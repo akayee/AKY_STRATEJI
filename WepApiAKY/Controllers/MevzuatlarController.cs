@@ -24,7 +24,7 @@ namespace WepApiAKY.Controllers
             _logger = logger;
             _mevzuatlarServices = mevzuatlarServices;
         }
-        [HttpGet]
+        [HttpGet("GetaMevzuat")]
         public JsonResult MevzuatGetir(int id)
         {
             //Tek Mevzuat getirme.
@@ -67,7 +67,7 @@ namespace WepApiAKY.Controllers
             }
             return new JsonResult(vmListe);
         }
-        [HttpPost]
+        [HttpPost("AddNewMevzuat")]
         public IActionResult YeniMevzuatEkle(VMMevzuatlar eklenecek)
         {
             //Yeni veri id si service tarafından atanmaktadır.
@@ -91,7 +91,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut]
+        [HttpPut("UpdateaMevzuat")]
         public IActionResult MevzuatGuncelle(VMMevzuatlar guncellenecek)
         {
             var model = new BrMevzuatlar()
@@ -113,7 +113,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("Delete")]
+        [HttpPut("DeleteaMevzuat")]
         public IActionResult MevzuatSil(VMMevzuatlar silinecek)
         {
             BrMevzuatlar model = _mevzuatlarServices.Getir(mevzuat => mevzuat.Id == silinecek.id);

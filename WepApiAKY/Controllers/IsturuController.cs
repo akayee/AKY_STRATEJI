@@ -48,7 +48,6 @@ namespace WepApiAKY.Controllers
                 OlusturmaTarihi = stIsturleri.OlusturmaTarihi,
                 Deleted = (bool)stIsturleri.Deleted,
                 PerformansId = stIsturleri.PerformansId,
-                Performans = vmperformans,
                 FaaliyetId= (int)stIsturleri.FaaliyetId
 
             };
@@ -77,7 +76,6 @@ namespace WepApiAKY.Controllers
                     id = isturu.Id,
                     Adi = isturu.Adi,
                     PerformansId = isturu.PerformansId,
-                    Performans = vmperformans,
                     Deleted = (bool)isturu.Deleted,
                     OlusturmaTarihi = isturu.OlusturmaTarihi,
                     FaaliyetId= (int)isturu.FaaliyetId

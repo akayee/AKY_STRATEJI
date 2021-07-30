@@ -26,7 +26,7 @@ namespace WepApiAKY.Controllers
             _hedefler = hedefler;
             _performanslar = performanslar;
         }
-        [HttpGet]
+        [HttpGet("GetaPerformance")]
         public JsonResult GetPerformans(int id)
         {
             //Tek Performans getirme.
@@ -46,8 +46,7 @@ namespace WepApiAKY.Controllers
                 Adi = performanslar.Adi,
                 OlusturmaTarihi = performanslar.OlusturmaTarihi,
                 Deleted = (bool)performanslar.Deleted,
-                HedeflerId = performanslar.HedeflerId,
-                Hedefler = vmhedef
+                HedeflerId = performanslar.HedeflerId
             };
 
             return new JsonResult(model);
@@ -76,7 +75,6 @@ namespace WepApiAKY.Controllers
                     id = performans.Id,
                     Adi = performans.Adi,
                     HedeflerId = performans.HedeflerId,
-                    Hedefler = vmhedef,
                     Deleted = (bool)performans.Deleted,
                     OlusturmaTarihi = performans.OlusturmaTarihi
                 });
@@ -84,7 +82,7 @@ namespace WepApiAKY.Controllers
 
             return new JsonResult(performanslar);
         }
-        [HttpPost]
+        [HttpPost("AddNewPerformans")]
         public IActionResult YeniPerformansEkle(VMPerformanslar eklenecek)
         {
 
@@ -109,7 +107,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut]
+        [HttpPut("UpdateaPerformance")]
         public IActionResult PerformansGuncelle(VMPerformanslar guncellenecek)
         {
 
@@ -132,7 +130,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("Delete")]
+        [HttpPut("DeleteaPerformans")]
         public IActionResult PerformansDelete(VMPerformanslar guncellenecek)
         {
 

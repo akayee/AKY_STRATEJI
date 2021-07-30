@@ -16,6 +16,5 @@ namespace AKYSTRATEJI.ViewModals
         public short Deger { get; set; }
         public enums.Ilceler Ilce { get; set; }
         public enums.Mahalleler Mahalle { get; set; }
-        public VMIsturleri IsTurleri { get; set; }
     }
 }

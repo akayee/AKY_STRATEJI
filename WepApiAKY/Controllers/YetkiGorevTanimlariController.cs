@@ -24,7 +24,7 @@ namespace WepApiAKY.Controllers
             _logger = logger;
             _yetkiGorev = yetkiGorev;
         }
-        [HttpGet]
+        [HttpGet("GetaYetkiGorevTanimi")]
         public JsonResult YetkiGorevGetir(int id)
         {
             //Tek YetkiGorevTanim getirme.
@@ -65,7 +65,7 @@ namespace WepApiAKY.Controllers
             }
             return new JsonResult(vmListe);
         }
-        [HttpPost]
+        [HttpPost("AddNewaYetkiGorevTanimi")]
         public IActionResult YeniYetkiGorevEkle(VMYetkiGorevTanimlari eklenecek)
         {
             //Yeni veri id si service tarafından atanmaktadır.
@@ -90,7 +90,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut]
+        [HttpPut("UpdateaYetkiGorevTanimi")]
         public IActionResult YetkiGorevGuncelle(VMYetkiGorevTanimlari guncellenecek)
         {
             var model = new BrYetkiGorevTanimlari()
@@ -113,7 +113,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("Delete")]
+        [HttpPut("DeleteaYetkiGorevTanimi")]
         public IActionResult YetkiGorevSil(VMYetkiGorevTanimlari silinecek)
         {
             BrYetkiGorevTanimlari model = _yetkiGorev.Getir(yetkigorev => yetkigorev.Id == silinecek.id);

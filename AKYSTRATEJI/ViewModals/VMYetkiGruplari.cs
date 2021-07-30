@@ -11,7 +11,5 @@ namespace AKYSTRATEJI.ViewModals
         public string Adi { get; set; }
         public int YetkilerId { get; set; }
         public bool Deleted { get; set; }
-        public List<VMKullanicilar> Kullanicilar { get; set; }
-        public List<VMYetkilervYetkiGruplari> YetkilervYetkiGruplaris { get; set; }
     }
 }

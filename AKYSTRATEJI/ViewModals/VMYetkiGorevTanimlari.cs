@@ -13,6 +13,5 @@ namespace AKYSTRATEJI.ViewModals
         public int BirimId { get; set; }
         public DateTime OlusturmaTarihi { get; set; }
         public bool Deleted { get; set; }
-        public VMBirimler Birim { get; set; }
     }
 }

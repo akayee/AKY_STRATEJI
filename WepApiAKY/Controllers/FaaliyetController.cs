@@ -24,7 +24,7 @@ namespace WepApiAKY.Controllers
             _logger = logger;
             _faaliyet = faaliyet;
         }
-        [HttpGet]
+        [HttpGet("GetFaaliyet")]
         public JsonResult GetFaaliyet(int id)
         {
             //Tek Arac getirme.
@@ -68,7 +68,7 @@ namespace WepApiAKY.Controllers
             }
             return new JsonResult(vmListe);
         }
-        [HttpPost]
+        [HttpPost("AddNewFaaliyet")]
         public IActionResult YeniFaaliyetEkle(VMFaaliyet eklenecek)
         {
             //Yeni veri id si service tarafından atanmaktadır.
@@ -87,14 +87,14 @@ namespace WepApiAKY.Controllers
             try
             {
                 _faaliyet.Ekle(model);
-                return new ABBJsonResponse("FaaliyetController/ Araç Başarıyla Eklendi");
+                return new ABBJsonResponse("FaaliyetController/ Kayıt Başarıyla Eklendi");
             }
             catch (Exception e)
             {
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut]
+        [HttpPut("UpdateaFaaliyet")]
         public IActionResult FaaliyetGuncelle(VMFaaliyet guncellenecek)
         {
             var model = new StFaaliyet()
@@ -117,7 +117,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("Delete")]
+        [HttpPut("DeleteaFaaliyet")]
         public IActionResult FaaliyetSil(VMFaaliyet silinecek)
         {
             StFaaliyet model = _faaliyet.Getir(faaliyet => faaliyet.Id == silinecek.id);

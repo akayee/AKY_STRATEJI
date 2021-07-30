@@ -25,7 +25,7 @@ namespace WepApiAKY.Controllers
            _fizikselYapilarServices = fizikselYapilarServices;
         }
 
-        [HttpGet]
+        [HttpGet("GetFizikselYapi")]
         public JsonResult FizikselYapiGetir(int id)
         {
             //Tek Arac getirme.
@@ -70,7 +70,7 @@ namespace WepApiAKY.Controllers
             }
             return new JsonResult(vmListe);
         }
-        [HttpPost]
+        [HttpPost("AddNewaFizikselYapi")]
         public IActionResult YeniFizikselYapiEkle(VMFizikselYapilar eklenecek)
         {
             //Yeni veri id si service tarafından atanmaktadır.
@@ -95,7 +95,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut]
+        [HttpPut("UpdateaFizikselYapi")]
         public IActionResult FizikselYapiGuncelle(VMFizikselYapilar guncellenecek)
         {
             var model = new BrFizikselYapilar()
@@ -118,7 +118,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("Delete")]
+        [HttpPut("DeleteaFizikselYapi")]
         public IActionResult FizikselYapiSil(VMFizikselYapilar silinecek)
         {
             BrFizikselYapilar model = _fizikselYapilarServices.Getir(fizikselyapi => fizikselyapi.Id == silinecek.id);

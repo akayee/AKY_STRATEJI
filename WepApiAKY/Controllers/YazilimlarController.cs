@@ -24,7 +24,7 @@ namespace WepApiAKY.Controllers
             _logger = logger;
             _yazilim = yazilim;
         }
-        [HttpGet]
+        [HttpGet("GetaYazilim")]
         public JsonResult YazilimGetir(int id)
         {
             //Tek Yazilim getirme.
@@ -64,7 +64,7 @@ namespace WepApiAKY.Controllers
             }
             return new JsonResult(vmListe);
         }
-        [HttpPost]
+        [HttpPost("AddNewaYazilim")]
         public IActionResult YeniYazilimEkle(VMYazilimlar eklenecek)
         {
             //Yeni veri id si service tarafından atanmaktadır.
@@ -87,7 +87,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut]
+        [HttpPut("UpdateaYazilim")]
         public IActionResult YazilimGuncelle(VMYazilimlar guncellenecek)
         {
             var model = new BrYazilimlar()
@@ -108,7 +108,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("Delete")]
+        [HttpPut("DeleteaYazilim")]
         public IActionResult YazilimSil(VMYazilimlar silinecek)
         {
             BrYazilimlar model = _yazilim.Getir(yazilim => yazilim.Id == silinecek.id);

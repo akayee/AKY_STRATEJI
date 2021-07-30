@@ -24,7 +24,7 @@ namespace WepApiAKY.Controllers
             _logger = logger;
             _olcubirimi = olcubirimi;
         }
-        [HttpGet]
+        [HttpGet("GetanOlcuBirimi")]
         public JsonResult OlcuBirimiGetir(int id)
         {
             //Tek Ölçü Birimi getirme.
@@ -59,7 +59,7 @@ namespace WepApiAKY.Controllers
             }
             return new JsonResult(vmListe);
         }
-        [HttpPost]
+        [HttpPost("AddNewOlcuBirimi")]
         public IActionResult YeniOlcuBirimiEkle(VMOlcuBirimi eklenecek)
         {
             //Yeni veri id si service tarafından atanmaktadır.
@@ -80,7 +80,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut]
+        [HttpPut("UpdateanOlcuBirimi")]
         public IActionResult OlcuBirimiGuncelle(VMOlcuBirimi guncellenecek)
         {
             var model = new GnOlcubirimi()
@@ -99,7 +99,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("Delete")]
+        [HttpPut("DeleteanOlcuBirimi")]
         public IActionResult OlcuBirimiSil(VMOlcuBirimi silinecek)
         {
             GnOlcubirimi model = _olcubirimi.Getir(olcubirimi => olcubirimi.Id == silinecek.id);

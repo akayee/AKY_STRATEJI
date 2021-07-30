@@ -24,7 +24,7 @@ namespace WepApiAKY.Controllers
             _logger = logger;
             _stratejiyili = stratejiyili;
         }
-        [HttpGet]
+        [HttpGet("GetaStratejiYili")]
         public JsonResult StratejiYiliGetir(int id)
         {
             //Tek strateji yılı getirme.
@@ -59,7 +59,7 @@ namespace WepApiAKY.Controllers
             }
             return new JsonResult(vmListe);
         }
-        [HttpPost]
+        [HttpPost("AddNewaStratejiYili")]
         public IActionResult YeniStratejiYiliEkle(VMStratejiYili eklenecek)
         {
             //Yeni veri id si service tarafından atanmaktadır.
@@ -80,7 +80,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("Delete")]
+        [HttpPut("DeleteaStratejiYili")]
         public IActionResult StratejiYiliSil(VMStratejiYili silinecek)
         {
             StStratejiyili model = _stratejiyili.Getir(kullanici => kullanici.Id == silinecek.id);

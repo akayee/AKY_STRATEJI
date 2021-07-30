@@ -13,8 +13,5 @@ namespace AKYSTRATEJI.ViewModals
         public int? PersonelId { get; set; }
         public int? YetkiGruplariId { get; set; }
         public bool Deleted { get; set; }
-        public VMKullanicilarBirimler KullaniciBirimleri { get; set; }
-        public VMYetkiGruplari YetkiGruplari { get; set; }
-        public VMPersoneller PersonelBilgisi { get; set; }
     }
 }

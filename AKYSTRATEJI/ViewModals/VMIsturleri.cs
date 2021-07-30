@@ -18,12 +18,6 @@ namespace AKYSTRATEJI.ViewModals
         public int? Maaliyet { get; set; }
         public int FaaliyetId { get; set; }
         public DateTime OlusturmaTarihi { get; set; }
-        public VMBirimler Birim { get; set; }
-        public List<VMIsler> Isler { get; set; }
-        public VMPerformanslar Performans { get; set; }
-        public VMOlcuBirimi OlcuBirimi { get; set; }
-        public VMStratejiYili StratejiYili { get; set; }
-        public VMYillikHedefler YillikHedef { get; set; }
 
     }
 }

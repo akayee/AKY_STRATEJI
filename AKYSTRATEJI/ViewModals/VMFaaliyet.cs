@@ -13,6 +13,5 @@ namespace AKYSTRATEJI.ViewModals
         public bool GelirGider { get; set; }
         public bool Deleted { get; set; }
         public int FaaliyetlerId { get; set; }
-        public VMFaaliyetTurleri FaaliyetTurleri { get; set; }
     }
 }
