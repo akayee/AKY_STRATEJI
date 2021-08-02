@@ -30,20 +30,29 @@ namespace WepApiAKY.Controllers
             //Tek Arac getirme.
 
             BrDonanimlar donanim = _donanimlar.TekDonanimGetir(id);
-            
-            var model = new VMDonanimlar()
+
+
+            if (!(donanim is null))
             {
-                id = donanim.Id,
-                Adi = donanim.Adi,
-                OlusturmaTarihi = donanim.OlusturmaTarihi,
-                Deleted = (bool)donanim.Deleted,
-                Sayi = donanim.Sayi,
-                BirimId = donanim.BirimId
-                //-WRN- //Birimler eklenecek
+                var model = new VMDonanimlar()
+                {
+                    id = donanim.Id,
+                    Adi = donanim.Adi,
+                    OlusturmaTarihi = donanim.OlusturmaTarihi,
+                    Deleted = (bool)donanim.Deleted,
+                    Sayi = donanim.Sayi,
+                    BirimId = donanim.BirimId
+                    //-WRN- //Birimler eklenecek
 
-            };
+                };
 
-            return new JsonResult(model);
+                return new JsonResult(model);
+            }
+            else
+            {
+
+                return new JsonResult("Veri Bulunmuyor");
+            }            
         }
         [HttpGet("GetListofDonanimlar")]
         public JsonResult DonanimListele()
@@ -77,14 +86,14 @@ namespace WepApiAKY.Controllers
             {
                 Id = eklenecek.id,
                 Adi = eklenecek.Adi,
-                OlusturmaTarihi = eklenecek.OlusturmaTarihi,
+                OlusturmaTarihi = DateTime.Now,
                 Deleted = (bool)eklenecek.Deleted,
                 Sayi = eklenecek.Sayi,
                 BirimId = eklenecek.BirimId
             };
             try
             {
-                _donanimlar.Ekle(model);
+                _donanimlar.YeniDonanimEkle(model);
                 return new ABBJsonResponse("DonanimController/ Araç Başarıyla Eklendi");
             }
             catch (Exception e)
@@ -106,7 +115,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _donanimlar.Guncelle(model);
+                _donanimlar.DonanimGuncelle(model);
                 return new ABBJsonResponse("DonanimController/ Araç Başarıyla Güncellendi");
             }
             catch (Exception e)
@@ -121,7 +130,7 @@ namespace WepApiAKY.Controllers
             model.Deleted = true;
             try
             {
-                _donanimlar.Guncelle(model);
+                _donanimlar.DonanimGuncelle(model);
                 return new ABBJsonResponse("DonanimController/ Araç Başarıyla Silindi");
             }
             catch (Exception e)

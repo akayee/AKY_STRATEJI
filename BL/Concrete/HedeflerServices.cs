@@ -29,6 +29,7 @@ namespace BL.Concrete
 
         public override void Validate(StHedefler entity)
         {
+            // veri eklemedeki "The method or operation is not implemented." hatası validate yüzünden geliyor.
             throw new NotImplementedException();
         }
 

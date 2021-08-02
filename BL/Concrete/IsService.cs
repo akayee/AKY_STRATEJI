@@ -38,7 +38,7 @@ namespace BL.Concrete
         {
             try
             {
-                return DetayliListe(filter);
+                return base.DetayliListe(filter);
                 throw new NotImplementedException("IsService Kayıt listeleme başarılı");
             }
             catch(Exception e)
@@ -57,7 +57,7 @@ namespace BL.Concrete
             {
                 //Kayıt silmiyoruz sadece Deleted parametresini true yapıyoruz.
                 isler.Deleted = true;
-                Guncelle(isler);
+                base.Guncelle(isler);
                 throw new NotImplementedException("IsServices Kayıt silme başarılı");
             }
             catch (Exception e)
@@ -70,7 +70,7 @@ namespace BL.Concrete
         {
             try
             {
-                return Getir(isTuru => isTuru.Id == IsId && isTuru.Deleted != true);
+                return base.Getir(isTuru => isTuru.Id == IsId && isTuru.Deleted != true);
                 throw new NotImplementedException("IsServices tek kayıt listeleme başarılı");
             }
             catch(Exception e)
@@ -81,20 +81,19 @@ namespace BL.Concrete
         //Gelen veriyi doğrulama işlemi. Tüm servisler çekildikten sonra tekrar güncellenecek.
         public override void Validate(StIsler entity)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
         //Yeni is ekleme işlemi.
         public bool YeniIsEkle(StIsler isler)
         {
-            int counted = IsleriListele().Count + 1;
+            int counted = base.DetayliListe().Count + 1;
             isler.IslerId = counted;
             isler.Id = counted;
-            //System.Diagnostics.Debug.WriteLine(amac.Adi);
 
             try
             {
 
-                Ekle(isler);
+                base.Ekle(isler);
                 throw new NotImplementedException("IsServis Kayıt Başarıyla Eklendi");
             }
             catch (Exception e)

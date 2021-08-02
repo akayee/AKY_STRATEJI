@@ -64,7 +64,7 @@ namespace BL.Concrete
 
         public override void Validate(StYillikhedef entity)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public bool YeniYillikHedefEkle(StYillikhedef yhedef)

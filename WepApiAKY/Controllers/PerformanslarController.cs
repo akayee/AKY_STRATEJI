@@ -31,25 +31,28 @@ namespace WepApiAKY.Controllers
         {
             //Tek Performans getirme.
             StPerformanslar performanslar = _performanslar.TekPerformansGetir(id);
-            //Performansın bağlı olduğu hedef getirme.
-            StHedefler performansinHedefi = _hedefler.TekHedefGetir(performanslar.HedeflerId);
-            VMHedefler vmhedef = new VMHedefler()
-            {
-                Tanim = performansinHedefi.Tanim,
-                id = performansinHedefi.Id,
-                Deleted= (bool)performansinHedefi.Deleted
-            };
-            //ViewModal Mapleme işlemi.
-            var model = new VMPerformanslar()
-            {
-                id = performanslar.Id,
-                Adi = performanslar.Adi,
-                OlusturmaTarihi = performanslar.OlusturmaTarihi,
-                Deleted = (bool)performanslar.Deleted,
-                HedeflerId = performanslar.HedeflerId
-            };
 
-            return new JsonResult(model);
+
+            if (!(performanslar is null))
+            {
+
+                //ViewModal Mapleme işlemi.
+                var model = new VMPerformanslar()
+                {
+                    id = performanslar.Id,
+                    Adi = performanslar.Adi,
+                    OlusturmaTarihi = performanslar.OlusturmaTarihi,
+                    Deleted = (bool)performanslar.Deleted,
+                    HedeflerId = performanslar.HedeflerId
+                };
+
+                return new JsonResult(model);
+            }
+            else
+            {
+
+                return new JsonResult("Veri Bulunmuyor");
+            }
         }
         [HttpGet("GetListofPerformanslar")]
         public JsonResult PerformansListele()
@@ -99,7 +102,7 @@ namespace WepApiAKY.Controllers
             try
             {
                 //Veri tabanına ekleme işlemi.
-                _performanslar.Ekle(model);
+                _performanslar.YeniPerformansEkle(model);
                 return new ABBJsonResponse("Stratejik Performans Başarıyla Eklendi");
             }
             catch (Exception e)
@@ -122,7 +125,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _performanslar.Guncelle(model);
+                _performanslar.PerformansGuncelle(model);
                 return new ABBJsonResponse("Stratejik Performans Başarıyla Güncellendi");
             }
             catch (Exception e)
@@ -145,7 +148,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _performanslar.Guncelle(model);
+                _performanslar.PerformansGuncelle(model);
                 return new ABBJsonResponse("Stratejik Performans Başarıyla Silindi");
             }
             catch (Exception e)

@@ -29,6 +29,27 @@ namespace WepApiAKY.Controllers
             //Tek Arac getirme.
 
             BrAraclar arac = _araclar.TekAracGetir(id);
+            if (!(arac is null))
+            {
+            var model = new VMAraclar()
+                {
+                    id = arac.Id,
+                    Adi = arac.Adi,
+                    OlusturmaTarihi = arac.OlusturmaTarihi,
+                    Deleted = (bool)arac.Deleted,
+                    AracCinsi= (AKYSTRATEJI.enums.AracCinsi)arac.Cinsi,
+                    TahsisTuru= (AKYSTRATEJI.enums.TahsisTuru)arac.TahsisTuru
+                    //-WRN- //Birimler eklenecek
+
+                };
+
+                return new JsonResult(model);
+            }
+            else
+            {
+
+                return new JsonResult("Veri Bulunmuyor");
+            }
             //Isturunun bağlı olduğu performans getirme.
             //StPerformanslar isturuPerformansi = stIsturleri.Performans;
             //VMPerformanslar vmperformans = new VMPerformanslar()
@@ -38,19 +59,7 @@ namespace WepApiAKY.Controllers
             //    Deleted = (bool)isturuPerformansi.Deleted
             //};
             ////ViewModal Mapleme işlemi.
-            var model = new VMAraclar()
-            {
-                id = arac.Id,
-                Adi = arac.Adi,
-                OlusturmaTarihi = arac.OlusturmaTarihi,
-                Deleted = (bool)arac.Deleted,
-                AracCinsi= (AKYSTRATEJI.enums.AracCinsi)arac.Cinsi,
-                TahsisTuru= (AKYSTRATEJI.enums.TahsisTuru)arac.TahsisTuru
-                //-WRN- //Birimler eklenecek
-
-            };
-
-            return new JsonResult(model);
+            
         }
         [HttpGet("GetListofAraclar")]
         public JsonResult AraclariListele()
@@ -93,7 +102,7 @@ namespace WepApiAKY.Controllers
             {
                 Adi = eklenecek.Adi,
                 Deleted = (bool)eklenecek.Deleted,
-                OlusturmaTarihi = eklenecek.OlusturmaTarihi,
+                OlusturmaTarihi = DateTime.Now,
                 Cinsi = (decimal)eklenecek.AracCinsi,
                 TahsisTuru = (decimal)eklenecek.TahsisTuru,
                 BirimId=eklenecek.BirimId
@@ -101,7 +110,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _araclar.Ekle(model);
+                _araclar.YeniAracEkle(model);
                 return new ABBJsonResponse("AraclarController/ Araç Başarıyla Eklendi");
             }
             catch (Exception e)
@@ -123,7 +132,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _araclar.Guncelle(model);
+                _araclar.AracGuncelle(model);
                 return new ABBJsonResponse("AraclarController/ Araç Başarıyla Güncellendi");
             }
             catch (Exception e)
@@ -138,7 +147,7 @@ namespace WepApiAKY.Controllers
             model.Deleted = true;
             try
             {
-                _araclar.Guncelle(model);
+                _araclar.AracGuncelle(model);
                 return new ABBJsonResponse("AraclarController/ Araç Başarıyla Silindi");
             }
             catch (Exception e)

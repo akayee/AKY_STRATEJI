@@ -31,23 +31,34 @@ namespace WepApiAKY.Controllers
 
             BrPersoneller Personel = _personelServices.TekPersonelGetir(id);
 
-            var model = new VMPersoneller()
+
+            if (!(Personel is null))
             {
-                id = Personel.Id,
-                Deleted = (bool)Personel.Deleted,
-                Adi = Personel.Adi,
-                BirimId = Personel.BirimId,
-                OlusturmaTarihi = Personel.OlusturmaTarihi,
-                Cinsiyet = Personel.Cinsiyet,
-                DogumTarihi = Personel.DogumTarihi,
-                IseGirisTarihi = Personel.IseGirisTarihi,
-                Kadro = (AKYSTRATEJI.enums.Kadrolar)Personel.Kadro,
-                KullaniciId = (int)Personel.KullaniciId,
-                Mezuniyet = (AKYSTRATEJI.enums.Mezuniyet)Personel.Mezuniyet,
-                Tel = (short)Personel.Tel,
-                Unvan = (AKYSTRATEJI.enums.Unvanlar)Personel.Unvan
-            };
-            return new JsonResult(model);
+                var model = new VMPersoneller()
+                {
+                    id = Personel.Id,
+                    Deleted = (bool)Personel.Deleted,
+                    Adi = Personel.Adi,
+                    BirimId = Personel.BirimId,
+                    OlusturmaTarihi = Personel.OlusturmaTarihi,
+                    Cinsiyet = Personel.Cinsiyet,
+                    DogumTarihi = Personel.DogumTarihi,
+                    IseGirisTarihi = Personel.IseGirisTarihi,
+                    Kadro = (AKYSTRATEJI.enums.Kadrolar)Personel.Kadro,
+                    KullaniciId = (int)Personel.KullaniciId,
+                    Mezuniyet = (AKYSTRATEJI.enums.Mezuniyet)Personel.Mezuniyet,
+                    Tel = (short)Personel.Tel,
+                    Unvan = (AKYSTRATEJI.enums.Unvanlar)Personel.Unvan
+                };
+                return new JsonResult(model);
+            }
+            else
+            {
+
+                return new JsonResult("Veri Bulunmuyor");
+            }
+
+            
         }
         [HttpGet("GetListofPersoneller")]
         public JsonResult PersonelleriListele()
@@ -90,7 +101,7 @@ namespace WepApiAKY.Controllers
                 Deleted = (bool)eklenecek.Deleted,
                 Adi = eklenecek.Adi,
                 BirimId = eklenecek.BirimId,
-                OlusturmaTarihi = eklenecek.OlusturmaTarihi,
+                OlusturmaTarihi = DateTime.Now,
                 Cinsiyet = eklenecek.Cinsiyet,
                 DogumTarihi = eklenecek.DogumTarihi,
                 IseGirisTarihi = eklenecek.IseGirisTarihi,
@@ -102,7 +113,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _personelServices.Ekle(model);
+                _personelServices.YeniPersonelEkle(model);
                 return new ABBJsonResponse("PersonelController/ Araç Başarıyla Eklendi");
             }
             catch (Exception e)
@@ -131,7 +142,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _personelServices.Guncelle(model);
+                _personelServices.TekPersonelGuncelle(model);
                 return new ABBJsonResponse("PersonelController/ Araç Başarıyla Güncellendi");
             }
             catch (Exception e)
@@ -146,7 +157,7 @@ namespace WepApiAKY.Controllers
             model.Deleted = true;
             try
             {
-                _personelServices.Guncelle(model);
+                _personelServices.TekPersonelGuncelle(model);
                 return new ABBJsonResponse("PersonelController/ Araç Başarıyla Silindi");
             }
             catch (Exception e)

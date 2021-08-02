@@ -31,16 +31,25 @@ namespace WepApiAKY.Controllers
 
             BrYazilimlar yazilim = _yazilim.TekYazilimGetir(id);
 
-            var model = new VMYazilimlar()
+
+            if (!(yazilim is null))
             {
-                id = yazilim.Id,
-                Deleted = (bool)yazilim.Deleted,
-                Adi = yazilim.Adi,
-                BirimId = yazilim.BirimId,
-                OlusturmaTarihi = yazilim.OlusturmaTarihi
-                
-            };
-            return new JsonResult(model);
+                var model = new VMYazilimlar()
+                {
+                    id = yazilim.Id,
+                    Deleted = (bool)yazilim.Deleted,
+                    Adi = yazilim.Adi,
+                    BirimId = yazilim.BirimId,
+                    OlusturmaTarihi = yazilim.OlusturmaTarihi
+
+                };
+                return new JsonResult(model);
+            }
+            else
+            {
+
+                return new JsonResult("Veri Bulunmuyor");
+            }
         }
         [HttpGet("GetListofYazilimlar")]
         public JsonResult YazilimlariListele()
@@ -75,11 +84,11 @@ namespace WepApiAKY.Controllers
                 Deleted = (bool)eklenecek.Deleted,
                 Adi = eklenecek.Adi,
                 BirimId = eklenecek.BirimId,
-                OlusturmaTarihi = eklenecek.OlusturmaTarihi
+                OlusturmaTarihi = DateTime.Now
             };
             try
             {
-                _yazilim.Ekle(model);
+                _yazilim.YeniYazilimEkle(model);
                 return new ABBJsonResponse("YazilimlarController/ Araç Başarıyla Eklendi");
             }
             catch (Exception e)
@@ -100,7 +109,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _yazilim.Guncelle(model);
+                _yazilim.TekYazilimGuncelle(model);
                 return new ABBJsonResponse("YazilimlarController/ Araç Başarıyla Güncellendi");
             }
             catch (Exception e)
@@ -115,7 +124,7 @@ namespace WepApiAKY.Controllers
             model.Deleted = true;
             try
             {
-                _yazilim.Guncelle(model);
+                _yazilim.TekYazilimGuncelle(model);
                 return new ABBJsonResponse("YazilimlarController/ Araç Başarıyla Silindi");
             }
             catch (Exception e)

@@ -12,7 +12,7 @@ namespace AKYSTRATEJI.Model
         public DateTime? BaslangicTarihi { get; set; }
         public DateTime? BitisTarihi { get; set; }
         public DateTime OlusturmaTarihi { get; set; }
-        public short Deger { get; set; }
+        public int Deger { get; set; }
         public int? Ilce { get; set; }
         public int? Mahalle { get; set; }
         public int IslerId { get; set; }

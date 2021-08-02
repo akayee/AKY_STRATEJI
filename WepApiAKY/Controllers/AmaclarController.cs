@@ -32,20 +32,27 @@ namespace WepApiAKY.Controllers
             
             //Tek Amac getirme.
             StAmaclar amaclar = _amaclar.AmacGetir(id);
-            System.Diagnostics.Debug.WriteLine(amaclar.Adi);
-            System.Diagnostics.Debug.WriteLine(amaclar.Id);
-            System.Diagnostics.Debug.WriteLine(amaclar.OlusturmaTarihi);
-            System.Diagnostics.Debug.WriteLine(amaclar.Deleted);
-            //Mapleme işlemi.
-            var model = new VMAmaclar(){
-                id = amaclar.Id,
-                Adi = amaclar.Adi,
-                OlusturmaTarihi = amaclar.OlusturmaTarihi,
-                Deleted= (bool)amaclar.Deleted
-           };
-            
+            if (!(amaclar is null))
+            {
+                //Mapleme işlemi.
+                var model = new VMAmaclar()
+                {
+                    id = amaclar.Id,
+                    Adi = amaclar.Adi,
+                    OlusturmaTarihi = amaclar.OlusturmaTarihi,
+                    Deleted = (bool)amaclar.Deleted
+                };
 
-            return new JsonResult(model);
+                return new JsonResult(model);
+            }
+            else
+            {
+
+                return new JsonResult("Veri Bulunmuyor");
+            }
+
+
+
         }
         [HttpGet("GetListofAmaclar")]
         public JsonResult AmacListe()
@@ -69,7 +76,7 @@ namespace WepApiAKY.Controllers
             try
             {
                 //Veri tabanına ekleme işlemi.
-                _amaclar.Ekle(model);
+                _amaclar.AmacEkle(model);
                 return new ABBJsonResponse("Stratejik Amaç Başarıyla Eklendi");
             }
             catch(Exception e)
@@ -91,7 +98,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _amaclar.Guncelle(model);
+                _amaclar.AmacGuncelle(model);
                 return new ABBJsonResponse("Stratejik Amaç Başarıyla Güncellendi");
             }
             catch (Exception e)
@@ -113,7 +120,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _amaclar.Guncelle(model);
+                _amaclar.AmacGuncelle(model);
                 return new ABBJsonResponse("Stratejik Amaç Başarıyla Silindi");
             }
             catch (Exception e)

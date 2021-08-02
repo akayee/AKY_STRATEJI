@@ -32,17 +32,29 @@ namespace WepApiAKY.Controllers
 
             StYillikhedef getirelecekveri = _yillikhedefService.TekYillikHedefGetir(id);
 
-            var model = new VMYillikHedefler()
+
+            if (!(getirelecekveri is null))
             {
-                id = getirelecekveri.Id,
-                Deleted = (bool)getirelecekveri.Deleted,
-                Hedef=getirelecekveri.Hedef,
-                HedefN=getirelecekveri.HedefN,
-                HedefNN=getirelecekveri.HedefNn,
-                OlusturmaTarihi=getirelecekveri.OlusturmaTarihi,
-                Yil=getirelecekveri.Yil
-            };
-            return new JsonResult(model);
+                var model = new VMYillikHedefler()
+                {
+                    id = getirelecekveri.Id,
+                    Deleted = (bool)getirelecekveri.Deleted,
+                    Hedef = getirelecekveri.Hedef,
+                    HedefN = getirelecekveri.HedefN,
+                    HedefNN = getirelecekveri.HedefNn,
+                    OlusturmaTarihi = getirelecekveri.OlusturmaTarihi,
+                    Yil = getirelecekveri.Yil,
+                    IsturuId= (int)getirelecekveri.IsTuruId,
+                    FaaliyetlerId= (int)getirelecekveri.FaaliyetId
+                };
+                return new JsonResult(model);
+            }
+            else
+            {
+
+                return new JsonResult("Veri Bulunmuyor");
+            }
+
         }
         [HttpGet("GetListofYillikHedefler")]
         public JsonResult YillikHedefleriListele()
@@ -63,7 +75,9 @@ namespace WepApiAKY.Controllers
                     HedefN=listmember.HedefN,
                     HedefNN=listmember.HedefNn,
                     OlusturmaTarihi=listmember.OlusturmaTarihi,
-                    Yil=listmember.Yil
+                    Yil=listmember.Yil,
+                    IsturuId= (int?)listmember.IsTuruId,
+                    FaaliyetlerId = (int?)listmember.FaaliyetId
                 });
             }
             return new JsonResult(vmListe);
@@ -78,15 +92,17 @@ namespace WepApiAKY.Controllers
                 Id = eklenecek.id,
                 Deleted = (bool)eklenecek.Deleted,
                 Yil=eklenecek.Yil,
-                OlusturmaTarihi=eklenecek.OlusturmaTarihi,
+                OlusturmaTarihi = DateTime.Now,
                 HedefNn=eklenecek.HedefNN,
                 HedefN=eklenecek.HedefN,
                 Hedef=eklenecek.Hedef,
-                YillikHedefId=eklenecek.id
+                YillikHedefId=eklenecek.id,
+                IsTuruId=eklenecek.IsturuId,
+                FaaliyetId=eklenecek.FaaliyetlerId
             };
             try
             {
-                _yillikhedefService.Ekle(model);
+                _yillikhedefService.YeniYillikHedefEkle(model);
                 return new ABBJsonResponse("YillikHedeflerController/ Kayıt Başarıyla Eklendi");
             }
             catch (Exception e)
@@ -106,11 +122,13 @@ namespace WepApiAKY.Controllers
                 HedefNn = guncellenecek.HedefNN,
                 HedefN = guncellenecek.HedefN,
                 Hedef = guncellenecek.Hedef,
-                YillikHedefId = guncellenecek.id
+                YillikHedefId = guncellenecek.id,
+                IsTuruId=guncellenecek.IsturuId,
+                FaaliyetId = guncellenecek.FaaliyetlerId
             };
             try
             {
-                _yillikhedefService.Guncelle(model);
+                _yillikhedefService.TekYillikHedefGuncelle(model);
                 return new ABBJsonResponse("YillikHedeflerController/ Araç Başarıyla Güncellendi");
             }
             catch (Exception e)
@@ -125,7 +143,7 @@ namespace WepApiAKY.Controllers
             model.Deleted = true;
             try
             {
-                _yillikhedefService.Guncelle(model);
+                _yillikhedefService.TekYillikHedefGuncelle(model);
                 return new ABBJsonResponse("YillikHedeflerController/ Araç Başarıyla Silindi");
             }
             catch (Exception e)

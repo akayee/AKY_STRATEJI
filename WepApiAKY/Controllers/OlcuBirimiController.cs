@@ -31,13 +31,23 @@ namespace WepApiAKY.Controllers
 
             GnOlcubirimi olcuBirimi = _olcubirimi.TekOlcuBirimiGetir(id);
 
-            var model = new VMOlcuBirimi()
+
+            if (!(olcuBirimi is null))
             {
-                id = olcuBirimi.Id,
-                Deleted = (bool)olcuBirimi.Deleted,
-                Tanim= olcuBirimi.Tanim
-            };
-            return new JsonResult(model);
+
+                var model = new VMOlcuBirimi()
+                {
+                    id = olcuBirimi.Id,
+                    Deleted = (bool)olcuBirimi.Deleted,
+                    Tanim = olcuBirimi.Tanim
+                };
+                return new JsonResult(model);
+            }
+            else
+            {
+
+                return new JsonResult("Veri Bulunmuyor");
+            }
         }
         [HttpGet("GetListofOlcuBirimi")]
         public JsonResult OlcuBirimleriListele()
@@ -72,7 +82,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _olcubirimi.Ekle(model);
+                _olcubirimi.YeniOlcuBirimiEkle(model);
                 return new ABBJsonResponse("OlcuBirimiController/ Kayıt Başarıyla Eklendi");
             }
             catch (Exception e)
@@ -91,7 +101,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _olcubirimi.Guncelle(model);
+                _olcubirimi.TekOlcuBirimiGuncelle(model);
                 return new ABBJsonResponse("OlcuBirimiController/ Araç Başarıyla Güncellendi");
             }
             catch (Exception e)
@@ -106,7 +116,7 @@ namespace WepApiAKY.Controllers
             model.Deleted = true;
             try
             {
-                _olcubirimi.Guncelle(model);
+                _olcubirimi.TekOlcuBirimiGuncelle(model);
                 return new ABBJsonResponse("OlcuBirimiController/ Araç Başarıyla Silindi");
             }
             catch (Exception e)

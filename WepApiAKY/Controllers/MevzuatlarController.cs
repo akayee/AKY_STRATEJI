@@ -31,18 +31,28 @@ namespace WepApiAKY.Controllers
 
             BrMevzuatlar mevzuat = _mevzuatlarServices.TekmevzuatGetir(id);
 
-            var model = new VMMevzuatlar()
+
+            if (!(mevzuat is null))
             {
-                id = mevzuat.Id,
-                Deleted = (bool)mevzuat.Deleted,
-                Adi = mevzuat.Adi,
-                BirimId = mevzuat.BirimId,
-                Yonetmelik= mevzuat.Yonetmelik,
-                OlusturmaTarihi = mevzuat.OlusturmaTarihi
 
-            };
+                var model = new VMMevzuatlar()
+                {
+                    id = mevzuat.Id,
+                    Deleted = (bool)mevzuat.Deleted,
+                    Adi = mevzuat.Adi,
+                    BirimId = mevzuat.BirimId,
+                    Yonetmelik = mevzuat.Yonetmelik,
+                    OlusturmaTarihi = mevzuat.OlusturmaTarihi
 
-            return new JsonResult(model);
+                };
+
+                return new JsonResult(model);
+            }
+            else
+            {
+
+                return new JsonResult("Veri Bulunmuyor");
+            }
         }
         [HttpGet("GetListofMevzuatlar")]
         public JsonResult MevzuatlariListele()
@@ -79,11 +89,11 @@ namespace WepApiAKY.Controllers
                 Adi = eklenecek.Adi,
                 BirimId = eklenecek.BirimId,
                 Yonetmelik = eklenecek.Yonetmelik,
-                OlusturmaTarihi = eklenecek.OlusturmaTarihi
+                OlusturmaTarihi = DateTime.Now
             };
             try
             {
-                _mevzuatlarServices.Ekle(model);
+                _mevzuatlarServices.YeniMevzuatEkle(model);
                 return new ABBJsonResponse("MevzuatlarController/ Araç Başarıyla Eklendi");
             }
             catch (Exception e)
@@ -105,7 +115,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _mevzuatlarServices.Guncelle(model);
+                _mevzuatlarServices.TekmEvzuatGuncelle(model);
                 return new ABBJsonResponse("MevzuatlarController/ Araç Başarıyla Güncellendi");
             }
             catch (Exception e)
@@ -120,7 +130,7 @@ namespace WepApiAKY.Controllers
             model.Deleted = true;
             try
             {
-                _mevzuatlarServices.Guncelle(model);
+                _mevzuatlarServices.TekmEvzuatGuncelle(model);
                 return new ABBJsonResponse("MevzuatlarController/ Araç Başarıyla Silindi");
             }
             catch (Exception e)

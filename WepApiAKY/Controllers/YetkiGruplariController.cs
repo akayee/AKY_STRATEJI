@@ -28,14 +28,24 @@ namespace WepApiAKY.Controllers
         {
             //Tek Yetki Grubu getirme.
             YtYetkigruplari getirelecekveri = _yetkigrupServices.TekYetkiGrubuGetir(id);
-            var model = new VMYetkiGruplari()
+
+
+            if (!(getirelecekveri is null))
             {
-                id = getirelecekveri.Id,
-                Deleted = (bool)getirelecekveri.Deleted,
-                Adi=getirelecekveri.Adi,
-                YetkilerId=getirelecekveri.YetkilerId
-            };
-            return new JsonResult(model);
+                var model = new VMYetkiGruplari()
+                {
+                    id = getirelecekveri.Id,
+                    Deleted = (bool)getirelecekveri.Deleted,
+                    Adi = getirelecekveri.Adi,
+                    YetkilerId = getirelecekveri.YetkilerId
+                };
+                return new JsonResult(model);
+            }
+            else
+            {
+
+                return new JsonResult("Veri Bulunmuyor");
+            }
         }
         [HttpGet("GetListofYetkiGruplari")]
         public JsonResult YetkiGruplariListele()
@@ -72,7 +82,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _yetkigrupServices.Ekle(model);
+                _yetkigrupServices.YeniYetkiGrubuEkle(model);
                 return new ABBJsonResponse("YetkiGruplariController/ Kayıt Başarıyla Eklendi");
             }
             catch (Exception e)
@@ -92,7 +102,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _yetkigrupServices.Guncelle(model);
+                _yetkigrupServices.TekYetkiGrubuGuncelle(model);
                 return new ABBJsonResponse("YetkiGruplariController/ Araç Başarıyla Güncellendi");
             }
             catch (Exception e)
@@ -107,7 +117,7 @@ namespace WepApiAKY.Controllers
             model.Deleted = true;
             try
             {
-                _yetkigrupServices.Guncelle(model);
+                _yetkigrupServices.TekYetkiGrubuGuncelle(model);
                 return new ABBJsonResponse("YetkiGruplariController/ Araç Başarıyla Silindi");
             }
             catch (Exception e)

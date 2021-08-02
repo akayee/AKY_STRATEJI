@@ -10,7 +10,7 @@ namespace AKYSTRATEJI.Model
         public StFaaliyetler()
         {
             StFaaliyets = new HashSet<StFaaliyet>();
-            StIsturleris = new HashSet<StIsturleri>();
+            StYillikhedefs = new HashSet<StYillikhedef>();
             StratejiyiliFaaliyetlers = new HashSet<StratejiyiliFaaliyetler>();
         }
 
@@ -18,7 +18,6 @@ namespace AKYSTRATEJI.Model
         public string Aciklama { get; set; }
         public string Adi { get; set; }
         public int OlcuBirimi { get; set; }
-        public int? YillikHedefId { get; set; }
         public int PerformansId { get; set; }
         public int BirimId { get; set; }
         public DateTime OlusturmaTarihi { get; set; }
@@ -30,9 +29,8 @@ namespace AKYSTRATEJI.Model
         public virtual StIsturleri IsTuru { get; set; }
         public virtual GnOlcubirimi OlcuBirimiNavigation { get; set; }
         public virtual StPerformanslar Performans { get; set; }
-        public virtual StYillikhedef YillikHedef { get; set; }
         public virtual ICollection<StFaaliyet> StFaaliyets { get; set; }
-        public virtual ICollection<StIsturleri> StIsturleris { get; set; }
+        public virtual ICollection<StYillikhedef> StYillikhedefs { get; set; }
         public virtual ICollection<StratejiyiliFaaliyetler> StratejiyiliFaaliyetlers { get; set; }
     }
 }

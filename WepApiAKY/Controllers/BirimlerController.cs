@@ -27,27 +27,26 @@ namespace WepApiAKY.Controllers
         public JsonResult GetBirim(int id)
         {
             //Tek Birim getirme.
-            BrBirimler birim = _birim.TekBirimGetir(id);            
-            var model = new VMBirimler()
+            BrBirimler birim = _birim.TekBirimGetir(id);
+            if (!(birim is null))
             {
-                id = birim.Id,
-                Adi = birim.Adi,
-                OlusturmaTarihi = birim.OlustumraTarihi,
-                Deleted = (bool)birim.Deleted,
-                UstBirimId= (int)birim.UstBirimId
-                //-WRN- //VMAraclar eklenecek
-                //-WRN- //VMDonanimlar eklenecek
-                //-WRN- //VMMevzuatlar eklenecek
-                //-WRN- //VMPersoneller eklenecek
-                //-WRN- //VMYazilimlar eklenecek
-                //-WRN- //VMYetkiGorevTanimlari eklenecek
-                //-WRN- //VMFaaliyetTurleri eklenecek
-                //-WRN- //VMKullanicilar eklenecek
-                //-WRN- //VMMaliFaaliyetTurleri eklenecek
-                //-WRN- //VMIsturleri eklenecek
-            };
+                var model = new VMBirimler()
+                {
+                    id = birim.Id,
+                    Adi = birim.Adi,
+                    OlusturmaTarihi = birim.OlustumraTarihi,
+                    Deleted = (bool)birim.Deleted,
+                    UstBirimId = (int)birim.UstBirimId
+                };
 
-            return new JsonResult(model);
+                return new JsonResult(model);
+            }
+            else
+            {
+
+                return new JsonResult("Veri Bulunmuyor");
+            }           
+           
         }
 
         [HttpGet("GetListofBirimler")]
@@ -66,18 +65,8 @@ namespace WepApiAKY.Controllers
                     id = birim.Id,
                     Adi = birim.Adi,
                     Deleted = (bool)birim.Deleted,
-                    OlusturmaTarihi = birim.OlustumraTarihi,
-                    UstBirimId = (int)birim.UstBirimId
-                    //-WRN- //VMAraclar eklenecek
-                    //-WRN- //VMDonanimlar eklenecek
-                    //-WRN- //VMMevzuatlar eklenecek
-                    //-WRN- //VMPersoneller eklenecek
-                    //-WRN- //VMYazilimlar eklenecek
-                    //-WRN- //VMYetkiGorevTanimlari eklenecek
-                    //-WRN- //VMFaaliyetTurleri eklenecek
-                    //-WRN- //VMKullanicilar eklenecek
-                    //-WRN- //VMMaliFaaliyetTurleri eklenecek
-                    //-WRN- //VMIsturleri eklenecek
+                    OlusturmaTarihi = DateTime.Now,
+                    UstBirimId = (int?)birim.UstBirimId
                 });
             }
             return new JsonResult(vmListe);
@@ -95,20 +84,10 @@ namespace WepApiAKY.Controllers
                 OlustumraTarihi = eklenecek.OlusturmaTarihi,
                 BirimId = eklenecek.id,
                 UstBirimId = (int)eklenecek.UstBirimId
-                //-WRN- //VMAraclar eklenecek
-                //-WRN- //VMDonanimlar eklenecek
-                //-WRN- //VMMevzuatlar eklenecek
-                //-WRN- //VMPersoneller eklenecek
-                //-WRN- //VMYazilimlar eklenecek
-                //-WRN- //VMYetkiGorevTanimlari eklenecek
-                //-WRN- //VMFaaliyetTurleri eklenecek
-                //-WRN- //VMKullanicilar eklenecek
-                //-WRN- //VMMaliFaaliyetTurleri eklenecek
-                //-WRN- //VMIsturleri eklenecek
             };
             try
             {
-                _birim.Ekle(model);
+                _birim.YeniBirimEkle(model);
                 return new ABBJsonResponse("BirimlerController/ Birim Başarıyla Eklendi");
             }
             catch (Exception e)
@@ -139,7 +118,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _birim.Guncelle(model);
+                _birim.BirimGuncelle(model);
                 return new ABBJsonResponse("BirimlerController/ Birim Başarıyla Güncellendi");
             }
             catch (Exception e)
@@ -154,7 +133,7 @@ namespace WepApiAKY.Controllers
             model.Deleted = true;
             try
             {
-                _birim.Guncelle(model);
+                _birim.BirimGuncelle(model);
                 return new ABBJsonResponse("BirimlerController/ Birim Başarıyla Silindi");
             }
             catch (Exception e)

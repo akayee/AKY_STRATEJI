@@ -31,16 +31,26 @@ namespace WepApiAKY.Controllers
 
             Kullanicilar getirelecekveri = _kullanici.TekKullaniciGetir(id);
 
-            var model = new VMKullanicilar()
+
+            if (!(getirelecekveri is null))
             {
-                id = getirelecekveri.Id,
-                Deleted = (bool)getirelecekveri.Deleted,
-                KullaniciAdi= getirelecekveri.KullaniciAdi,
-                Password= getirelecekveri.Password,
-                PersonelId= getirelecekveri.PersonelId,
-                YetkiGruplariId= getirelecekveri.YetkiGruplariId
-            };
-            return new JsonResult(model);
+
+                var model = new VMKullanicilar()
+                {
+                    id = getirelecekveri.Id,
+                    Deleted = (bool)getirelecekveri.Deleted,
+                    KullaniciAdi = getirelecekveri.KullaniciAdi,
+                    Password = getirelecekveri.Password,
+                    PersonelId = getirelecekveri.PersonelId,
+                    YetkiGruplariId = getirelecekveri.YetkiGruplariId
+                };
+                return new JsonResult(model);
+            }
+            else
+            {
+
+                return new JsonResult("Veri Bulunmuyor");
+            }
         }
         [HttpGet("GetListofKullanicilar")]
         public JsonResult KullanicilariListele()
@@ -81,7 +91,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _kullanici.Ekle(model);
+                _kullanici.YeniKullaniciEkle(model);
                 return new ABBJsonResponse("KullanicilarController/ Kayıt Başarıyla Eklendi");
             }
             catch (Exception e)
@@ -103,7 +113,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _kullanici.Guncelle(model);
+                _kullanici.TekKullaniciGuncelle(model);
                 return new ABBJsonResponse("KullanicilarController/ Araç Başarıyla Güncellendi");
             }
             catch (Exception e)
@@ -118,7 +128,7 @@ namespace WepApiAKY.Controllers
             model.Deleted = true;
             try
             {
-                _kullanici.Guncelle(model);
+                _kullanici.TekKullaniciGuncelle(model);
                 return new ABBJsonResponse("KullanicilarController/ Araç Başarıyla Silindi");
             }
             catch (Exception e)

@@ -33,26 +33,28 @@ namespace WepApiAKY.Controllers
 
             StIsturleri stIsturleri = _isturleri.TekIsTuruGetir(id);
             //Isturunun bağlı olduğu performans getirme.
-            StPerformanslar isturuPerformansi = stIsturleri.Performans;
-            VMPerformanslar vmperformans = new VMPerformanslar()
-            {
-                Adi = isturuPerformansi.Adi,
-                id = isturuPerformansi.Id,
-                Deleted = (bool)isturuPerformansi.Deleted
-            };
-            //ViewModal Mapleme işlemi.
-            var model = new VMIsturleri()
-            {
-                id = stIsturleri.Id,
-                Adi = stIsturleri.Adi,
-                OlusturmaTarihi = stIsturleri.OlusturmaTarihi,
-                Deleted = (bool)stIsturleri.Deleted,
-                PerformansId = stIsturleri.PerformansId,
-                FaaliyetId= (int)stIsturleri.FaaliyetId
 
-            };
+            if (!(stIsturleri is null))
+            {
+                //ViewModal Mapleme işlemi.
+                var model = new VMIsturleri()
+                {
+                    id = stIsturleri.Id,
+                    Adi = stIsturleri.Adi,
+                    OlusturmaTarihi = stIsturleri.OlusturmaTarihi,
+                    Deleted = (bool)stIsturleri.Deleted,
+                    OlcuBirimiId = stIsturleri.OlcuBirimi,
+                    PerformansId = stIsturleri.PerformansId
 
-            return new JsonResult(model);
+                };
+
+                return new JsonResult(model);
+            }
+            else
+            {
+
+                return new JsonResult("Veri Bulunmuyor");
+            }            
         }
         [HttpGet("GetListofIsturleri")]
         public JsonResult PerformansListele()
@@ -64,21 +66,15 @@ namespace WepApiAKY.Controllers
             //İlgili Listeler birbirlerine mapleniyor ve relationlar çekilerek ekleniyor.
             foreach (StIsturleri isturu in isTurleri)
             {
-                StPerformanslar isturuPerformansi = _performanslar.Getir(performans => performans.Id == isturu.PerformansId);
-                VMPerformanslar vmperformans = new VMPerformanslar()
-                {
-                    Adi = isturuPerformansi.Adi,
-                    id = isturuPerformansi.Id,
-                    Deleted = (bool)isturuPerformansi.Deleted
-                };
+              
                 vmListe.Add(new VMIsturleri()
                 {
                     id = isturu.Id,
                     Adi = isturu.Adi,
                     PerformansId = isturu.PerformansId,
                     Deleted = (bool)isturu.Deleted,
-                    OlusturmaTarihi = isturu.OlusturmaTarihi,
-                    FaaliyetId= (int)isturu.FaaliyetId
+                    OlcuBirimiId=isturu.OlcuBirimi,
+                    OlusturmaTarihi = isturu.OlusturmaTarihi
                 });
             }
 
@@ -94,17 +90,16 @@ namespace WepApiAKY.Controllers
             {
                 Adi = eklenecek.Adi,
                 Aciklama = eklenecek.Aciklama,
-                YillikHedefId = eklenecek.YillikHedefId,
                 PerformansId = eklenecek.PerformansId,
                 Deleted = eklenecek.Deleted,
                 Maaliyet = eklenecek.Maaliyet,
-                OlusturmaTarihi = DateTime.Now,
-                FaaliyetId=eklenecek.FaaliyetId
+                OlcuBirimi=eklenecek.OlcuBirimiId,
+                OlusturmaTarihi = DateTime.Now
                 
             };
             try
             {
-                _isturleri.Ekle(model);
+                _isturleri.YeniIsTuruEkle(model);
                 return new ABBJsonResponse("Stratejik Isturu Başarıyla Eklendi");
             }
             catch (Exception e)
@@ -119,17 +114,16 @@ namespace WepApiAKY.Controllers
             {
                 Adi = guncellenecek.Adi,
                 Aciklama = guncellenecek.Aciklama,
-                YillikHedefId = guncellenecek.YillikHedefId,
                 PerformansId = guncellenecek.PerformansId,
                 Deleted = guncellenecek.Deleted,
                 Maaliyet = guncellenecek.Maaliyet,
+                OlcuBirimi=guncellenecek.OlcuBirimiId,
                 OlusturmaTarihi = guncellenecek.OlusturmaTarihi,
-                BirimId=guncellenecek.BirimId,
-                FaaliyetId = guncellenecek.FaaliyetId
+                BirimId=guncellenecek.BirimId
             };
             try
             {
-                _isturleri.Guncelle(model);
+                _isturleri.IsTuruGuncelle(model);
                 return new ABBJsonResponse("Stratejik Isturu Başarıyla Güncellendi");
             }
             catch (Exception e)
@@ -144,7 +138,7 @@ namespace WepApiAKY.Controllers
             model.Deleted = true;
             try
             {
-                _isturleri.Guncelle(model);
+                _isturleri.IsTuruGuncelle(model);
                 return new ABBJsonResponse("Stratejik Isturu Başarıyla Silindi");
             }
             catch(Exception e)

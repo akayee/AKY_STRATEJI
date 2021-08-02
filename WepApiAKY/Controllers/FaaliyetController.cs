@@ -31,18 +31,27 @@ namespace WepApiAKY.Controllers
 
             StFaaliyet faaliyet = _faaliyet.TekFaaliyetGetir(id);
 
-            var model = new VMFaaliyet()
+            if (!(faaliyet is null))
             {
-                id = faaliyet.Id,
-                OlusturmaTarihi = faaliyet.OlusturmaTarihi,
-                Deleted = (bool)faaliyet.Deleted,
-                FaaliyetlerId= faaliyet.FaaliyetlerId,
-                Deger= faaliyet.Deger,
-                GelirGider= faaliyet.GelirGider
 
-            };
+                var model = new VMFaaliyet()
+                {
+                    id = faaliyet.Id,
+                    OlusturmaTarihi = faaliyet.OlusturmaTarihi,
+                    Deleted = (bool)faaliyet.Deleted,
+                    FaaliyetlerId = faaliyet.FaaliyetlerId,
+                    Deger = faaliyet.Deger,
+                    GelirGider = faaliyet.GelirGider
 
-            return new JsonResult(model);
+                };
+
+                return new JsonResult(model);
+            }
+            else
+            {
+
+                return new JsonResult("Veri Bulunmuyor");
+            }
         }
 
         [HttpGet("GetListofFaaliyet")]
@@ -76,7 +85,7 @@ namespace WepApiAKY.Controllers
             var model = new StFaaliyet()
             {
                 Id = eklenecek.id,
-                OlusturmaTarihi = eklenecek.OlusturmaTarihi,
+                OlusturmaTarihi = DateTime.Now,
                 Deleted = (bool)eklenecek.Deleted,
                 FaaliyetlerId = eklenecek.FaaliyetlerId,
                 Deger = eklenecek.Deger,
@@ -86,7 +95,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _faaliyet.Ekle(model);
+                _faaliyet.YeniFaaliyetEkle(model);
                 return new ABBJsonResponse("FaaliyetController/ Kayıt Başarıyla Eklendi");
             }
             catch (Exception e)
@@ -109,7 +118,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _faaliyet.Guncelle(model);
+                _faaliyet.TekFaaliyetGuncelle(model);
                 return new ABBJsonResponse("FaaliyetController/ Araç Başarıyla Güncellendi");
             }
             catch (Exception e)
@@ -124,7 +133,7 @@ namespace WepApiAKY.Controllers
             model.Deleted = true;
             try
             {
-                _faaliyet.Guncelle(model);
+                _faaliyet.TekFaaliyetGuncelle(model);
                 return new ABBJsonResponse("FaaliyetController/ Araç Başarıyla Silindi");
             }
             catch (Exception e)

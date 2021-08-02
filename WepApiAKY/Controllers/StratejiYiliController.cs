@@ -31,13 +31,21 @@ namespace WepApiAKY.Controllers
 
             StStratejiyili getirelecekveri = _stratejiyili.TekStratejiYiliGetir(id);
 
-            var model = new VMStratejiYili()
+            if (!(getirelecekveri is null))
             {
-                id = getirelecekveri.Id,
-                Deleted = (bool)getirelecekveri.Deleted,
-                yil=getirelecekveri.Yil
-            };
-            return new JsonResult(model);
+                var model = new VMStratejiYili()
+                {
+                    id = getirelecekveri.Id,
+                    Deleted = (bool)getirelecekveri.Deleted,
+                    yil = getirelecekveri.Yil
+                };
+                return new JsonResult(model);
+            }
+            else
+            {
+
+                return new JsonResult("Veri Bulunmuyor");
+            }
         }
         [HttpGet("GetListofStratejiYili")]
         public JsonResult KullanicilariListele()
@@ -72,7 +80,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _stratejiyili.Ekle(model);
+                _stratejiyili.YeniStratejiYiliEkle(model);
                 return new ABBJsonResponse("StratejiYiliController/ Kayıt Başarıyla Eklendi");
             }
             catch (Exception e)
@@ -87,7 +95,7 @@ namespace WepApiAKY.Controllers
             model.Deleted = true;
             try
             {
-                _stratejiyili.Guncelle(model);
+                _stratejiyili.TekStratejiYiliGuncelle(model);
                 return new ABBJsonResponse("StratejiYiliController/ Araç Başarıyla Silindi");
             }
             catch (Exception e)

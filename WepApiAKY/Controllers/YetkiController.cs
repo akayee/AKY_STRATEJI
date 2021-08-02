@@ -29,14 +29,23 @@ namespace WepApiAKY.Controllers
             //Tek Yetki getirme.
             YtYetkiler getirelecekveri = _yetkiservices.TekYetkiGetir(id);
 
-            var model = new VMYetkiler()
+
+            if (!(getirelecekveri is null))
             {
-                id = getirelecekveri.Id,
-                Deleted = (bool)getirelecekveri.Deleted,
-                Adi=getirelecekveri.Adi,
-                Yetki=getirelecekveri.Yetki
-            };
-            return new JsonResult(model);
+                var model = new VMYetkiler()
+                {
+                    id = getirelecekveri.Id,
+                    Deleted = (bool)getirelecekveri.Deleted,
+                    Adi = getirelecekveri.Adi,
+                    Yetki = getirelecekveri.Yetki
+                };
+                return new JsonResult(model);
+            }
+            else
+            {
+
+                return new JsonResult("Veri Bulunmuyor");
+            }
         }
         [HttpGet("GetListofYetkiler")]
         public JsonResult KullanicilariListele()
@@ -74,7 +83,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _yetkiservices.Ekle(model);
+                _yetkiservices.YeniYetkiEkle(model);
                 return new ABBJsonResponse("YetkiController/ Kayıt Başarıyla Eklendi");
             }
             catch (Exception e)
@@ -95,7 +104,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _yetkiservices.Guncelle(model);
+                _yetkiservices.TekYetkiGuncelle(model);
                 return new ABBJsonResponse("YetkiController/ Araç Başarıyla Güncellendi");
             }
             catch (Exception e)
@@ -110,7 +119,7 @@ namespace WepApiAKY.Controllers
             model.Deleted = true;
             try
             {
-                _yetkiservices.Guncelle(model);
+                _yetkiservices.TekYetkiGuncelle(model);
                 return new ABBJsonResponse("YetkiController/ Araç Başarıyla Silindi");
             }
             catch (Exception e)

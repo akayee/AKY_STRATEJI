@@ -32,24 +32,27 @@ namespace WepApiAKY.Controllers
         {
             //Tek Hedef getirme.
             StHedefler hedefler = _hedefler.TekHedefGetir(id);
-            //Hedefin bağlı olduğu amaç getirme.
-            StAmaclar hedefinamaci = _amaclar.AmacGetir(hedefler.AmaclarId);
-            VMAmaclar vmamac = new VMAmaclar()
-            {
-                Adi=hedefinamaci.Adi,
-                id=hedefinamaci.Id
-            };
-            //ViewModal Mapleme işlemi.
-            var model = new VMHedefler()
-            {
-                id = hedefler.Id,
-                Tanim = hedefler.Tanim,
-                OlusturmaTarihi = hedefler.OlusturmaTarihi,
-                Deleted = (bool)hedefler.Deleted,
-                AmaclarId = hedefler.AmaclarId
-            };
 
-            return new JsonResult(model);
+            if (!(hedefler is null))
+            {
+                //ViewModal Mapleme işlemi.
+                var model = new VMHedefler()
+                {
+                    id = hedefler.Id,
+                    Tanim = hedefler.Tanim,
+                    OlusturmaTarihi = hedefler.OlusturmaTarihi,
+                    Deleted = (bool)hedefler.Deleted,
+                    AmaclarId = hedefler.AmaclarId
+                };
+
+                return new JsonResult(model);
+            }
+            else
+            {
+
+                return new JsonResult("Veri Bulunmuyor");
+            }
+            
         }
 
         [HttpGet("GetListofHedefler")]
@@ -100,7 +103,7 @@ namespace WepApiAKY.Controllers
             try
             {
                 //Veri tabanına ekleme işlemi.
-                _hedefler.Ekle(model);
+                _hedefler.YeniHedefEkle(model);
                 return new ABBJsonResponse("Stratejik Hedef Başarıyla Eklendi");
             }
             catch (Exception e)
@@ -124,7 +127,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _hedefler.Guncelle(model);
+                _hedefler.HedefGuncelle(model);
                 return new ABBJsonResponse("Stratejik Hedef Başarıyla Güncellendi");
             }
             catch (Exception e)
@@ -149,7 +152,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _hedefler.Guncelle(model);
+                _hedefler.HedefGuncelle(model);
                 return new ABBJsonResponse("Stratejik Hedef Başarıyla Silindi");
             }
             catch (Exception e)

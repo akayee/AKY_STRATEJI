@@ -18,7 +18,7 @@ namespace WepApiAKY.Controllers
     {
         //Yapılan işlerin toplamı burada hesaplanacak
         private readonly ILogger<IslerController> _logger;
-        private readonly IsService _isler;
+        private readonly IIslerServices _isler;
         private readonly IIsturleriServices _isTurleri;
         private readonly IAmaclarService _amaclar;
         private readonly IHedeflerServices _hedeflerservices;
@@ -29,7 +29,7 @@ namespace WepApiAKY.Controllers
         private readonly IBirimServis _birimler;
         private readonly IBirimTipleriServices _birimtipleri;
 
-        public IslerController(ILogger<IslerController> logger, IsService isler,IBirimTipleriServices birimTipleri, IIsturleriServices isTurleri, IAmaclarService amaclar, IHedeflerServices hedeflerservices, IPerformanslarServices performanslarservices, IIsturleriServices isturleriservices, IFaaliyetServices faaliyetservices, IFaaliyetTurleriServices faaliyetturleriservices, IBirimServis birimler)
+        public IslerController(ILogger<IslerController> logger, IIslerServices isler,IBirimTipleriServices birimTipleri, IIsturleriServices isTurleri, IAmaclarService amaclar, IHedeflerServices hedeflerservices, IPerformanslarServices performanslarservices, IIsturleriServices isturleriservices, IFaaliyetServices faaliyetservices, IFaaliyetTurleriServices faaliyetturleriservices, IBirimServis birimler)
         {
             _logger = logger;
             _isler = isler;
@@ -48,32 +48,40 @@ namespace WepApiAKY.Controllers
         public JsonResult GetIs(int id)
         {
             //Tek Is getirme.
-
             StIsler stIsler = _isler.TekIsGetir(id);
+            if (!(stIsler is null))
+            {
+                var model = new VMIsler()
+                {
+                    id = stIsler.Id,
+                    OlusturmaTarihi = stIsler.OlusturmaTarihi,
+                    Deleted = (bool)stIsler.Deleted,
+                    IsturuId = stIsler.IsTuruId,
+                    BaslangicTarihi = stIsler.BaslangicTarihi,
+                    BitisTarihi = stIsler.BitisTarihi,
+                    Ilce = (AKYSTRATEJI.enums.Ilceler)stIsler.Ilce,
+                    Mahalle = (AKYSTRATEJI.enums.Mahalleler)stIsler.Mahalle,
+                    Deger = stIsler.Deger,
+
+                };
+
+                return new JsonResult(model);
+
+            }
+            else
+            {
+
+                return new JsonResult("Veri Bulunmuyor");
+            }
+            
+
+            
+            
             //İslere bağlı olduğu İstürü getirme.
-            StIsturleri IsinIsturu = stIsler.IsTuru;
-            VMIsturleri vmIsturu = new VMIsturleri()
-            {
-                Adi = IsinIsturu.Adi,
-                id = IsinIsturu.Id,
-                Deleted = (bool)IsinIsturu.Deleted
-            };
             //ViewModal Mapleme işlemi.
-            var model = new VMIsler()
-            {
-                id = stIsler.Id,
-                OlusturmaTarihi = stIsler.OlusturmaTarihi,
-                Deleted = (bool)stIsler.Deleted,
-                IsturuId = stIsler.IsTuruId,
-                BaslangicTarihi = stIsler.BaslangicTarihi,
-                BitisTarihi = stIsler.BitisTarihi,
-                Ilce = (AKYSTRATEJI.enums.Ilceler)stIsler.Ilce,
-                Mahalle = (AKYSTRATEJI.enums.Mahalleler)stIsler.Mahalle,
-                Deger = stIsler.Deger,
+            
 
-            };
-
-            return new JsonResult(model);
+            
         }
         [HttpGet("GetListofIsler")]
         public JsonResult PerformansListele()
@@ -85,13 +93,7 @@ namespace WepApiAKY.Controllers
             //İlgili Listeler birbirlerine mapleniyor ve relationlar çekilerek ekleniyor.
             foreach (StIsler isturu in Isler)
             {
-                StIsturleri islerinIsturu = _isTurleri.Getir(performans => performans.Id == isturu.IsTuruId);
-                VMIsturleri vmIsturleri = new VMIsturleri()
-                {
-                    Adi = islerinIsturu.Adi,
-                    id = islerinIsturu.Id,
-                    Deleted = (bool)islerinIsturu.Deleted
-                };
+                
                 vmListe.Add(new VMIsler()
                 {
                     id = isturu.Id,
@@ -127,7 +129,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _isler.Ekle(model);
+                _isler.YeniIsEkle(model);
                 return new ABBJsonResponse("IslerController Stratejik Isler Başarıyla Eklendi");
             }
             catch (Exception e)
@@ -151,7 +153,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _isler.Guncelle(model);
+                _isler.IsGuncelle(model);
                 return new ABBJsonResponse("IslerController Stratejik İş Başarıyla Güncellendi");
             }
             catch (Exception e)
@@ -166,7 +168,7 @@ namespace WepApiAKY.Controllers
             model.Deleted = true;
             try
             {
-                _isler.Guncelle(model);
+                _isler.IsGuncelle(model);
                 return new ABBJsonResponse("IslerController Stratejik İş Başarıyla Silindi");
             }
             catch (Exception e)
@@ -187,13 +189,15 @@ namespace WepApiAKY.Controllers
             //İşler
             List<VMIsler> vmisler = new List<VMIsler>();
             //Strateji Bilgilerini Birimine göre tek tek çekerek vm ile eşleştiriyoruz.
-            BrBirimler stbirim = _birimler.Getir(birim => birim.Id == BirimId);
+            BrBirimler stbirim = _birimler.TekBirimGetir(BirimId);
             VMBirimler birimi= new VMBirimler()
             {
                 Adi=stbirim.Adi,
-                Deleted= (bool)stbirim.Deleted,
+                Deleted= (bool?)stbirim.Deleted,
                 id=stbirim.Id,
-                BirimTipiId= (int)stbirim.BirimTipiId
+                BirimTipiId= (int?)stbirim.BirimTipiId,
+                OlusturmaTarihi=stbirim.OlustumraTarihi,
+                UstBirimId=(int?)stbirim.UstBirimId
             };
             BrBirimtipleri stbirimtipleri = _birimtipleri.Getir(birimtipi => birimtipi.Id == birimi.BirimTipiId);
             VMBirimTipleri birimtipi = new VMBirimTipleri()
@@ -223,7 +227,7 @@ namespace WepApiAKY.Controllers
                 }
 
                 //FaaliyetTurleri işlemleri
-                StFaaliyetler stfaaliyetturleri = _faaliyetturleriservices.Getir(faaliyetturu => faaliyetturu.Id == isturu.FaaliyetId);
+                StFaaliyetler stfaaliyetturleri = _faaliyetturleriservices.Getir(faaliyetturu => faaliyetturu.IsTuruId == isturu.Id);
 
                 VMFaaliyetTurleri vmfaaliyetturu = new VMFaaliyetTurleri()
                 {
@@ -236,7 +240,7 @@ namespace WepApiAKY.Controllers
                 vmfaaliyetturleri.Add(vmfaaliyetturu);
 
                 //Faaliyet işlemleri
-                List<StFaaliyet> stfaaliyet = _faaliyetservices.DetayliListe(faaliyet => faaliyet.FaaliyetlerId == isturu.FaaliyetId);
+                List<StFaaliyet> stfaaliyet = _faaliyetservices.DetayliListe(faaliyet => faaliyet.FaaliyetlerId == vmfaaliyetturu.id);
 
                 foreach(StFaaliyet faaliyet in stfaaliyet)
                 {
@@ -271,7 +275,7 @@ namespace WepApiAKY.Controllers
                 }
 
                 //işlerin tamamını çekerek yazma
-                List<StIsler> stislistesi = _isler.DetayliListe(stis => stis.Id == isturu.Id);
+                List<StIsler> stislistesi = _isler.DetayliListe(stis => stis.IsTuruId == isturu.Id);
                 foreach(StIsler stisler in stislistesi)
                 {
                     VMIsler vmis = new VMIsler()

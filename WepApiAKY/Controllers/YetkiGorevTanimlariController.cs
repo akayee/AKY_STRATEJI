@@ -31,16 +31,27 @@ namespace WepApiAKY.Controllers
 
             BrYetkiGorevTanimlari yetkiGorevTanim = _yetkiGorev.TekYetkiGorevTanimGetir(id);
 
-            var model = new VMYetkiGorevTanimlari()
+
+
+            if (!(yetkiGorevTanim is null))
             {
-                id = yetkiGorevTanim.Id,
-                Deleted = (bool)yetkiGorevTanim.Deleted,
-                Adi = yetkiGorevTanim.Adi,
-                BirimId = yetkiGorevTanim.BirimId,
-                OlusturmaTarihi = yetkiGorevTanim.OlusturmaTarihi,
-                Kanun=yetkiGorevTanim.Kanun
-            };
-            return new JsonResult(model);
+
+                var model = new VMYetkiGorevTanimlari()
+                {
+                    id = yetkiGorevTanim.Id,
+                    Deleted = (bool)yetkiGorevTanim.Deleted,
+                    Adi = yetkiGorevTanim.Adi,
+                    BirimId = yetkiGorevTanim.BirimId,
+                    OlusturmaTarihi = yetkiGorevTanim.OlusturmaTarihi,
+                    Kanun = yetkiGorevTanim.Kanun
+                };
+                return new JsonResult(model);
+            }
+            else
+            {
+
+                return new JsonResult("Veri Bulunmuyor");
+            }
         }
         [HttpGet("GetListofYetkiGorevTanimlar")]
         public JsonResult yetkiGorevleriListele()
@@ -76,13 +87,13 @@ namespace WepApiAKY.Controllers
                 Deleted = (bool)eklenecek.Deleted,
                 Adi = eklenecek.Adi,
                 BirimId = eklenecek.BirimId,
-                OlusturmaTarihi = eklenecek.OlusturmaTarihi,
+                OlusturmaTarihi = DateTime.Now,
                 Kanun=eklenecek.Kanun,
                 YetkiGorevId=eklenecek.id
             };
             try
             {
-                _yetkiGorev.Ekle(model);
+                _yetkiGorev.YeniYetkiGorevTanimEkle(model);
                 return new ABBJsonResponse("YetkiGorevTanimlariController/ Kayıt Başarıyla Eklendi");
             }
             catch (Exception e)
@@ -105,7 +116,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _yetkiGorev.Guncelle(model);
+                _yetkiGorev.TekYetkiGorevTanimGuncelle(model);
                 return new ABBJsonResponse("YetkiGorevTanimlariController/ Araç Başarıyla Güncellendi");
             }
             catch (Exception e)
@@ -120,7 +131,7 @@ namespace WepApiAKY.Controllers
             model.Deleted = true;
             try
             {
-                _yetkiGorev.Guncelle(model);
+                _yetkiGorev.TekYetkiGorevTanimGuncelle(model);
                 return new ABBJsonResponse("YetkiGorevTanimlariController/ Araç Başarıyla Silindi");
             }
             catch (Exception e)

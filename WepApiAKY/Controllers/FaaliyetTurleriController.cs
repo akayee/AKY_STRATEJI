@@ -32,20 +32,27 @@ namespace WepApiAKY.Controllers
 
             StFaaliyetler faaliyetTuru = _faaliyetTurleri.FaaliyetTuruGetir(id);
 
-            var model = new VMFaaliyetTurleri()
+            if (!(faaliyetTuru is null))
             {
-                id = faaliyetTuru.Id,
-                Aciklama = faaliyetTuru.Aciklama,
-                BirimId = faaliyetTuru.BirimId,
-                Deleted = (bool)faaliyetTuru.Deleted,
-                Adi = faaliyetTuru.Adi,
-                FaaliyetlerId = faaliyetTuru.FaaliyetlerId,
-                IsturleriId = (int)faaliyetTuru.IsTuruId,
-                OlcuBirimiId = faaliyetTuru.OlcuBirimi,
-                PerformansId = faaliyetTuru.PerformansId,
-                YillikHedeflerId = (int)faaliyetTuru.YillikHedefId
-            };
-            return new JsonResult(model);
+                var model = new VMFaaliyetTurleri()
+                {
+                    id = faaliyetTuru.Id,
+                    Aciklama = faaliyetTuru.Aciklama,
+                    BirimId = faaliyetTuru.BirimId,
+                    Deleted = (bool)faaliyetTuru.Deleted,
+                    Adi = faaliyetTuru.Adi,
+                    FaaliyetlerId = faaliyetTuru.FaaliyetlerId,
+                    IsturleriId = (int)faaliyetTuru.IsTuruId,
+                    OlcuBirimiId = faaliyetTuru.OlcuBirimi,
+                    PerformansId = faaliyetTuru.PerformansId
+                };
+                return new JsonResult(model);
+            }
+            else
+            {
+
+                return new JsonResult("Veri Bulunmuyor");
+            }
         }
         [HttpGet("GetListofFaaliyetTurleri")]
         public JsonResult FaaliyetTurleriListele()
@@ -65,8 +72,7 @@ namespace WepApiAKY.Controllers
                     FaaliyetlerId = faaliyetturu.FaaliyetlerId,
                     IsturleriId = (int)faaliyetturu.IsTuruId,
                     OlcuBirimiId = faaliyetturu.OlcuBirimi,
-                    PerformansId = faaliyetturu.PerformansId,
-                    YillikHedeflerId= (int)faaliyetturu.YillikHedefId
+                    PerformansId = faaliyetturu.PerformansId
                    
                 });
             }
@@ -85,13 +91,12 @@ namespace WepApiAKY.Controllers
                 FaaliyetlerId = eklenecek.FaaliyetlerId,
                 IsTuruId = eklenecek.IsturleriId,
                 OlcuBirimi = eklenecek.OlcuBirimiId,
-                OlusturmaTarihi = eklenecek.OlusturmaTarihi,
-                PerformansId = eklenecek.PerformansId,
-                YillikHedefId = eklenecek.YillikHedeflerId
+                OlusturmaTarihi = DateTime.Now,
+                PerformansId = eklenecek.PerformansId
             };
             try
             {
-                _faaliyetTurleri.Ekle(model);
+                _faaliyetTurleri.YeniFaaliyetTuruEkle(model);
                 return new ABBJsonResponse("FaaliyetTurleriController/ Kayıt Başarıyla Eklendi");
             }
             catch (Exception e)
@@ -113,12 +118,11 @@ namespace WepApiAKY.Controllers
                 IsTuruId = guncellenecek.FaaliyetlerId,
                 OlcuBirimi = guncellenecek.OlcuBirimiId,
                 OlusturmaTarihi = guncellenecek.OlusturmaTarihi,
-                PerformansId = guncellenecek.PerformansId,
-                YillikHedefId = guncellenecek.YillikHedeflerId
+                PerformansId = guncellenecek.PerformansId
             };
             try
             {
-                _faaliyetTurleri.Guncelle(model);
+                _faaliyetTurleri.TekFaaliyetTuruGuncelle(model);
                 return new ABBJsonResponse("FaaliyetTurleriController/ Kayıt Başarıyla Güncellendi");
             }
             catch (Exception e)
@@ -133,7 +137,7 @@ namespace WepApiAKY.Controllers
             model.Deleted = true;
             try
             {
-                _faaliyetTurleri.Guncelle(model);
+                _faaliyetTurleri.TekFaaliyetTuruGuncelle(model);
                 return new ABBJsonResponse("FaaliyetTurleriController/ Kayıt Başarıyla Silindi");
             }
             catch (Exception e)

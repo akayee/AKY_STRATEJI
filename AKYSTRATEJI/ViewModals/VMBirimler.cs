@@ -9,9 +9,9 @@ namespace AKYSTRATEJI.ViewModals
     {
         public int id { get; set; }
         public string Adi { get; set; }
-        public int UstBirimId { get; set; }
-        public bool Deleted { get; set; }
-        public int BirimTipiId { get; set; }
+        public int? UstBirimId { get; set; }
+        public bool? Deleted { get; set; }
+        public int? BirimTipiId { get; set; }
         public DateTime OlusturmaTarihi { get; set; }
 
 

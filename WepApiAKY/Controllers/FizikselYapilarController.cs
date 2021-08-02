@@ -32,19 +32,29 @@ namespace WepApiAKY.Controllers
 
             BrFizikselYapilar fizikselyapi = _fizikselYapilarServices.TekFizikselYapiGetir(id);
 
-            var model = new VMFizikselYapilar()
+            if (!(fizikselyapi is null))
             {
-                id = fizikselyapi.Id,
-                Deleted = (bool)fizikselyapi.Deleted,
-                Adi= fizikselyapi.Adi,
-                BirimId=fizikselyapi.BirimId,
-                Konum=fizikselyapi.Konum,
-                MetreKare=fizikselyapi.MetreKare,
-                OlusturmaTarihi=fizikselyapi.OlusturmaTarihi
 
-            };
 
-            return new JsonResult(model);
+                var model = new VMFizikselYapilar()
+                {
+                    id = fizikselyapi.Id,
+                    Deleted = (bool)fizikselyapi.Deleted,
+                    Adi = fizikselyapi.Adi,
+                    BirimId = fizikselyapi.BirimId,
+                    Konum = fizikselyapi.Konum,
+                    MetreKare = fizikselyapi.MetreKare,
+                    OlusturmaTarihi = fizikselyapi.OlusturmaTarihi
+
+                };
+
+                return new JsonResult(model);
+            }
+            else
+            {
+
+                return new JsonResult("Veri Bulunmuyor");
+            }
         }
         [HttpGet("GetListofBirimTipleri")]
         public JsonResult FizikselYapilariListele()
@@ -83,11 +93,11 @@ namespace WepApiAKY.Controllers
                 BirimId = eklenecek.BirimId,
                 Konum = eklenecek.Konum,
                 MetreKare = eklenecek.MetreKare,
-                OlusturmaTarihi = eklenecek.OlusturmaTarihi
+                OlusturmaTarihi = DateTime.Now
             };
             try
             {
-                _fizikselYapilarServices.Ekle(model);
+                _fizikselYapilarServices.YeniFizikselYapiEkle(model);
                 return new ABBJsonResponse("FizikselYapilarController/ Araç Başarıyla Eklendi");
             }
             catch (Exception e)
@@ -110,7 +120,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _fizikselYapilarServices.Guncelle(model);
+                _fizikselYapilarServices.TekFizikselYapiGuncelle(model);
                 return new ABBJsonResponse("FizikselYapilarController/ Araç Başarıyla Güncellendi");
             }
             catch (Exception e)
@@ -125,7 +135,7 @@ namespace WepApiAKY.Controllers
             model.Deleted = true;
             try
             {
-                _fizikselYapilarServices.Guncelle(model);
+                _fizikselYapilarServices.TekFizikselYapiGuncelle(model);
                 return new ABBJsonResponse("FizikselYapilarController/ Araç Başarıyla Silindi");
             }
             catch (Exception e)

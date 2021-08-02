@@ -11,7 +11,9 @@ namespace AKYSTRATEJI.ViewModals
         public int Yil { get; set; }
         public int Hedef { get; set; }
         public int? HedefN { get; set; }
+        public int? FaaliyetlerId { get; set; }
         public int? HedefNN { get; set; }
+        public int? IsturuId { get; set; }
         public DateTime OlusturmaTarihi { get; set; }
         public bool Deleted { get; set; }
 

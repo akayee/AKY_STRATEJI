@@ -31,15 +31,23 @@ namespace WepApiAKY.Controllers
 
             BrBirimtipleri birimtipi = _birimtipleri.TekBirimTipiGetir(id);
 
-            var model = new VMBirimTipleri()
+            if (!(birimtipi is null))
             {
-                Id = birimtipi.Id,
-                Deleted = (bool)birimtipi.Deleted,
-                BirimTipi= birimtipi.BirimTipi
+                var model = new VMBirimTipleri()
+                {
+                    Id = birimtipi.Id,
+                    Deleted = (bool)birimtipi.Deleted,
+                    BirimTipi = birimtipi.BirimTipi
 
-            };
+                };
 
-            return new JsonResult(model);
+                return new JsonResult(model);
+            }
+            else
+            {
+
+                return new JsonResult("Veri Bulunmuyor");
+            }           
         }
         [HttpGet("GetListofBirimTipleri")]
         public JsonResult BirimTipiListele()
@@ -70,11 +78,11 @@ namespace WepApiAKY.Controllers
             {
                 Id = eklenecek.Id,
                 Deleted = (bool)eklenecek.Deleted,
-                BirimTipi = eklenecek.BirimTipi
+                BirimTipi = eklenecek.BirimTipi,
             };
             try
             {
-                _birimtipleri.Ekle(model);
+                _birimtipleri.YeniBirimTipiEkle(model);
                 return new ABBJsonResponse("BirimTipiController/ Araç Başarıyla Eklendi");
             }
             catch (Exception e)
@@ -93,7 +101,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _birimtipleri.Guncelle(model);
+                _birimtipleri.TekBirimTipiGuncelle(model);
                 return new ABBJsonResponse("BirimTipiController/ Araç Başarıyla Güncellendi");
             }
             catch (Exception e)
@@ -108,7 +116,7 @@ namespace WepApiAKY.Controllers
             model.Deleted = true;
             try
             {
-                _birimtipleri.Guncelle(model);
+                _birimtipleri.TekBirimTipiGuncelle(model);
                 return new ABBJsonResponse("BirimTipiController/ Araç Başarıyla Silindi");
             }
             catch (Exception e)
