@@ -1,5 +1,6 @@
 ﻿using ABB.Core.DataAccess;
 using AKYSTRATEJI.Model;
+using AKYSTRATEJI.ViewModals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,9 @@ namespace BL.Abstract
         bool YeniIsTuruEkle(StIsturleri isTuru);
         bool IsTuruSil(StIsturleri isTuru);
         bool IsTuruGuncelle(StIsturleri IsTuru);
-        
+        public List<VMIsturleri> StratejiBilgileriHesapla(int birimid);
+
+
 
     }
 }

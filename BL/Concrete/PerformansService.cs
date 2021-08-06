@@ -4,6 +4,7 @@ using BL.Abstract;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace BL.Concrete
 {
@@ -29,9 +30,9 @@ namespace BL.Concrete
             }
         }
 
-        public List<StPerformanslar> PerformanslariListele()
+        public List<StPerformanslar> PerformanslariListele(Expression<Func<StPerformanslar, bool>> filter = null, params Expression<Func<StPerformanslar, object>>[] includeProperties)
         {
-            return DetayliListe(performanslar => performanslar.Deleted != true);
+            return DetayliListe(filter);
         }
 
         public bool PerformansSil(StPerformanslar performans)

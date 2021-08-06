@@ -75,7 +75,7 @@ namespace BL.Concrete
 
         public override void Validate(StFaaliyet entity)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public bool YeniFaaliyetEkle(StFaaliyet faaliyet)

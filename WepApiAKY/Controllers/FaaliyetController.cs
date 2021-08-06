@@ -40,8 +40,7 @@ namespace WepApiAKY.Controllers
                     OlusturmaTarihi = faaliyet.OlusturmaTarihi,
                     Deleted = (bool)faaliyet.Deleted,
                     FaaliyetlerId = faaliyet.FaaliyetlerId,
-                    Deger = faaliyet.Deger,
-                    GelirGider = faaliyet.GelirGider
+                    Deger = faaliyet.Deger
 
                 };
 
@@ -71,8 +70,7 @@ namespace WepApiAKY.Controllers
                     OlusturmaTarihi = faaliyet.OlusturmaTarihi,
                     Deleted = (bool)faaliyet.Deleted,
                     FaaliyetlerId = faaliyet.FaaliyetlerId,
-                    Deger = faaliyet.Deger,
-                    GelirGider = faaliyet.GelirGider
+                    Deger = faaliyet.Deger
                 });
             }
             return new JsonResult(vmListe);
@@ -89,7 +87,6 @@ namespace WepApiAKY.Controllers
                 Deleted = (bool)eklenecek.Deleted,
                 FaaliyetlerId = eklenecek.FaaliyetlerId,
                 Deger = eklenecek.Deger,
-                GelirGider = eklenecek.GelirGider,
                 FaaliyetId=eklenecek.id
 
             };
@@ -113,7 +110,6 @@ namespace WepApiAKY.Controllers
                 Deleted = (bool)guncellenecek.Deleted,
                 FaaliyetlerId = guncellenecek.FaaliyetlerId,
                 Deger = guncellenecek.Deger,
-                GelirGider = guncellenecek.GelirGider,
                 FaaliyetId = guncellenecek.id
             };
             try

@@ -1,5 +1,6 @@
 ﻿using ABB.Core.DataAccess;
 using AKYSTRATEJI.Model;
+using AKYSTRATEJI.ViewModals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,7 @@ namespace BL.Abstract
         bool YeniFaaliyetTuruEkle(StFaaliyetler FaaliyetTuru);
         bool TekFaaliyetTuruSil(StFaaliyetler FaaliyetTuru);
         bool TekFaaliyetTuruGuncelle(StFaaliyetler FaaliyetTuru);
+
+        public List<VMFaaliyetTurleri> StratejiBilgileriHesapla(int birimid);
     }
 }

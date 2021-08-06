@@ -16,5 +16,6 @@ namespace BL.Abstract
         bool YeniBirimEkle(BrBirimler birim);
         bool BirimSil(BrBirimler birim);
         bool BirimGuncelle(BrBirimler birim);
+        int UstBirimGetir(int BirimId);
     }
 }

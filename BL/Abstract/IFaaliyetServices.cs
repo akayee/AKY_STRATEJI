@@ -1,5 +1,6 @@
 ﻿using ABB.Core.DataAccess;
 using AKYSTRATEJI.Model;
+using AKYSTRATEJI.ViewModals;
 using System;
 using System.Collections.Generic;
 using System.Linq;

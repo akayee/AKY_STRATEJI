@@ -13,10 +13,12 @@ namespace BL.Concrete
     public class BirimlerService : ABBEntityServis<BrBirimler, AKYSTRATEJIContext>, IBirimServis
     {
         private readonly ILogger<BirimlerService> _logger;
+        private readonly IBirimTipleriServices _birimtipi;
 
-        public BirimlerService(ILogger<BirimlerService> logger) : base(logger)
+        public BirimlerService(ILogger<BirimlerService> logger , IBirimTipleriServices birimtipi) : base(logger)
         {
             _logger = logger;
+            _birimtipi = birimtipi;
         }
 
         public bool BirimGuncelle(BrBirimler birim)
@@ -96,6 +98,25 @@ namespace BL.Concrete
             {
                 throw new NotImplementedException(e.Message);
             }
+        }
+        public int UstBirimGetir(int BirimId)
+        {
+            
+            BrBirimler birim = TekBirimGetir(BirimId);
+            
+            BrBirimtipleri birimtipi = _birimtipi.Getir(birimtipi => birimtipi.Id == birim.BirimTipiId);
+            if(birimtipi.Id !=4)
+            {
+                int ustbirimId = (int)birim.UstBirimId;
+                UstBirimGetir((int)birim.UstBirimId);
+                return ustbirimId;
+            }
+            else
+            {
+
+                return birim.Id;
+            }
+
         }
     }
 }

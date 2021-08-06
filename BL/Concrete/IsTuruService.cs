@@ -1,5 +1,6 @@
 ﻿using ABB.Core.DataAccess;
 using AKYSTRATEJI.Model;
+using AKYSTRATEJI.ViewModals;
 using BL.Abstract;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.Extensions.Logging;
@@ -14,9 +15,13 @@ namespace BL.Concrete
     public class IsTuruService : ABBEntityServis<StIsturleri, AKYSTRATEJIContext>, IIsturleriServices
     {
         private readonly ILogger<IsTuruService> _logger;
-        public IsTuruService(ILogger<IsTuruService> logger) : base(logger)
+        private readonly IIslerServices _islerservices;
+        private readonly IYillikHedefServices _yillikhedefler;
+        public IsTuruService(ILogger<IsTuruService> logger,IIslerServices islerServices , IYillikHedefServices yillikHedefServices) : base(logger)
         {
             _logger = logger;
+            _islerservices = islerServices;
+            _yillikhedefler = yillikHedefServices;
         }
 
         public bool IsTuruGuncelle(StIsturleri IsTuru)
@@ -60,7 +65,7 @@ namespace BL.Concrete
 
         public override void Validate(StIsturleri entity)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public bool YeniIsTuruEkle(StIsturleri isTuru)
@@ -80,6 +85,61 @@ namespace BL.Concrete
             {
                 throw new NotImplementedException(e.Message);
             }
+        }
+        public List<VMIsturleri> StratejiBilgileriHesapla(int birimid)
+        {
+            List<VMIsturleri> vmisturu = new List<VMIsturleri>();
+            List<StIsturleri> isturleri = IsTuruListele(i => i.BirimId == birimid && i.Deleted!=true);
+            int toplamdeger = 0;
+            int firstpart = 0;
+            int secondpart = 0;
+            int thirdpart = 0;
+            int lastpart = 0;
+            foreach (StIsturleri isturu in isturleri)
+            {
+
+                List<StIsler> islistesi = _islerservices.IsleriListele(isler => isler.IsTuruId == isturu.Id && isler.Deleted!=true);
+                foreach(StIsler hesaplanacak in islistesi)
+                {
+                    toplamdeger += hesaplanacak.Deger;
+                    if(hesaplanacak.OlusturmaTarihi.Month<5)
+                    {
+                        firstpart += hesaplanacak.Deger;
+                    }else if(hesaplanacak.OlusturmaTarihi.Month > 4 && hesaplanacak.OlusturmaTarihi.Month < 9)
+                    {
+                        secondpart += hesaplanacak.Deger;
+                    }
+                    else if (hesaplanacak.OlusturmaTarihi.Month > 8 && hesaplanacak.OlusturmaTarihi.Month < 13)
+                    {
+                        thirdpart += hesaplanacak.Deger;
+                    }
+                    else
+                    {
+                        lastpart += hesaplanacak.Deger;
+                    }
+                }
+                var yillikhedef = _yillikhedefler.YillikHedefleriListele(i => i.Yil == DateTime.Today.Year && i.IsTuruId==isturu.Id && i.Deleted!=true).FirstOrDefault();
+                VMIsturleri vmis = new VMIsturleri()
+                {
+                    Aciklama = isturu.Aciklama,
+                    Adi=isturu.Adi,
+                    BirimId=isturu.BirimId,
+                    Deleted= (bool)isturu.Deleted,
+                    id=isturu.Id,
+                    PerformansId=isturu.PerformansId,
+                    OlcuBirimiId=isturu.OlcuBirimi,
+                    YillikHedef=yillikhedef.Hedef,
+                    ToplamDeger=toplamdeger,
+                    FirstPart=firstpart,
+                    SecondPart=secondpart,
+                    ThirdPart=thirdpart,
+                    LastPart=lastpart
+ 
+                };
+                vmisturu.Add(vmis);
+            }
+
+            return vmisturu;
         }
     }
 }
