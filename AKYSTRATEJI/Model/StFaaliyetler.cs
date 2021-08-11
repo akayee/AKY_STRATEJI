@@ -10,8 +10,8 @@ namespace AKYSTRATEJI.Model
         public StFaaliyetler()
         {
             StFaaliyets = new HashSet<StFaaliyet>();
+            StStratejireleations = new HashSet<StStratejireleation>();
             StYillikhedefs = new HashSet<StYillikhedef>();
-            StratejiyiliFaaliyetlers = new HashSet<StratejiyiliFaaliyetler>();
         }
 
         public int Id { get; set; }
@@ -25,13 +25,14 @@ namespace AKYSTRATEJI.Model
         public bool? Deleted { get; set; }
         public int? IsTuruId { get; set; }
         public int? Maaliyet { get; set; }
+        public int? EkonomikKod { get; set; }
 
         public virtual BrBirimler Birim { get; set; }
         public virtual GnOlcubirimi OlcuBirimiNavigation { get; set; }
         public virtual StPerformanslar Performans { get; set; }
         public virtual StIsturleri StIsturleri { get; set; }
         public virtual ICollection<StFaaliyet> StFaaliyets { get; set; }
+        public virtual ICollection<StStratejireleation> StStratejireleations { get; set; }
         public virtual ICollection<StYillikhedef> StYillikhedefs { get; set; }
-        public virtual ICollection<StratejiyiliFaaliyetler> StratejiyiliFaaliyetlers { get; set; }
     }
 }

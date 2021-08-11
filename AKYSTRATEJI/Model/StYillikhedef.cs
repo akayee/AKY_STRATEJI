@@ -7,6 +7,11 @@ namespace AKYSTRATEJI.Model
 {
     public partial class StYillikhedef
     {
+        public StYillikhedef()
+        {
+            StStratejireleations = new HashSet<StStratejireleation>();
+        }
+
         public int Id { get; set; }
         public int YillikHedefId { get; set; }
         public int Yil { get; set; }
@@ -20,5 +25,6 @@ namespace AKYSTRATEJI.Model
 
         public virtual StFaaliyetler Faaliyet { get; set; }
         public virtual StIsturleri IsTuru { get; set; }
+        public virtual ICollection<StStratejireleation> StStratejireleations { get; set; }
     }
 }

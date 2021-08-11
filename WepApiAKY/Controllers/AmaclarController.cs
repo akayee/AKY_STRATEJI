@@ -59,8 +59,21 @@ namespace WepApiAKY.Controllers
         {
             //Veritabanından StAmaclar tablosunun listesini almaişlemi.
             List<StAmaclar> amaclar = _amaclar.Listele();
+            List<VMAmaclar> vMAmaclars = new List<VMAmaclar>();
 
-            return new JsonResult(amaclar);
+            foreach(StAmaclar amac in amaclar)
+            {
+                VMAmaclar vmamac = new VMAmaclar()
+                {
+                    Adi=amac.Adi,
+                    Deleted=(bool)amac.Deleted,
+                    id=amac.Id,
+                    OlusturmaTarihi=amac.OlusturmaTarihi
+                };
+                vMAmaclars.Add(vmamac);
+            }
+
+            return new JsonResult(vMAmaclars);
         }
         [HttpPost("AddNewAmac")]
         public IActionResult Ekle(VMAmaclar eklenecek)

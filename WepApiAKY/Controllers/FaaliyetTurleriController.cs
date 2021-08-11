@@ -44,7 +44,8 @@ namespace WepApiAKY.Controllers
                     FaaliyetlerId = faaliyetTuru.FaaliyetlerId,
                     IsturleriId = (int)faaliyetTuru.IsTuruId,
                     OlcuBirimiId = faaliyetTuru.OlcuBirimi,
-                    PerformansId = faaliyetTuru.PerformansId
+                    PerformansId = faaliyetTuru.PerformansId,
+                    EkonomikSiniflandirma=(int)faaliyetTuru.EkonomikKod
                 };
                 return new JsonResult(model);
             }
@@ -72,7 +73,8 @@ namespace WepApiAKY.Controllers
                     FaaliyetlerId = faaliyetturu.FaaliyetlerId,
                     IsturleriId = (int)faaliyetturu.IsTuruId,
                     OlcuBirimiId = faaliyetturu.OlcuBirimi,
-                    PerformansId = faaliyetturu.PerformansId
+                    PerformansId = faaliyetturu.PerformansId,
+                    EkonomikSiniflandirma=(int)faaliyetturu.EkonomikKod
                    
                 });
             }
@@ -92,7 +94,8 @@ namespace WepApiAKY.Controllers
                 IsTuruId = eklenecek.IsturleriId,
                 OlcuBirimi = eklenecek.OlcuBirimiId,
                 OlusturmaTarihi = DateTime.Now,
-                PerformansId = eklenecek.PerformansId
+                PerformansId = eklenecek.PerformansId,
+                EkonomikKod=eklenecek.EkonomikSiniflandirma
             };
             try
             {
@@ -118,7 +121,8 @@ namespace WepApiAKY.Controllers
                 IsTuruId = guncellenecek.FaaliyetlerId,
                 OlcuBirimi = guncellenecek.OlcuBirimiId,
                 OlusturmaTarihi = guncellenecek.OlusturmaTarihi,
-                PerformansId = guncellenecek.PerformansId
+                PerformansId = guncellenecek.PerformansId,
+                EkonomikKod=guncellenecek.EkonomikSiniflandirma
             };
             try
             {

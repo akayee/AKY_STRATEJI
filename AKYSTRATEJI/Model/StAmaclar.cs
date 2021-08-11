@@ -10,7 +10,7 @@ namespace AKYSTRATEJI.Model
         public StAmaclar()
         {
             StHedeflers = new HashSet<StHedefler>();
-            StratejiyiliAmaclars = new HashSet<StratejiyiliAmaclar>();
+            StStratejireleations = new HashSet<StStratejireleation>();
         }
 
         public int Id { get; set; }
@@ -20,6 +20,6 @@ namespace AKYSTRATEJI.Model
         public bool? Deleted { get; set; }
 
         public virtual ICollection<StHedefler> StHedeflers { get; set; }
-        public virtual ICollection<StratejiyiliAmaclar> StratejiyiliAmaclars { get; set; }
+        public virtual ICollection<StStratejireleation> StStratejireleations { get; set; }
     }
 }

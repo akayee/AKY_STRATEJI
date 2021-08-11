@@ -59,6 +59,7 @@ namespace WepApiAKY
             services.AddScoped<IYetkilerServices, YetkiService>();
             services.AddScoped<IYillikHedefServices, YillikHedefService>();
             services.AddScoped<IFaaliyetTurleriServices, FaaliyetTuruService>();
+            services.AddScoped<IStratejiRelationServices, StratejiReleationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
