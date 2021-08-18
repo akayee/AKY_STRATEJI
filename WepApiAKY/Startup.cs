@@ -35,12 +35,9 @@ namespace WepApiAKY
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WepApiAKY", Version = "v1" });
                 c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First()); //This line
             });
-            services.AddCors(options => options.AddPolicy("ApiCorsPolicy", builder =>
-            {
-                builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
-            }));
-
-            services.AddMvc();
+            services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()
+                                                                    .AllowAnyMethod()
+                                                                     .AllowAnyHeader()));
 
             services.AddScoped<IAmaclarService, AmaclarService >();
             services.AddScoped<IHedeflerServices, HedeflerServices>();
@@ -77,24 +74,17 @@ namespace WepApiAKY
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WepApiAKY v1"));
             }
-            app.UseCors(
-                options => options.WithOrigins("http://http://localhost:3000").AllowAnyMethod()
-            );
 
             app.UseHttpsRedirection();
+            app.UseCors("AllowAll");
+
 
             app.UseRouting();
 
             app.UseDeveloperExceptionPage();
 
             app.UseAuthorization();
-
-            app.UseCors(builder => builder
-            .AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader());
-            app.UseCors("ApiCorsPolicy");
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

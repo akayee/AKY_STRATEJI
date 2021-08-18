@@ -2,6 +2,7 @@
 using AKYSTRATEJI.Model;
 using AKYSTRATEJI.ViewModals;
 using BL.Abstract;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -65,8 +66,8 @@ namespace WepApiAKY.Controllers
                     id = birim.Id,
                     Adi = birim.Adi,
                     Deleted = (bool)birim.Deleted,
-                    OlusturmaTarihi = DateTime.Now,
-                    UstBirimId = (int?)birim.UstBirimId
+                    OlusturmaTarihi = birim.OlustumraTarihi,
+                    UstBirimId = birim.UstBirimId
                 });
             }
             return new JsonResult(vmListe);
@@ -81,14 +82,16 @@ namespace WepApiAKY.Controllers
             {
                 Adi = eklenecek.Adi,
                 Deleted = (bool)eklenecek.Deleted,
-                OlustumraTarihi = eklenecek.OlusturmaTarihi,
+                OlustumraTarihi = DateTime.Now,
                 BirimId = eklenecek.id,
-                UstBirimId = (int)eklenecek.UstBirimId
+                UstBirimId = eklenecek.UstBirimId
             };
             try
             {
                 _birim.YeniBirimEkle(model);
-                return new ABBJsonResponse("BirimlerController/ Birim Başarıyla Eklendi");
+                ABBJsonResponse response = new ABBJsonResponse("BirimlerController/ Birim Başarıyla Eklendi");
+                response.StatusCode = 200;
+                return response;
             }
             catch (Exception e)
             {

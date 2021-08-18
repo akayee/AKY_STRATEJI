@@ -78,7 +78,7 @@ namespace BL.Concrete
 
         public override void Validate(BrBirimler entity)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public bool YeniBirimEkle(BrBirimler birim)
@@ -92,7 +92,7 @@ namespace BL.Concrete
             {
 
                 base.Ekle(birim);
-                throw new NotImplementedException("BirimlerService/ Kayır Başarıyla Eklendi");
+                return (true);
             }
             catch (Exception e)
             {
