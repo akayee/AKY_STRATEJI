@@ -26,7 +26,7 @@ namespace BL.Concrete
             try
             {
                 base.Guncelle(birim);
-                throw new NotImplementedException("BirimlerService/ Kayıt güncelleme başarılı");
+                return true;
             }
             catch (Exception e)
             {
@@ -38,8 +38,7 @@ namespace BL.Concrete
         {
             try
             {
-                return base.DetayliListe(filter);
-                throw new NotImplementedException("BirimlerService/ Kayıt listeleme başarılı");
+                return base.GetList(filter,birim=>birim.BirimTipi);
             }
             catch (Exception e)
             {
@@ -54,7 +53,7 @@ namespace BL.Concrete
 
                 birim.Deleted = true;
                 base.Guncelle(birim);
-                throw new NotImplementedException("BirimlerService/ Kayıt silme başarılı");
+                return true;
             }
             catch (Exception e)
             {
@@ -68,7 +67,6 @@ namespace BL.Concrete
             {
 
                 return base.Getir(birim => birim.Id == BirimId && birim.Deleted != true);
-                throw new NotImplementedException("BirimlerService/ Tek Kayıt getirme başarılı");
             }
             catch (Exception e)
             {
@@ -81,7 +79,7 @@ namespace BL.Concrete
             //throw new NotImplementedException();
         }
 
-        public bool YeniBirimEkle(BrBirimler birim)
+        public int YeniBirimEkle(BrBirimler birim)
         {
             int counted = BirimlerListele().Count + 1;
             birim.BirimId = counted;
@@ -92,7 +90,7 @@ namespace BL.Concrete
             {
 
                 base.Ekle(birim);
-                return (true);
+                return (birim.Id);
             }
             catch (Exception e)
             {

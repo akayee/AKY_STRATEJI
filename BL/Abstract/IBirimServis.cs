@@ -13,7 +13,7 @@ namespace BL.Abstract
         BrBirimler TekBirimGetir(int BirimId);
         List<BrBirimler> BirimlerListele(Expression<Func<BrBirimler, bool>> filter = null,
             params Expression<Func<BrBirimler, object>>[] includeProperties);
-        bool YeniBirimEkle(BrBirimler birim);
+        int YeniBirimEkle(BrBirimler birim);
         bool BirimSil(BrBirimler birim);
         bool BirimGuncelle(BrBirimler birim);
         int UstBirimGetir(int BirimId);

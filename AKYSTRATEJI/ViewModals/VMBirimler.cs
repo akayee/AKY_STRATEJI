@@ -13,6 +13,7 @@ namespace AKYSTRATEJI.ViewModals
         public bool? Deleted { get; set; }
         public int? BirimTipiId { get; set; }
         public DateTime OlusturmaTarihi { get; set; }
+        public string BirimTipiAdi { get; set; }
 
 
     }

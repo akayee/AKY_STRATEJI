@@ -24,7 +24,6 @@ namespace BL.Concrete
             try
             {
                 return base.DetayliListe(filter);
-                throw new NotImplementedException("BrBirimtipleriService/ Kayıt listeleme başarılı");
             }
             catch (Exception e)
             {
@@ -38,7 +37,6 @@ namespace BL.Concrete
             {
 
                 return base.Getir(birimtipi => birimtipi.Id == BirimTipiId && birimtipi.Deleted != true);
-                throw new NotImplementedException("BrBirimtipleriService/ Tek Kayıt getirme başarılı");
             }
             catch (Exception e)
             {
@@ -52,7 +50,7 @@ namespace BL.Concrete
             {
 
                 base.Guncelle(BirimTipi);
-                throw new NotImplementedException("BrBirimtipleriService/ Kayıt güncelleme başarılı");
+                return true;
             }
             catch (Exception e)
             {
@@ -67,7 +65,7 @@ namespace BL.Concrete
 
                 BirimTipi.Deleted = true;
                 base.Guncelle(BirimTipi);
-                throw new NotImplementedException("BrBirimtipleriService/ Kayıt silme başarılı");
+                return true;
             }
             catch (Exception e)
             {
@@ -77,7 +75,7 @@ namespace BL.Concrete
 
         public override void Validate(BrBirimtipleri entity)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public bool YeniBirimTipiEkle(BrBirimtipleri BirimTipi)
@@ -90,7 +88,7 @@ namespace BL.Concrete
             {
 
                 base.Ekle(BirimTipi);
-                throw new NotImplementedException("BrBirimtipleriService/ Kayır Başarıyla Eklendi");
+                return true;
             }
             catch (Exception e)
             {

@@ -37,7 +37,8 @@ namespace WepApiAKY.Controllers
                     Adi = birim.Adi,
                     OlusturmaTarihi = birim.OlustumraTarihi,
                     Deleted = (bool)birim.Deleted,
-                    UstBirimId = (int)birim.UstBirimId
+                    UstBirimId = (int)birim.UstBirimId,
+                    BirimTipiId=birim.BirimTipiId
                 };
 
                 return new JsonResult(model);
@@ -54,7 +55,7 @@ namespace WepApiAKY.Controllers
         public JsonResult BirimleriListele()
         {
             //Veritabanından BrBirimler tablosunun listesini almaişlemi.
-            List<BrBirimler> birimler = _birim.BirimlerListele();
+            List<BrBirimler> birimler = _birim.BirimlerListele(birim=> birim.Deleted!=true);
             //View Model tipinde liste oluşturuluyor. Güvenlik Amaçlı
             List<VMBirimler> vmListe = new List<VMBirimler>();
             //İlgili Listeler birbirlerine mapleniyor ve relationlar çekilerek ekleniyor.
@@ -67,7 +68,9 @@ namespace WepApiAKY.Controllers
                     Adi = birim.Adi,
                     Deleted = (bool)birim.Deleted,
                     OlusturmaTarihi = birim.OlustumraTarihi,
-                    UstBirimId = birim.UstBirimId
+                    UstBirimId = birim.UstBirimId,
+                    BirimTipiId=birim.BirimTipiId,
+                    BirimTipiAdi=birim.BirimTipi.BirimTipi
                 });
             }
             return new JsonResult(vmListe);
@@ -83,22 +86,23 @@ namespace WepApiAKY.Controllers
                 Adi = eklenecek.Adi,
                 Deleted = (bool)eklenecek.Deleted,
                 OlustumraTarihi = DateTime.Now,
+                BirimTipiId = eklenecek.BirimTipiId,
                 BirimId = eklenecek.id,
                 UstBirimId = eklenecek.UstBirimId
             };
             try
             {
-                _birim.YeniBirimEkle(model);
+                int id=_birim.YeniBirimEkle(model);
                 ABBJsonResponse response = new ABBJsonResponse("BirimlerController/ Birim Başarıyla Eklendi");
                 response.StatusCode = 200;
-                return response;
+                return new JsonResult(id);
             }
             catch (Exception e)
             {
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("UpdateaBirim")]
+        [HttpPost("UpdateaBirim")]
         public IActionResult BirimGuncelle(VMBirimler guncellenecek)
         {
             var model = new BrBirimler()
@@ -107,7 +111,8 @@ namespace WepApiAKY.Controllers
                 Deleted = guncellenecek.Deleted,
                 OlustumraTarihi = guncellenecek.OlusturmaTarihi,
                 BirimId = guncellenecek.id,
-                UstBirimId = (int)guncellenecek.UstBirimId
+                UstBirimId = (int)guncellenecek.UstBirimId,
+                BirimTipiId=guncellenecek.BirimTipiId
                 //-WRN- //VMAraclar eklenecek
                 //-WRN- //VMDonanimlar eklenecek
                 //-WRN- //VMMevzuatlar eklenecek
@@ -122,14 +127,16 @@ namespace WepApiAKY.Controllers
             try
             {
                 _birim.BirimGuncelle(model);
-                return new ABBJsonResponse("BirimlerController/ Birim Başarıyla Güncellendi");
+                ABBJsonResponse response = new ABBJsonResponse("BirimlerController/ Birim Başarıyla Eklendi");
+                response.StatusCode = 200;
+                return response;
             }
             catch (Exception e)
             {
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("DeleteaBirim")]
+        [HttpPost("DeleteaBirim")]
         public IActionResult BirimSil(VMBirimler silinecek)
         {
             BrBirimler model = _birim.Getir(birim => birim.Id == silinecek.id);
@@ -137,7 +144,9 @@ namespace WepApiAKY.Controllers
             try
             {
                 _birim.BirimGuncelle(model);
-                return new ABBJsonResponse("BirimlerController/ Birim Başarıyla Silindi");
+                ABBJsonResponse response = new ABBJsonResponse("BirimlerController/ Birim Başarıyla Eklendi");
+                response.StatusCode = 200;
+                return response;
             }
             catch (Exception e)
             {

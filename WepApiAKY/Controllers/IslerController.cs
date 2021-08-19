@@ -201,7 +201,8 @@ namespace WepApiAKY.Controllers
                 OlusturmaTarihi=stbirim.OlustumraTarihi,
                 UstBirimId=(int?)stbirim.UstBirimId
             };
-            BrBirimtipleri stbirimtipleri = _birimtipleri.TekBirimTipiGetir((int)birimi.BirimTipiId);
+            int cekilecekbirimtipi = (int)stbirim.BirimTipiId;
+            BrBirimtipleri stbirimtipleri = _birimtipleri.TekBirimTipiGetir(cekilecekbirimtipi);
             VMBirimTipleri birimtipi = new VMBirimTipleri()
             {
                 Id=stbirimtipleri.Id,
