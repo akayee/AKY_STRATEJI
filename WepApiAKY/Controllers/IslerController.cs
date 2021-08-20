@@ -20,28 +20,20 @@ namespace WepApiAKY.Controllers
         private readonly ILogger<IslerController> _logger;
         private readonly IIslerServices _isler;
         private readonly IIsturleriServices _isTurleri;
-        private readonly IAmaclarService _amaclar;
-        private readonly IHedeflerServices _hedeflerservices;
         private readonly IPerformanslarServices _performanslarservices;
-        private readonly IIsturleriServices _isturleriservices;
         private readonly IFaaliyetServices _faaliyetservices;
         private readonly IFaaliyetTurleriServices _faaliyetturleriservices;
         private readonly IBirimServis _birimler;
-        private readonly IBirimTipleriServices _birimtipleri;
 
-        public IslerController(ILogger<IslerController> logger, IIslerServices isler,IBirimTipleriServices birimTipleri, IIsturleriServices isTurleri, IAmaclarService amaclar, IHedeflerServices hedeflerservices, IPerformanslarServices performanslarservices, IIsturleriServices isturleriservices, IFaaliyetServices faaliyetservices, IFaaliyetTurleriServices faaliyetturleriservices, IBirimServis birimler)
+        public IslerController(ILogger<IslerController> logger, IIslerServices isler, IIsturleriServices isTurleri, IPerformanslarServices performanslarservices, IIsturleriServices isturleriservices, IFaaliyetServices faaliyetservices, IFaaliyetTurleriServices faaliyetturleriservices, IBirimServis birimler)
         {
             _logger = logger;
             _isler = isler;
             _isTurleri = isTurleri;
-            _amaclar = amaclar;
-            _hedeflerservices = hedeflerservices;
             _performanslarservices = performanslarservices;
-            _isturleriservices = isturleriservices;
             _faaliyetservices = faaliyetservices;
             _faaliyetturleriservices = faaliyetturleriservices;
             _birimler = birimler;
-            _birimtipleri = birimTipleri;
         }
 
         [HttpGet("GetAnIs")]
@@ -202,7 +194,7 @@ namespace WepApiAKY.Controllers
                 UstBirimId=(int?)stbirim.UstBirimId
             };
             int cekilecekbirimtipi = (int)stbirim.BirimTipiId;
-            BrBirimtipleri stbirimtipleri = _birimtipleri.TekBirimTipiGetir(cekilecekbirimtipi);
+            BrBirimtipleri stbirimtipleri = stbirim.BirimTipi;
             VMBirimTipleri birimtipi = new VMBirimTipleri()
             {
                 Id=stbirimtipleri.Id,
@@ -271,7 +263,10 @@ namespace WepApiAKY.Controllers
                     Deleted= (bool)performanslar.Deleted,
                     HedeflerId=performanslar.HedeflerId,
                     id=performanslar.Id,
-                    OlusturmaTarihi=performanslar.OlusturmaTarihi               
+                    OlusturmaTarihi=performanslar.OlusturmaTarihi,
+                    HedefAdi=performanslar.Hedefler.Tanim,
+                    AmaclarId=performanslar.Hedefler.AmaclarId,
+                    AmacAdi=performanslar.Hedefler.Amaclar.Adi
                 };
 
                 //Eğer performans listede var ise eklemiyor
@@ -281,33 +276,8 @@ namespace WepApiAKY.Controllers
                 }
             }
 
-            //performansın hedef idsine göre hedefleri çekiyoruz.
-            VMPerformanslar perfor= vmperformanslar.FirstOrDefault();
-            StHedefler hedef = _hedeflerservices.TekHedefGetir(perfor.HedeflerId);
-            VMHedefler vmhedef = new VMHedefler()
-            {
-                AmaclarId=hedef.AmaclarId,
-                Deleted= (bool)hedef.Deleted,
-                id=hedef.Id,
-                Tanim=hedef.Tanim
-            };
-            BrBirimler ustbirim = _birimler.TekBirimGetir(_birimler.UstBirimGetir(3));
-            VMBirimler vmustbirim = new VMBirimler()
-            {
-                Adi = ustbirim.Adi,
-                Deleted = ustbirim.Deleted,
-                UstBirimId = ustbirim.UstBirimId,
-                id = ustbirim.Id
-            };
-            StAmaclar amac = _amaclar.AmacGetir(hedef.AmaclarId);
-            VMAmaclar vmamac = new VMAmaclar()
-            {
-                Adi = amac.Adi,
-                id = amac.Id,
-                OlusturmaTarihi = amac.OlusturmaTarihi
-            };
 
-            StratejiBilgileri Stratejibilgileri = new StratejiBilgileri() {StratejikAmac= vmamac, Birim = birimi , BirimTipi=birimtipi,Isturleri= denemevm, Performanslar= vmperformanslar,Hedefler=vmhedef, Isler=vmisler ,Faaliyetler= vmfaaliyetler,VMFaaliyetTurleri= vmfaaliyetturleri , UstBirim= vmustbirim };
+            StratejiBilgileri Stratejibilgileri = new StratejiBilgileri() { Birim = birimi , BirimTipi=birimtipi,Isturleri= denemevm, Performanslar= vmperformanslar,Faaliyetler= vmfaaliyetler,VMFaaliyetTurleri= vmfaaliyetturleri};
             //View Model tipinde liste oluşturuluyor. Güvenlik Amaçlı            
 
             return new JsonResult(Stratejibilgileri);

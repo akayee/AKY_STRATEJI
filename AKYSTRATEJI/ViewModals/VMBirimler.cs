@@ -14,6 +14,7 @@ namespace AKYSTRATEJI.ViewModals
         public int? BirimTipiId { get; set; }
         public DateTime OlusturmaTarihi { get; set; }
         public string BirimTipiAdi { get; set; }
+        public string UstBirimAdi { get; set; }
 
 
     }

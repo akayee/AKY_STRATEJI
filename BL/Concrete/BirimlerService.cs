@@ -13,12 +13,10 @@ namespace BL.Concrete
     public class BirimlerService : ABBEntityServis<BrBirimler, AKYSTRATEJIContext>, IBirimServis
     {
         private readonly ILogger<BirimlerService> _logger;
-        private readonly IBirimTipleriServices _birimtipi;
 
         public BirimlerService(ILogger<BirimlerService> logger , IBirimTipleriServices birimtipi) : base(logger)
         {
             _logger = logger;
-            _birimtipi = birimtipi;
         }
 
         public bool BirimGuncelle(BrBirimler birim)
@@ -66,7 +64,7 @@ namespace BL.Concrete
             try
             {
 
-                return base.Getir(birim => birim.Id == BirimId && birim.Deleted != true);
+                return base.Get(birim => birim.Id == BirimId && birim.Deleted != true,b=>b.BirimTipi);
             }
             catch (Exception e)
             {
@@ -99,11 +97,9 @@ namespace BL.Concrete
         }
         public int UstBirimGetir(int BirimId)
         {
-            
-            BrBirimler birim = TekBirimGetir(BirimId);
-            
-            BrBirimtipleri birimtipi = _birimtipi.Getir(birimtipi => birimtipi.Id == birim.BirimTipiId);
-            if(birimtipi.Id !=4)
+
+            BrBirimler birim = base.Get(null, birim => birim.BirimTipi);
+            if(birim.BirimTipi.Id !=4)
             {
                 int ustbirimId = (int)birim.UstBirimId;
                 UstBirimGetir((int)birim.UstBirimId);

@@ -18,12 +18,10 @@ namespace WepApiAKY.Controllers
         private readonly ILogger<IsturuController> _logger;
         //Stratejik Isler işlemlerini yaptığımız servis
         private readonly IIsturleriServices _isturleri;
-        private readonly IPerformanslarServices _performanslar;
-        public IsturuController(ILogger<IsturuController> logger, IIsturleriServices isturleri, IPerformanslarServices performanslar)
+        public IsturuController(ILogger<IsturuController> logger, IIsturleriServices isturleri)
         {
             _logger = logger;
             _isturleri = isturleri;
-            _performanslar = performanslar;
         }
 
         [HttpGet("GetIsTuru")]

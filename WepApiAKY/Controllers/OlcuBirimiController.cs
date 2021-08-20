@@ -53,7 +53,7 @@ namespace WepApiAKY.Controllers
         public JsonResult OlcuBirimleriListele()
         {
             //Veritabanından GnOlcubirimi tablosunun listesini almaişlemi.
-            List<GnOlcubirimi> olcubirimleri = _olcubirimi.OlcuBirimiListele();
+            List<GnOlcubirimi> olcubirimleri = _olcubirimi.OlcuBirimiListele(o=>o.Deleted!=true);
             //View Model tipinde liste oluşturuluyor. Güvenlik Amaçlı
             List<VMOlcuBirimi> vmListe = new List<VMOlcuBirimi>();
             //İlgili Listeler birbirlerine mapleniyor ve relationlar çekilerek ekleniyor.
@@ -82,15 +82,15 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _olcubirimi.YeniOlcuBirimiEkle(model);
-                return new ABBJsonResponse("OlcuBirimiController/ Kayıt Başarıyla Eklendi");
+                int id =_olcubirimi.YeniOlcuBirimiEkle(model);
+                return new JsonResult(id);
             }
             catch (Exception e)
             {
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("UpdateanOlcuBirimi")]
+        [HttpPost("UpdateanOlcuBirimi")]
         public IActionResult OlcuBirimiGuncelle(VMOlcuBirimi guncellenecek)
         {
             var model = new GnOlcubirimi()
@@ -102,14 +102,16 @@ namespace WepApiAKY.Controllers
             try
             {
                 _olcubirimi.TekOlcuBirimiGuncelle(model);
-                return new ABBJsonResponse("OlcuBirimiController/ Araç Başarıyla Güncellendi");
+                ABBJsonResponse response = new ABBJsonResponse("OlcuBirimiController/ Araç Başarıyla Silindi");
+                response.StatusCode = 200;
+                return response;
             }
             catch (Exception e)
             {
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("DeleteanOlcuBirimi")]
+        [HttpPost("DeleteanOlcuBirimi")]
         public IActionResult OlcuBirimiSil(VMOlcuBirimi silinecek)
         {
             GnOlcubirimi model = _olcubirimi.Getir(olcubirimi => olcubirimi.Id == silinecek.id);
@@ -117,7 +119,9 @@ namespace WepApiAKY.Controllers
             try
             {
                 _olcubirimi.TekOlcuBirimiGuncelle(model);
-                return new ABBJsonResponse("OlcuBirimiController/ Araç Başarıyla Silindi");
+                ABBJsonResponse response = new ABBJsonResponse("OlcuBirimiController/ Araç Başarıyla Silindi");
+                response.StatusCode = 200;
+                return response;
             }
             catch (Exception e)
             {

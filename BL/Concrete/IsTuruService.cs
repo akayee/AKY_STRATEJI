@@ -15,13 +15,9 @@ namespace BL.Concrete
     public class IsTuruService : ABBEntityServis<StIsturleri, AKYSTRATEJIContext>, IIsturleriServices
     {
         private readonly ILogger<IsTuruService> _logger;
-        private readonly IIslerServices _islerservices;
-        private readonly IYillikHedefServices _yillikhedefler;
-        public IsTuruService(ILogger<IsTuruService> logger,IIslerServices islerServices , IYillikHedefServices yillikHedefServices) : base(logger)
+        public IsTuruService(ILogger<IsTuruService> logger) : base(logger)
         {
             _logger = logger;
-            _islerservices = islerServices;
-            _yillikhedefler = yillikHedefServices;
         }
 
         public bool IsTuruGuncelle(StIsturleri IsTuru)
@@ -40,7 +36,7 @@ namespace BL.Concrete
 
         public List<StIsturleri> IsTuruListele(Expression<Func<StIsturleri, bool>> filter = null, params Expression<Func<StIsturleri, object>>[] includeProperties)
         {
-            return DetayliListe(filter);
+            return GetList(filter,includeProperties);
         }
 
         public bool IsTuruSil(StIsturleri isTuru)
@@ -89,7 +85,7 @@ namespace BL.Concrete
         public List<VMIsturleri> StratejiBilgileriHesapla(int birimid)
         {
             List<VMIsturleri> vmisturu = new List<VMIsturleri>();
-            List<StIsturleri> isturleri = IsTuruListele(i => i.BirimId == birimid && i.Deleted!=true);
+            List<StIsturleri> isturleri = IsTuruListele(i => i.BirimId == birimid && i.Deleted!=true,i=>i.StIslers,isturleri=>isturleri.StYillikhedefs);
             int toplamdeger = 0;
             int firstpart = 0;
             int secondpart = 0;
@@ -98,7 +94,7 @@ namespace BL.Concrete
             foreach (StIsturleri isturu in isturleri)
             {
 
-                List<StIsler> islistesi = _islerservices.IsleriListele(isler => isler.IsTuruId == isturu.Id && isler.Deleted!=true);
+                List<StIsler> islistesi = isturu.StIslers.ToList();
                 foreach(StIsler hesaplanacak in islistesi)
                 {
                     toplamdeger += hesaplanacak.Deger;
@@ -118,7 +114,7 @@ namespace BL.Concrete
                         lastpart += hesaplanacak.Deger;
                     }
                 }
-                var yillikhedef = _yillikhedefler.YillikHedefleriListele(i => i.Yil == DateTime.Today.Year && i.IsTuruId==isturu.Id && i.Deleted!=true).FirstOrDefault();
+                var yillikhedef = isturu.StYillikhedefs.Where(i => i.Yil == DateTime.Today.Year && i.IsTuruId == isturu.Id && i.Deleted != true).FirstOrDefault();
                 VMIsturleri vmis = new VMIsturleri()
                 {
                     Aciklama = isturu.Aciklama,

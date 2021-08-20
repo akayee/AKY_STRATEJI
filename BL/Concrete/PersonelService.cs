@@ -23,7 +23,7 @@ namespace BL.Concrete
         {
             try
             {
-                return base.DetayliListe(filter);
+                return base.GetList(filter,includeProperties);
                 throw new NotImplementedException("PersonelService/ Kayıt listeleme başarılı");
             }
             catch (Exception e)
@@ -37,7 +37,7 @@ namespace BL.Concrete
             try
             {
 
-                return base.Getir(personel => personel.Id == PersonelId && personel.Deleted != true);
+                return base.Get(personel => personel.Id == PersonelId && personel.Deleted != true);
                 throw new NotImplementedException("PersonelService/ Tek Kayıt getirme başarılı");
             }
             catch (Exception e)

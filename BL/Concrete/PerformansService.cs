@@ -32,7 +32,7 @@ namespace BL.Concrete
 
         public List<StPerformanslar> PerformanslariListele(Expression<Func<StPerformanslar, bool>> filter = null, params Expression<Func<StPerformanslar, object>>[] includeProperties)
         {
-            return DetayliListe(filter);
+            return GetList(filter,includeProperties);
         }
 
         public bool PerformansSil(StPerformanslar performans)
@@ -52,12 +52,12 @@ namespace BL.Concrete
 
         public StPerformanslar TekPerformansGetir(int PerformansId)
         {
-            return Getir(performans => performans.Id == PerformansId && performans.Deleted != true);
+            return Get(performans => performans.Id == PerformansId && performans.Deleted != true,p=>p.Hedefler,prop=>prop.Hedefler.Amaclar);
         }
 
         public override void Validate(StPerformanslar entity)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public bool YeniPerformansEkle(StPerformanslar performans)
@@ -71,7 +71,7 @@ namespace BL.Concrete
             {
 
                 Ekle(performans);
-                throw new NotImplementedException("Başarıyla Eklendi");
+                return true;
             }
             catch (Exception e)
             {

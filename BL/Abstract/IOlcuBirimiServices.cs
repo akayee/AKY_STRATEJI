@@ -13,7 +13,7 @@ namespace BL.Abstract
         GnOlcubirimi TekOlcuBirimiGetir(int OlcuBirimiId);
         List<GnOlcubirimi> OlcuBirimiListele(Expression<Func<GnOlcubirimi, bool>> filter = null,
             params Expression<Func<GnOlcubirimi, object>>[] includeProperties);
-        bool YeniOlcuBirimiEkle(GnOlcubirimi OlcuBirimi);
+        int YeniOlcuBirimiEkle(GnOlcubirimi OlcuBirimi);
         bool TekOlcuBirimiSil(GnOlcubirimi OlcuBirimi);
         bool TekOlcuBirimiGuncelle(GnOlcubirimi OlcuBirimi);
     }

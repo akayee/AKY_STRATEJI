@@ -38,7 +38,8 @@ namespace WepApiAKY.Controllers
                     OlusturmaTarihi = birim.OlustumraTarihi,
                     Deleted = (bool)birim.Deleted,
                     UstBirimId = (int)birim.UstBirimId,
-                    BirimTipiId=birim.BirimTipiId
+                    BirimTipiId=birim.BirimTipiId,
+                    BirimTipiAdi=birim.BirimTipi.BirimTipi
                 };
 
                 return new JsonResult(model);
@@ -93,8 +94,6 @@ namespace WepApiAKY.Controllers
             try
             {
                 int id=_birim.YeniBirimEkle(model);
-                ABBJsonResponse response = new ABBJsonResponse("BirimlerController/ Birim Başarıyla Eklendi");
-                response.StatusCode = 200;
                 return new JsonResult(id);
             }
             catch (Exception e)
@@ -113,16 +112,6 @@ namespace WepApiAKY.Controllers
                 BirimId = guncellenecek.id,
                 UstBirimId = (int)guncellenecek.UstBirimId,
                 BirimTipiId=guncellenecek.BirimTipiId
-                //-WRN- //VMAraclar eklenecek
-                //-WRN- //VMDonanimlar eklenecek
-                //-WRN- //VMMevzuatlar eklenecek
-                //-WRN- //VMPersoneller eklenecek
-                //-WRN- //VMYazilimlar eklenecek
-                //-WRN- //VMYetkiGorevTanimlari eklenecek
-                //-WRN- //VMFaaliyetTurleri eklenecek
-                //-WRN- //VMKullanicilar eklenecek
-                //-WRN- //VMMaliFaaliyetTurleri eklenecek
-                //-WRN- //VMIsturleri eklenecek
             };
             try
             {
@@ -144,7 +133,7 @@ namespace WepApiAKY.Controllers
             try
             {
                 _birim.BirimGuncelle(model);
-                ABBJsonResponse response = new ABBJsonResponse("BirimlerController/ Birim Başarıyla Eklendi");
+                ABBJsonResponse response = new ABBJsonResponse("BirimlerController/ Birim Başarıyla Silindi");
                 response.StatusCode = 200;
                 return response;
             }

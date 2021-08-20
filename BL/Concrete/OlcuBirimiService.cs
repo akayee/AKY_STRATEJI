@@ -23,8 +23,7 @@ namespace BL.Concrete
         {
             try
             {
-                return base.DetayliListe(filter);
-                throw new NotImplementedException("OlcuBirimiService/ Kayıt listeleme başarılı");
+                return base.GetList(filter,includeProperties);
             }
             catch (Exception e)
             {
@@ -52,7 +51,7 @@ namespace BL.Concrete
             {
 
                 base.Guncelle(OlcuBirimi);
-                throw new NotImplementedException("OlcuBirimiService/ Kayıt güncelleme başarılı");
+                return true;
             }
             catch (Exception e)
             {
@@ -67,7 +66,7 @@ namespace BL.Concrete
 
                 OlcuBirimi.Deleted = true;
                 base.Guncelle(OlcuBirimi);
-                throw new NotImplementedException("OlcuBirimiService/ Kayıt silme başarılı");
+                return true;
             }
             catch (Exception e)
             {
@@ -77,10 +76,10 @@ namespace BL.Concrete
 
         public override void Validate(GnOlcubirimi entity)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
-        public bool YeniOlcuBirimiEkle(GnOlcubirimi OlcuBirimi)
+        public int YeniOlcuBirimiEkle(GnOlcubirimi OlcuBirimi)
         {
             int counted = OlcuBirimiListele().Count + 1;
             OlcuBirimi.Id = counted;
@@ -90,7 +89,7 @@ namespace BL.Concrete
             {
 
                 base.Ekle(OlcuBirimi);
-                throw new NotImplementedException("OlcuBirimiService/ Kayır Başarıyla Eklendi");
+                return OlcuBirimi.Id;
             }
             catch (Exception e)
             {
