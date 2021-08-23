@@ -142,5 +142,12 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             };
         }
+
+        [HttpGet("GetListofBirimBilgileri")]
+        public JsonResult BirimBilgileriListele([FromQuery(Name = "Birimler")] int[] Birimler)
+        {
+            BirimBilgiler birimbilgileri = _birim.BirimBilgileriGetir(Birimler);
+            return new JsonResult(birimbilgileri);
+        }
     }
 }

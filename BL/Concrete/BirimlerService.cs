@@ -1,5 +1,6 @@
 ﻿using ABB.Core.DataAccess;
 using AKYSTRATEJI.Model;
+using AKYSTRATEJI.ViewModals;
 using BL.Abstract;
 using Microsoft.Extensions.Logging;
 using System;
@@ -111,6 +112,175 @@ namespace BL.Concrete
                 return birim.Id;
             }
 
+        }
+
+        public BirimBilgiler BirimBilgileriGetir(int[] BirimId)
+        {
+            List<BrBirimler> birimler = new List<BrBirimler>();
+
+            List<VMBirimler> vmbirimler = new List<VMBirimler>();
+            List<VMMevzuatlar> mevzuatlar = new List<VMMevzuatlar>();
+            List<VMAraclar> araclar = new List<VMAraclar>();
+            List<VMDonanimlar> donanimlar = new List<VMDonanimlar>();
+            List<VMYazilimlar> yazilimlar = new List<VMYazilimlar>();
+            List<VMFizikselYapilar> fizikselyapilar = new List<VMFizikselYapilar>();
+            List<VMYetkiGorevTanimlari> yetkigorevler = new List<VMYetkiGorevTanimlari>();
+            List<VMPersoneller> personeller = new List<VMPersoneller>();
+
+
+            
+
+            // Birimin ilgili tüm verileri burada çekiliyor.
+            foreach (int i in BirimId)
+            {
+                BrBirimler tekbirim = base.Get(b => b.Id == i && b.Deleted!=true,
+                    birim=>birim.BirimTipi,
+                    b=>b.BrYetkiGorevTanimlaris,
+                    birim=>birim.BrYazilimlars,
+                    birim=>birim.BrPersonellers,
+                    birim=>birim.BrMevzuatlars,
+                    birim => birim.BrFizikselYapilars,
+                    birim => birim.BrDonanimlars,
+                    birim=>birim.BrAraclars);
+                VMBirimler vmbirim = new VMBirimler()
+                {
+                    Adi=tekbirim.Adi,
+                    BirimTipiAdi=tekbirim.BirimTipi.BirimTipi,
+                    id=tekbirim.Id,
+                    BirimTipiId=tekbirim.BirimTipiId,
+                    Deleted=tekbirim.Deleted,
+                    OlusturmaTarihi=tekbirim.OlustumraTarihi,
+                    UstBirimAdi=null,
+                    UstBirimId=tekbirim.UstBirimId
+                };
+                vmbirimler.Add(vmbirim);
+                birimler.Add(tekbirim);
+            }
+            //MAPLEME İŞLEMİ
+            foreach (BrBirimler birim in birimler)
+            {
+                //ARACLAR MAPLEME
+                if(birim.BrAraclars.Count>0)
+                {
+                    foreach (BrAraclar arac in birim.BrAraclars)
+                    {
+                        VMAraclar vmarac = new VMAraclar()
+                        {
+                            Adi = arac.Adi,
+                            AracCinsi = (AKYSTRATEJI.enums.AracCinsi)arac.Cinsi,
+                            id = arac.Id,
+                            TahsisTuru = (AKYSTRATEJI.enums.TahsisTuru)arac.TahsisTuru,
+                            BirimId = arac.BirimId
+                        };
+                        araclar.Add(vmarac);
+                    }
+                }
+                
+                //DONANİMLAR MAPLEME
+                if(birim.BrDonanimlars.Count>0)
+                {
+
+                    foreach (BrDonanimlar donanim in birim.BrDonanimlars)
+                    {
+                        VMDonanimlar vmdonanim = new VMDonanimlar()
+                        {
+                            Adi = donanim.Adi,
+                            id = donanim.Id,
+                            Sayi = donanim.Sayi,
+                            BirimId = donanim.BirimId
+                        };
+                        donanimlar.Add(vmdonanim);
+                    }
+                }
+                //YAZİLİM MAPLEME
+                foreach (BrYazilimlar yazilim in birim.BrYazilimlars)
+                {
+                    VMYazilimlar vmyazilim = new VMYazilimlar()
+                    {
+                        Adi = yazilim.Adi,
+                        id = yazilim.Id,
+                        BirimId=yazilim.BirimId
+                        
+                    };
+                    yazilimlar.Add(vmyazilim);
+                }
+                //FİZİKSEL YAPILAR MAPLEME
+                foreach (BrFizikselYapilar fizikselyapi in birim.BrFizikselYapilars)
+                {
+                    VMFizikselYapilar vmfizikselyapi = new VMFizikselYapilar()
+                    {
+                        Adi = fizikselyapi.Adi,
+                        id = fizikselyapi.Id,
+                        Konum=fizikselyapi.Konum,
+                        MetreKare=fizikselyapi.MetreKare,
+                        BirimId=fizikselyapi.BirimId
+
+                    };
+                    fizikselyapilar.Add(vmfizikselyapi);
+                }
+                //YETKİ GÖREV TANIMLARI MAPLEME
+                foreach (BrYetkiGorevTanimlari yetkigorev in birim.BrYetkiGorevTanimlaris)
+                {
+                    VMYetkiGorevTanimlari vmyetkigorevyapilar = new VMYetkiGorevTanimlari()
+                    {
+                        Adi = yetkigorev.Adi,
+                        id = yetkigorev.Id,
+                        BirimId = yetkigorev.BirimId,
+                        Kanun=yetkigorev.Kanun
+
+                    };
+                    yetkigorevler.Add(vmyetkigorevyapilar);
+                }
+                //MEVZUATLAR MAPLEME
+                foreach (BrMevzuatlar mevzuat in birim.BrMevzuatlars)
+                {
+                    VMMevzuatlar vmmevzuatlar = new VMMevzuatlar()
+                    {
+                        Adi = mevzuat.Adi,
+                        id = mevzuat.Id,
+                        BirimId = mevzuat.BirimId,
+                        Yonetmelik=mevzuat.Yonetmelik
+
+                    };
+                    mevzuatlar.Add(vmmevzuatlar);
+                }
+                //Personeller MAPLEME
+                foreach (BrPersoneller personel in birim.BrPersonellers)
+                {
+                    VMPersoneller vmpersonel = new VMPersoneller()
+                    {
+                        Adi = personel.Adi,
+                        id = personel.Id,
+                        BirimId = personel.BirimId,
+                        Cinsiyet=personel.Cinsiyet,
+                        Deleted= (bool)personel.Deleted,
+                        DogumTarihi=personel.DogumTarihi,
+                        IseGirisTarihi=personel.IseGirisTarihi,
+                        Kadro= (AKYSTRATEJI.enums.Kadrolar)personel.Kadro,
+                        KullaniciId= (int)personel.KullaniciId,
+                        Mezuniyet= (AKYSTRATEJI.enums.Mezuniyet)personel.Mezuniyet,
+                        OlusturmaTarihi=personel.OlusturmaTarihi,
+                        Tel= (short)personel.Tel,
+                        Unvan= (AKYSTRATEJI.enums.Unvanlar)personel.Unvan
+
+                    };
+                    personeller.Add(vmpersonel);
+                }
+            }
+            BirimBilgiler birimbilgileri = new BirimBilgiler()
+            {
+                AracListesi = araclar,
+                Donanimlar = donanimlar,
+                FizikselYapilar = fizikselyapilar,
+                Mevzuatlar = mevzuatlar,
+                Personeller = personeller,
+                Yazilimlar = yazilimlar,
+                YetkiGorevTanimlari = yetkigorevler,
+                YetkiliOlduguBirimler = vmbirimler
+            };
+
+
+            return birimbilgileri;
         }
     }
 }

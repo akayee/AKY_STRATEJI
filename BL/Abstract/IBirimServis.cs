@@ -1,5 +1,6 @@
 ﻿using ABB.Core.DataAccess;
 using AKYSTRATEJI.Model;
+using AKYSTRATEJI.ViewModals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,5 +18,6 @@ namespace BL.Abstract
         bool BirimSil(BrBirimler birim);
         bool BirimGuncelle(BrBirimler birim);
         int UstBirimGetir(int BirimId);
+        BirimBilgiler BirimBilgileriGetir(int[] BirimId);
     }
 }
