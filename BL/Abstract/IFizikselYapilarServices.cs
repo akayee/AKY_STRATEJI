@@ -13,7 +13,7 @@ namespace BL.Abstract
         BrFizikselYapilar TekFizikselYapiGetir(int FizikselYapiId);
         List<BrFizikselYapilar> FizikselYapilariListele(Expression<Func<BrFizikselYapilar, bool>> filter = null,
             params Expression<Func<BrFizikselYapilar, object>>[] includeProperties);
-        bool YeniFizikselYapiEkle(BrFizikselYapilar FizikselYapi);
+        int YeniFizikselYapiEkle(BrFizikselYapilar FizikselYapi);
         bool TekFizikselYapiSil(BrFizikselYapilar FizikselYapi);
         bool TekFizikselYapiGuncelle(BrFizikselYapilar FizikselYapi);
     }

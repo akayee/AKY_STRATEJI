@@ -56,11 +56,11 @@ namespace WepApiAKY.Controllers
                 return new JsonResult("Veri Bulunmuyor");
             }
         }
-        [HttpGet("GetListofBirimTipleri")]
-        public JsonResult FizikselYapilariListele()
+        [HttpGet("GetListofFizikselYapilar")]
+        public JsonResult FizikselYapilariListele(int BirimId)
         {
             //Veritabanından BrDonanimlar tablosunun listesini almaişlemi.
-            List<BrFizikselYapilar> fizikselYapilars = _fizikselYapilarServices.FizikselYapilariListele();
+            List<BrFizikselYapilar> fizikselYapilars = _fizikselYapilarServices.FizikselYapilariListele(f=>f.BirimId == BirimId);
             //View Model tipinde liste oluşturuluyor. Güvenlik Amaçlı
             List<VMFizikselYapilar> vmListe = new List<VMFizikselYapilar>();
             //İlgili Listeler birbirlerine mapleniyor ve relationlar çekilerek ekleniyor.
@@ -97,8 +97,8 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _fizikselYapilarServices.YeniFizikselYapiEkle(model);
-                return new ABBJsonResponse("FizikselYapilarController/ Araç Başarıyla Eklendi");
+                ;
+                return new JsonResult(_fizikselYapilarServices.YeniFizikselYapiEkle(model));
             }
             catch (Exception e)
             {

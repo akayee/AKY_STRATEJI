@@ -23,8 +23,7 @@ namespace BL.Concrete
         {
             try
             {
-                return base.DetayliListe(filter);
-                throw new NotImplementedException("FizikselYapilarService/ Kayıt listeleme başarılı");
+                return base.GetList(filter,includeProperties);
             }
             catch (Exception e)
             {
@@ -38,7 +37,6 @@ namespace BL.Concrete
             {
 
                 return base.Getir(fizikselyapi => fizikselyapi.Id == FizikselYapiId && fizikselyapi.Deleted != true);
-                throw new NotImplementedException("FizikselYapilarService/ Tek Kayıt getirme başarılı");
             }
             catch (Exception e)
             {
@@ -52,7 +50,7 @@ namespace BL.Concrete
             {
 
                 base.Guncelle(FizikselYapi);
-                throw new NotImplementedException("FizikselYapilarService/ Kayıt güncelleme başarılı");
+                return true;
             }
             catch (Exception e)
             {
@@ -67,7 +65,7 @@ namespace BL.Concrete
 
                 FizikselYapi.Deleted = true;
                 base.Guncelle(FizikselYapi);
-                throw new NotImplementedException("FizikselYapilarService/ Kayıt silme başarılı");
+                return true;
             }
             catch (Exception e)
             {
@@ -77,10 +75,10 @@ namespace BL.Concrete
 
         public override void Validate(BrFizikselYapilar entity)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
-        public bool YeniFizikselYapiEkle(BrFizikselYapilar FizikselYapi)
+        public int YeniFizikselYapiEkle(BrFizikselYapilar FizikselYapi)
         {
             int counted = FizikselYapilariListele().Count + 1;
             FizikselYapi.Id = counted;
@@ -90,7 +88,7 @@ namespace BL.Concrete
             {
 
                 base.Ekle(FizikselYapi);
-                throw new NotImplementedException("FizikselYapilarService/ Kayır Başarıyla Eklendi");
+                return counted;
             }
             catch (Exception e)
             {
