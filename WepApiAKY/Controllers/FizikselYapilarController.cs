@@ -60,7 +60,7 @@ namespace WepApiAKY.Controllers
         public JsonResult FizikselYapilariListele(int BirimId)
         {
             //Veritabanından BrDonanimlar tablosunun listesini almaişlemi.
-            List<BrFizikselYapilar> fizikselYapilars = _fizikselYapilarServices.FizikselYapilariListele(f=>f.BirimId == BirimId);
+            List<BrFizikselYapilar> fizikselYapilars = _fizikselYapilarServices.FizikselYapilariListele(f=>f.BirimId == BirimId && f.Deleted != true);
             //View Model tipinde liste oluşturuluyor. Güvenlik Amaçlı
             List<VMFizikselYapilar> vmListe = new List<VMFizikselYapilar>();
             //İlgili Listeler birbirlerine mapleniyor ve relationlar çekilerek ekleniyor.
@@ -97,7 +97,7 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                ;
+                
                 return new JsonResult(_fizikselYapilarServices.YeniFizikselYapiEkle(model));
             }
             catch (Exception e)
@@ -105,7 +105,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("UpdateaFizikselYapi")]
+        [HttpPost("UpdateaFizikselYapi")]
         public IActionResult FizikselYapiGuncelle(VMFizikselYapilar guncellenecek)
         {
             var model = new BrFizikselYapilar()
@@ -120,15 +120,15 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _fizikselYapilarServices.TekFizikselYapiGuncelle(model);
-                return new ABBJsonResponse("FizikselYapilarController/ Araç Başarıyla Güncellendi");
+                
+                return new JsonResult(_fizikselYapilarServices.TekFizikselYapiGuncelle(model));
             }
             catch (Exception e)
             {
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("DeleteaFizikselYapi")]
+        [HttpPost("DeleteaFizikselYapi")]
         public IActionResult FizikselYapiSil(VMFizikselYapilar silinecek)
         {
             BrFizikselYapilar model = _fizikselYapilarServices.Getir(fizikselyapi => fizikselyapi.Id == silinecek.id);

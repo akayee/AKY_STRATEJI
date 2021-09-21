@@ -13,7 +13,7 @@ namespace BL.Abstract
         BrYetkiGorevTanimlari TekYetkiGorevTanimGetir(int YetkiGorevId);
         List<BrYetkiGorevTanimlari> YetkiGorevTanimlariListele(Expression<Func<BrYetkiGorevTanimlari, bool>> filter = null,
             params Expression<Func<BrYetkiGorevTanimlari, object>>[] includeProperties);
-        bool YeniYetkiGorevTanimEkle(BrYetkiGorevTanimlari YetkiGorevTanim);
+        int YeniYetkiGorevTanimEkle(BrYetkiGorevTanimlari YetkiGorevTanim);
         bool TekYetkiGorevTanimSil(BrYetkiGorevTanimlari YetkiGorevTanim);
         bool TekYetkiGorevTanimGuncelle(BrYetkiGorevTanimlari YetkiGorevTanim);
     }

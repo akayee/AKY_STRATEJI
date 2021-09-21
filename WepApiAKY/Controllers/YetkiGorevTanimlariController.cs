@@ -54,10 +54,10 @@ namespace WepApiAKY.Controllers
             }
         }
         [HttpGet("GetListofYetkiGorevTanimlar")]
-        public JsonResult yetkiGorevleriListele()
+        public JsonResult yetkiGorevleriListele(int BirimId)
         {
             //Veritabanından BrYetkiGorevTanimlar tablosunun listesini almaişlemi.
-            List<BrYetkiGorevTanimlari> yetkiGorevTanim = _yetkiGorev.YetkiGorevTanimlariListele();
+            List<BrYetkiGorevTanimlari> yetkiGorevTanim = _yetkiGorev.YetkiGorevTanimlariListele(y=> y.BirimId== BirimId&& y.Deleted!=true);
             //View Model tipinde liste oluşturuluyor. Güvenlik Amaçlı
             List<VMYetkiGorevTanimlari> vmListe = new List<VMYetkiGorevTanimlari>();
             //İlgili Listeler birbirlerine mapleniyor ve relationlar çekilerek ekleniyor.
@@ -93,15 +93,15 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _yetkiGorev.YeniYetkiGorevTanimEkle(model);
-                return new ABBJsonResponse("YetkiGorevTanimlariController/ Kayıt Başarıyla Eklendi");
+                
+                return new JsonResult(_yetkiGorev.YeniYetkiGorevTanimEkle(model));
             }
             catch (Exception e)
             {
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("UpdateaYetkiGorevTanimi")]
+        [HttpPost("UpdateaYetkiGorevTanimi")]
         public IActionResult YetkiGorevGuncelle(VMYetkiGorevTanimlari guncellenecek)
         {
             var model = new BrYetkiGorevTanimlari()
@@ -116,23 +116,23 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _yetkiGorev.TekYetkiGorevTanimGuncelle(model);
-                return new ABBJsonResponse("YetkiGorevTanimlariController/ Araç Başarıyla Güncellendi");
+                
+                return new JsonResult(_yetkiGorev.TekYetkiGorevTanimGuncelle(model));
             }
             catch (Exception e)
             {
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("DeleteaYetkiGorevTanimi")]
+        [HttpPost("DeleteaYetkiGorevTanimi")]
         public IActionResult YetkiGorevSil(VMYetkiGorevTanimlari silinecek)
         {
             BrYetkiGorevTanimlari model = _yetkiGorev.Getir(yetkigorev => yetkigorev.Id == silinecek.id);
             model.Deleted = true;
             try
             {
-                _yetkiGorev.TekYetkiGorevTanimGuncelle(model);
-                return new ABBJsonResponse("YetkiGorevTanimlariController/ Araç Başarıyla Silindi");
+                
+                return new JsonResult(_yetkiGorev.TekYetkiGorevTanimGuncelle(model));
             }
             catch (Exception e)
             {

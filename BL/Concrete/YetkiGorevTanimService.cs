@@ -25,7 +25,7 @@ namespace BL.Concrete
             {
 
                 return base.Getir(yetkigorev => yetkigorev.Id == YetkiGorevId && yetkigorev.Deleted != true);
-                throw new NotImplementedException("YetkiGorevTanimService/ Tek Kayıt getirme başarılı");
+                
             }
             catch (Exception e)
             {
@@ -39,7 +39,7 @@ namespace BL.Concrete
             {
 
                 base.Guncelle(YetkiGorevTanim);
-                throw new NotImplementedException("YetkiGorevTanimService/ Kayıt güncelleme başarılı");
+                return true;
             }
             catch (Exception e)
             {
@@ -54,7 +54,7 @@ namespace BL.Concrete
 
                 YetkiGorevTanim.Deleted = true;
                 base.Guncelle(YetkiGorevTanim);
-                throw new NotImplementedException("YetkiGorevTanimService/ Kayıt silme başarılı");
+                return true;
             }
             catch (Exception e)
             {
@@ -64,10 +64,10 @@ namespace BL.Concrete
 
         public override void Validate(BrYetkiGorevTanimlari entity)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
-        public bool YeniYetkiGorevTanimEkle(BrYetkiGorevTanimlari YetkiGorevTanim)
+        public int YeniYetkiGorevTanimEkle(BrYetkiGorevTanimlari YetkiGorevTanim)
         {
             int counted = YetkiGorevTanimlariListele().Count + 1;
             YetkiGorevTanim.Id = counted;
@@ -77,7 +77,7 @@ namespace BL.Concrete
             {
 
                 base.Ekle(YetkiGorevTanim);
-                throw new NotImplementedException("YazilimService/ Kayır Başarıyla Eklendi");
+                return counted;
             }
             catch (Exception e)
             {
@@ -90,7 +90,7 @@ namespace BL.Concrete
             try
             {
                 return base.DetayliListe(filter);
-                throw new NotImplementedException("YetkiGorevTanimService/ Kayıt listeleme başarılı");
+               
             }
             catch (Exception e)
             {
