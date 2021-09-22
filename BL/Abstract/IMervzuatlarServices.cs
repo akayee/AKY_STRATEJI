@@ -13,7 +13,7 @@ namespace BL.Abstract
         BrMevzuatlar TekmevzuatGetir(int MevzuatId);
         List<BrMevzuatlar> MevzuatlariListele(Expression<Func<BrMevzuatlar, bool>> filter = null,
             params Expression<Func<BrMevzuatlar, object>>[] includeProperties);
-        bool YeniMevzuatEkle(BrMevzuatlar Mevzuat);
+        int YeniMevzuatEkle(BrMevzuatlar Mevzuat);
         bool TekMevzuatSil(BrMevzuatlar Mevzuat);
         bool TekmEvzuatGuncelle(BrMevzuatlar Mevzuat);
     }

@@ -24,7 +24,6 @@ namespace BL.Concrete
             try
             {
                 return base.DetayliListe(filter);
-                throw new NotImplementedException("MevzuatlarService/ Kayıt listeleme başarılı");
             }
             catch (Exception e)
             {
@@ -39,7 +38,7 @@ namespace BL.Concrete
 
                 Mevzuat.Deleted = true;
                 base.Guncelle(Mevzuat);
-                throw new NotImplementedException("MevzuatlarService/ Kayıt silme başarılı");
+                return true;
             }
             catch (Exception e)
             {
@@ -53,7 +52,6 @@ namespace BL.Concrete
             {
 
                 return base.Getir(mevzuat => mevzuat.Id == MevzuatId && mevzuat.Deleted != true);
-                throw new NotImplementedException("MevzuatlarService/ Tek Kayıt getirme başarılı");
             }
             catch (Exception e)
             {
@@ -67,7 +65,7 @@ namespace BL.Concrete
             {
 
                 base.Guncelle(Mevzuat);
-                throw new NotImplementedException("MevzuatlarService/ Kayıt güncelleme başarılı");
+                return true;
             }
             catch (Exception e)
             {
@@ -77,20 +75,21 @@ namespace BL.Concrete
 
         public override void Validate(BrMevzuatlar entity)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
-        public bool YeniMevzuatEkle(BrMevzuatlar Mevzuat)
+        public int YeniMevzuatEkle(BrMevzuatlar Mevzuat)
         {
             int counted = MevzuatlariListele().Count + 1;
             Mevzuat.Id = counted;
+            Mevzuat.MevzuatId = counted;
             //System.Diagnostics.Debug.WriteLine(amac.Adi);
 
             try
             {
 
                 base.Ekle(Mevzuat);
-                throw new NotImplementedException("MevzuatlarService/ Kayır Başarıyla Eklendi");
+                return counted;
             }
             catch (Exception e)
             {

@@ -55,10 +55,10 @@ namespace WepApiAKY.Controllers
             }
         }
         [HttpGet("GetListofMevzuatlar")]
-        public JsonResult MevzuatlariListele()
+        public JsonResult MevzuatlariListele(int BirimId)
         {
             //Veritabanından BrMevzuatlar tablosunun listesini almaişlemi.
-            List<BrMevzuatlar> mevzuatlar = _mevzuatlarServices.MevzuatlariListele();
+            List<BrMevzuatlar> mevzuatlar = _mevzuatlarServices.MevzuatlariListele(obj=> obj.BirimId== BirimId && obj.Deleted!=true);
             //View Model tipinde liste oluşturuluyor. Güvenlik Amaçlı
             List<VMMevzuatlar> vmListe = new List<VMMevzuatlar>();
             //İlgili Listeler birbirlerine mapleniyor ve relationlar çekilerek ekleniyor.
@@ -93,15 +93,14 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _mevzuatlarServices.YeniMevzuatEkle(model);
-                return new ABBJsonResponse("MevzuatlarController/ Araç Başarıyla Eklendi");
+                return new JsonResult(_mevzuatlarServices.YeniMevzuatEkle(model));
             }
             catch (Exception e)
             {
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("UpdateaMevzuat")]
+        [HttpPost("UpdateaMevzuat")]
         public IActionResult MevzuatGuncelle(VMMevzuatlar guncellenecek)
         {
             var model = new BrMevzuatlar()
@@ -115,23 +114,21 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _mevzuatlarServices.TekmEvzuatGuncelle(model);
-                return new ABBJsonResponse("MevzuatlarController/ Araç Başarıyla Güncellendi");
+                return new JsonResult(_mevzuatlarServices.TekmEvzuatGuncelle(model));
             }
             catch (Exception e)
             {
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("DeleteaMevzuat")]
+        [HttpPost("DeleteaMevzuat")]
         public IActionResult MevzuatSil(VMMevzuatlar silinecek)
         {
             BrMevzuatlar model = _mevzuatlarServices.Getir(mevzuat => mevzuat.Id == silinecek.id);
             model.Deleted = true;
             try
             {
-                _mevzuatlarServices.TekmEvzuatGuncelle(model);
-                return new ABBJsonResponse("MevzuatlarController/ Araç Başarıyla Silindi");
+                return new JsonResult(_mevzuatlarServices.TekmEvzuatGuncelle(model));
             }
             catch (Exception e)
             {
