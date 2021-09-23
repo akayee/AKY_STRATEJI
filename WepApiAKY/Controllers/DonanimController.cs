@@ -55,10 +55,10 @@ namespace WepApiAKY.Controllers
             }            
         }
         [HttpGet("GetListofDonanimlar")]
-        public JsonResult DonanimListele()
+        public JsonResult DonanimListele(int BirimId)
         {
             //Veritabanından BrDonanimlar tablosunun listesini almaişlemi.
-            List<BrDonanimlar> donanimlar = _donanimlar.DonanimListele();
+            List<BrDonanimlar> donanimlar = _donanimlar.DonanimListele(obj=> obj.BirimId==BirimId && obj.Deleted!=true);
             //View Model tipinde liste oluşturuluyor. Güvenlik Amaçlı
             List<VMDonanimlar> vmListe = new List<VMDonanimlar>();
             //İlgili Listeler birbirlerine mapleniyor ve relationlar çekilerek ekleniyor.
@@ -93,15 +93,14 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _donanimlar.YeniDonanimEkle(model);
-                return new ABBJsonResponse("DonanimController/ Araç Başarıyla Eklendi");
+                return new JsonResult(_donanimlar.YeniDonanimEkle(model));
             }
             catch (Exception e)
             {
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("UpdateaDonanim")]
+        [HttpPost("UpdateaDonanim")]
         public IActionResult DonanimGuncelle(VMDonanimlar guncellenecek)
         {
             var model = new BrDonanimlar()
@@ -123,7 +122,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("DeleteaDonanim")]
+        [HttpPost("DeleteaDonanim")]
         public IActionResult DonanimSil(VMDonanimlar silinecek)
         {
             BrDonanimlar model = _donanimlar.Getir(donanim => donanim.Id == silinecek.id);

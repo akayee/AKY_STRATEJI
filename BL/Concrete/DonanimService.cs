@@ -25,7 +25,7 @@ namespace BL.Concrete
             {
 
                 base.Guncelle(donanim);
-                throw new NotImplementedException("DonanimService/ Kayıt güncelleme başarılı");
+                return true;
             }
             catch (Exception e)
             {
@@ -38,7 +38,6 @@ namespace BL.Concrete
             try
             {
                 return DetayliListe(filter);
-                throw new NotImplementedException("DonanimService/ Kayıt listeleme başarılı");
             }
             catch (Exception e)
             {
@@ -53,7 +52,7 @@ namespace BL.Concrete
 
                 donanim.Deleted = true;
                 base.Guncelle(donanim);
-                throw new NotImplementedException("DonanimService/ Kayıt silme başarılı");
+                return true;
             }
             catch (Exception e)
             {
@@ -67,7 +66,6 @@ namespace BL.Concrete
             {
 
                 return base.Getir(donanim => donanim.Id == DonanimId && donanim.Deleted != true);
-                throw new NotImplementedException("DonanimService/ Tek Kayıt getirme başarılı");
             }
             catch (Exception e)
             {
@@ -77,10 +75,10 @@ namespace BL.Concrete
 
         public override void Validate(BrDonanimlar entity)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
-        public bool YeniDonanimEkle(BrDonanimlar donanim)
+        public int YeniDonanimEkle(BrDonanimlar donanim)
         {
             int counted = DonanimListele().Count + 1;
             donanim.DonanimId = counted;
@@ -91,7 +89,7 @@ namespace BL.Concrete
             {
 
                 base.Ekle(donanim);
-                throw new NotImplementedException("DonanimService/ Kayır Başarıyla Eklendi");
+                return counted;
             }
             catch (Exception e)
             {

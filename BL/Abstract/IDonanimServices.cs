@@ -13,7 +13,7 @@ namespace BL.Abstract
         BrDonanimlar TekDonanimGetir(int DonanimId);
         List<BrDonanimlar> DonanimListele(Expression<Func<BrDonanimlar, bool>> filter = null,
             params Expression<Func<BrDonanimlar, object>>[] includeProperties);
-        bool YeniDonanimEkle(BrDonanimlar donanim);
+        int YeniDonanimEkle(BrDonanimlar donanim);
         bool DonanimSil(BrDonanimlar donanim);
         bool DonanimGuncelle(BrDonanimlar donanim);
     }
