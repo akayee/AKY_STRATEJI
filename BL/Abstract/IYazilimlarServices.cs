@@ -13,7 +13,7 @@ namespace BL.Abstract
         BrYazilimlar TekYazilimGetir(int YazilimId);
         List<BrYazilimlar> YaizimlariListele(Expression<Func<BrYazilimlar, bool>> filter = null,
             params Expression<Func<BrYazilimlar, object>>[] includeProperties);
-        bool YeniYazilimEkle(BrYazilimlar Yazilim);
+        int YeniYazilimEkle(BrYazilimlar Yazilim);
         bool TekYazilimSil(BrYazilimlar Yazilim);
         bool TekYazilimGuncelle(BrYazilimlar Yazilim);
     }

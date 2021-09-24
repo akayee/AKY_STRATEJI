@@ -13,7 +13,7 @@ namespace BL.Abstract
         BrAraclar TekAracGetir(int AracId);
         List<BrAraclar> AracListele(Expression<Func<BrAraclar, bool>> filter = null,
             params Expression<Func<BrAraclar, object>>[] includeProperties);
-        bool YeniAracEkle(BrAraclar arac);
+        int YeniAracEkle(BrAraclar arac);
         bool AracSil(BrAraclar arac);
         bool AracGuncelle(BrAraclar arac);
     }

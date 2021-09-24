@@ -25,7 +25,6 @@ namespace BL.Concrete
             {
 
                 return base.Getir(yazilim => yazilim.Id == YazilimId && yazilim.Deleted != true);
-                throw new NotImplementedException("YazilimService/ Tek Kayıt getirme başarılı");
             }
             catch (Exception e)
             {
@@ -39,7 +38,7 @@ namespace BL.Concrete
             {
 
                 base.Guncelle(Yazilim);
-                throw new NotImplementedException("YazilimService/ Kayıt güncelleme başarılı");
+                return true;
             }
             catch (Exception e)
             {
@@ -54,7 +53,7 @@ namespace BL.Concrete
 
                 Yazilim.Deleted = true;
                 base.Guncelle(Yazilim);
-                throw new NotImplementedException("YazilimService/ Kayıt silme başarılı");
+                return true;
             }
             catch (Exception e)
             {
@@ -64,7 +63,7 @@ namespace BL.Concrete
 
         public override void Validate(BrYazilimlar entity)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public List<BrYazilimlar> YaizimlariListele(Expression<Func<BrYazilimlar, bool>> filter = null, params Expression<Func<BrYazilimlar, object>>[] includeProperties)
@@ -72,7 +71,6 @@ namespace BL.Concrete
             try
             {
                 return base.DetayliListe(filter);
-                throw new NotImplementedException("YazilimService/ Kayıt listeleme başarılı");
             }
             catch (Exception e)
             {
@@ -80,7 +78,7 @@ namespace BL.Concrete
             }
         }
 
-        public bool YeniYazilimEkle(BrYazilimlar Yazilim)
+        public int YeniYazilimEkle(BrYazilimlar Yazilim)
         {
             int counted = YaizimlariListele().Count + 1;
             Yazilim.Id = counted;
@@ -90,7 +88,7 @@ namespace BL.Concrete
             {
 
                 base.Ekle(Yazilim);
-                throw new NotImplementedException("YazilimService/ Kayır Başarıyla Eklendi");
+                return counted;
             }
             catch (Exception e)
             {

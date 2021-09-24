@@ -52,10 +52,10 @@ namespace WepApiAKY.Controllers
             }
         }
         [HttpGet("GetListofYazilimlar")]
-        public JsonResult YazilimlariListele()
+        public JsonResult YazilimlariListele(int BirimId)
         {
             //Veritabanından BrYazilimlar tablosunun listesini almaişlemi.
-            List<BrYazilimlar> yazilimlar = _yazilim.YaizimlariListele();
+            List<BrYazilimlar> yazilimlar = _yazilim.YaizimlariListele(obj => obj.BirimId == BirimId && obj.Deleted != true);
             //View Model tipinde liste oluşturuluyor. Güvenlik Amaçlı
             List<VMYazilimlar> vmListe = new List<VMYazilimlar>();
             //İlgili Listeler birbirlerine mapleniyor ve relationlar çekilerek ekleniyor.
@@ -88,15 +88,14 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _yazilim.YeniYazilimEkle(model);
-                return new ABBJsonResponse("YazilimlarController/ Araç Başarıyla Eklendi");
+                return new JsonResult(_yazilim.YeniYazilimEkle(model));
             }
             catch (Exception e)
             {
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("UpdateaYazilim")]
+        [HttpPost("UpdateaYazilim")]
         public IActionResult YazilimGuncelle(VMYazilimlar guncellenecek)
         {
             var model = new BrYazilimlar()
@@ -117,7 +116,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("DeleteaYazilim")]
+        [HttpPost("DeleteaYazilim")]
         public IActionResult YazilimSil(VMYazilimlar silinecek)
         {
             BrYazilimlar model = _yazilim.Getir(yazilim => yazilim.Id == silinecek.id);

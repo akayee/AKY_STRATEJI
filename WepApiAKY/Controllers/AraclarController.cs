@@ -62,10 +62,10 @@ namespace WepApiAKY.Controllers
             
         }
         [HttpGet("GetListofAraclar")]
-        public JsonResult AraclariListele()
+        public JsonResult AraclariListele(int BirimId)
         {
             //Veritabanından BrAraclar tablosunun listesini almaişlemi.
-            List<BrAraclar> araclar = _araclar.AracListele();
+            List<BrAraclar> araclar = _araclar.AracListele(obj => obj.BirimId == BirimId && obj.Deleted != true);
             //View Model tipinde liste oluşturuluyor. Güvenlik Amaçlı
             List<VMAraclar> vmListe = new List<VMAraclar>();
             //İlgili Listeler birbirlerine mapleniyor ve relationlar çekilerek ekleniyor.
@@ -88,7 +88,8 @@ namespace WepApiAKY.Controllers
                     Deleted = (bool)arac.Deleted,
                     OlusturmaTarihi = arac.OlusturmaTarihi,
                     AracCinsi = (AKYSTRATEJI.enums.AracCinsi)arac.Cinsi,
-                    TahsisTuru = (AKYSTRATEJI.enums.TahsisTuru)arac.TahsisTuru
+                    TahsisTuru = (AKYSTRATEJI.enums.TahsisTuru)arac.TahsisTuru,
+                    BirimId=arac.BirimId
                 });
             }
             return new JsonResult(vmListe);
@@ -110,15 +111,15 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _araclar.YeniAracEkle(model);
-                return new ABBJsonResponse("AraclarController/ Araç Başarıyla Eklendi");
+                
+                return new JsonResult(_araclar.YeniAracEkle(model));
             }
             catch (Exception e)
             {
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("UpdateanArac")]
+        [HttpPost("UpdateanArac")]
         public IActionResult AracGuncelle(VMAraclar guncellenecek)
         {
             var model = new BrAraclar()
@@ -140,7 +141,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("DeleteanArac")]
+        [HttpPost("DeleteanArac")]
         public IActionResult AracSil(VMAraclar silinecek)
         {
             BrAraclar model = _araclar.Getir(arac => arac.Id == silinecek.id);

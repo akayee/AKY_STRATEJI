@@ -23,7 +23,7 @@ namespace BL.Concrete
             {
 
                 base.Guncelle(arac);
-                throw new NotImplementedException("AraclarService/ Kayıt güncelleme başarılı");
+                return true;
             }
             catch (Exception e)
             {
@@ -37,7 +37,6 @@ namespace BL.Concrete
             try
             {
                 return DetayliListe(filter);
-                throw new NotImplementedException("AraclarService/ Kayıt listeleme başarılı");
             }
             catch(Exception e)
             {
@@ -52,7 +51,7 @@ namespace BL.Concrete
 
                 arac.Deleted = true;
                 base.Guncelle(arac);
-                throw new NotImplementedException("AraclarService/ Kayıt silme başarılı");
+                return true;
             }
             catch (Exception e)
             {
@@ -66,7 +65,6 @@ namespace BL.Concrete
             {
 
                 return base.Getir(arac => arac.Id == AracId && arac.Deleted != true);
-                throw new NotImplementedException("AraclarService/ Tek Kayıt getirme başarılı");
             }
             catch (Exception e)
             {
@@ -76,10 +74,10 @@ namespace BL.Concrete
 
         public override void Validate(BrAraclar entity)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
-        public bool YeniAracEkle(BrAraclar arac)
+        public int YeniAracEkle(BrAraclar arac)
         {
             int counted = AracListele().Count + 1;
             arac.AracId = counted;
@@ -90,7 +88,7 @@ namespace BL.Concrete
             {
 
                 base.Ekle(arac);
-                throw new NotImplementedException("AraclarService/ Kayır Başarıyla Eklendi");
+                return counted;
             }
             catch (Exception e)
             {
