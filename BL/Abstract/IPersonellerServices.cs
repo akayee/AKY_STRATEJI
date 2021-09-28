@@ -13,7 +13,7 @@ namespace BL.Abstract
         BrPersoneller TekPersonelGetir(int PersonelId);
         List<BrPersoneller> PersonelleriListele(Expression<Func<BrPersoneller, bool>> filter = null,
             params Expression<Func<BrPersoneller, object>>[] includeProperties);
-        bool YeniPersonelEkle(BrPersoneller Personel);
+        int YeniPersonelEkle(BrPersoneller Personel);
         bool TekPersonelSil(BrPersoneller Personel);
         bool TekPersonelGuncelle(BrPersoneller Personel);
     }

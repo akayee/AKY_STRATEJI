@@ -24,7 +24,6 @@ namespace BL.Concrete
             try
             {
                 return base.GetList(filter,includeProperties);
-                throw new NotImplementedException("PersonelService/ Kayıt listeleme başarılı");
             }
             catch (Exception e)
             {
@@ -38,7 +37,6 @@ namespace BL.Concrete
             {
 
                 return base.Get(personel => personel.Id == PersonelId && personel.Deleted != true);
-                throw new NotImplementedException("PersonelService/ Tek Kayıt getirme başarılı");
             }
             catch (Exception e)
             {
@@ -52,7 +50,7 @@ namespace BL.Concrete
             {
 
                 base.Guncelle(Personel);
-                throw new NotImplementedException("PersonelService/ Kayıt güncelleme başarılı");
+                return (true);
             }
             catch (Exception e)
             {
@@ -67,7 +65,7 @@ namespace BL.Concrete
 
                 Personel.Deleted = true;
                 base.Guncelle(Personel);
-                throw new NotImplementedException("PersonelService/ Kayıt silme başarılı");
+                return (true);
             }
             catch (Exception e)
             {
@@ -77,10 +75,10 @@ namespace BL.Concrete
 
         public override void Validate(BrPersoneller entity)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
-        public bool YeniPersonelEkle(BrPersoneller Personel)
+        public int YeniPersonelEkle(BrPersoneller Personel)
         {
             int counted = PersonelleriListele().Count + 1;
             Personel.Id = counted;
@@ -90,7 +88,7 @@ namespace BL.Concrete
             {
 
                 base.Ekle(Personel);
-                throw new NotImplementedException("PersonelService/ Kayır Başarıyla Eklendi");
+                return (counted);
             }
             catch (Exception e)
             {

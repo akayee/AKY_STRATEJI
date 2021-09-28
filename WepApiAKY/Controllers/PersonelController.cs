@@ -61,10 +61,10 @@ namespace WepApiAKY.Controllers
             
         }
         [HttpGet("GetListofPersoneller")]
-        public JsonResult PersonelleriListele()
+        public JsonResult PersonelleriListele(int BirimId)
         {
             //Veritabanından BrMevzuatlar tablosunun listesini almaişlemi.
-            List<BrPersoneller> personeller = _personelServices.PersonelleriListele();
+            List<BrPersoneller> personeller = _personelServices.PersonelleriListele(obj=>obj.BirimId==BirimId && obj.Deleted!=true);
             //View Model tipinde liste oluşturuluyor. Güvenlik Amaçlı
             List<VMPersoneller> vmListe = new List<VMPersoneller>();
             //İlgili Listeler birbirlerine mapleniyor ve relationlar çekilerek ekleniyor.
@@ -113,15 +113,14 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _personelServices.YeniPersonelEkle(model);
-                return new ABBJsonResponse("PersonelController/ Araç Başarıyla Eklendi");
+                return new JsonResult(_personelServices.YeniPersonelEkle(model));
             }
             catch (Exception e)
             {
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("UpdateaPersonel")]
+        [HttpPost("UpdateaPersonel")]
         public IActionResult PersonelGuncelle(VMPersoneller guncellenecek)
         {
             var model = new BrPersoneller()
@@ -150,7 +149,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("DeleteaPersonel")]
+        [HttpPost("DeleteaPersonel")]
         public IActionResult PersonelSil(VMPersoneller silinecek)
         {
             BrPersoneller model = _personelServices.Getir(personel => personel.Id == silinecek.id);
