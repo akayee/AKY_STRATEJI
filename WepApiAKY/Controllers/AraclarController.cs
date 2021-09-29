@@ -124,12 +124,14 @@ namespace WepApiAKY.Controllers
         {
             var model = new BrAraclar()
             {
+                Id=guncellenecek.id,
                 Adi = guncellenecek.Adi,
                 Deleted = guncellenecek.Deleted,
                 OlusturmaTarihi = guncellenecek.OlusturmaTarihi,
                 Cinsi= (decimal)guncellenecek.AracCinsi,
                 TahsisTuru = (decimal)guncellenecek.TahsisTuru,
-                BirimId = guncellenecek.BirimId
+                BirimId = guncellenecek.BirimId,
+                AracId=guncellenecek.id
             };
             try
             {
