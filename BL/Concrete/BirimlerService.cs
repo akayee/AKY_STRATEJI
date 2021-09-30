@@ -117,7 +117,6 @@ namespace BL.Concrete
         public BirimBilgiler BirimBilgileriGetir(int[] BirimId)
         {
             List<BrBirimler> birimler = new List<BrBirimler>();
-
             List<VMBirimler> vmbirimler = new List<VMBirimler>();
             List<VMMevzuatlar> mevzuatlar = new List<VMMevzuatlar>();
             List<VMAraclar> araclar = new List<VMAraclar>();

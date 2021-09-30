@@ -13,7 +13,7 @@ namespace BL.Abstract
         List<StStratejireleation> StratejininYiliniListele(Expression<Func<StStratejireleation, bool>> filter = null,
             params Expression<Func<StStratejireleation, object>>[] includeProperties);
         bool YeniStratejiIliskiEkle(StStratejireleation Iliski);
-        StStratejireleation TekStratejiRelationGetir(int id);
+        StStratejireleation TekStratejiRelationGetir(Expression<Func<StStratejireleation, bool>> filter = null, params Expression<Func<StStratejireleation, object>>[] includeProperties);
         bool TekStratejiIliskiSil(StStratejireleation Iliski);
         bool TopluStratejiIliskiEkle(List<StStratejireleation> StratejiIliskileri);
         bool TopluStratejiIliskiSil(List<StStratejireleation> StratejiIliskileri);

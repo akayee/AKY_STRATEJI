@@ -38,9 +38,9 @@ namespace BL.Concrete
             return true;
         }
 
-        public StStratejireleation TekStratejiRelationGetir(int id)
+        public StStratejireleation TekStratejiRelationGetir(Expression<Func<StStratejireleation, bool>> filter = null, params Expression<Func<StStratejireleation, object>>[] includeProperties)
         {
-            return base.Getir(i=> i.Id==id);
+            return base.Getir(filter,includeProperties);
         }
 
         public bool TopluStratejiIliskiEkle(List<StStratejireleation> StratejiIliskileri)

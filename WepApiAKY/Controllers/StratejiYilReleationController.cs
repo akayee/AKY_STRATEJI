@@ -29,7 +29,7 @@ namespace WepApiAKY.Controllers
         {
 
             //Tek Amac getirme.
-            StStratejireleation releation = _yililiskiservice.TekStratejiRelationGetir(id);
+            StStratejireleation releation = _yililiskiservice.TekStratejiRelationGetir(obj=>obj.Id== id);
             if (!(releation is null))
             {
                 //Mapleme işlemi.

@@ -20,10 +20,12 @@ namespace WepApiAKY.Controllers
         private readonly ILogger<AmaclarController> _logger;
         //Stratejik Amaclar işlemlerini yaptığımız servis
         private readonly IAmaclarService _amaclar;
-        public AmaclarController(ILogger<AmaclarController> logger, IAmaclarService amaclar)
+        private readonly IStratejiRelationServices _stratejiRelations;
+        public AmaclarController(ILogger<AmaclarController> logger, IAmaclarService amaclar ,IStratejiRelationServices relations)
         {
             _logger = logger;
             _amaclar = amaclar;
+            _stratejiRelations = relations;
         }
 
         [HttpGet("GetAmac")]
@@ -58,18 +60,20 @@ namespace WepApiAKY.Controllers
         public JsonResult AmacListe()
         {
             //Veritabanından StAmaclar tablosunun listesini almaişlemi.
-            List<StAmaclar> amaclar = _amaclar.Listele();
-            List<VMAmaclar> vMAmaclars = new List<VMAmaclar>();
-
+            List<StAmaclar> amaclar = _amaclar.Listele(obj=>obj.Deleted!=true,obj=>obj.StStratejireleations);
+            List<VMAmaclar> vMAmaclars = new List<VMAmaclar>(); 
             foreach(StAmaclar amac in amaclar)
             {
+                //WARNING Hatalı
+                //StStratejireleation relations = _stratejiRelations.TekStratejiRelationGetir(obj => obj.Deleted != true && obj.Id == amac.StStratejireleations.ı, obj => obj.StratejiYili);
                 VMAmaclar vmamac = new VMAmaclar()
                 {
-                    Adi=amac.Adi,
-                    Deleted=(bool)amac.Deleted,
-                    id=amac.Id,
-                    OlusturmaTarihi=amac.OlusturmaTarihi
-                };
+                    Adi = amac.Adi,
+                    Deleted = (bool)amac.Deleted,
+                    id = amac.Id,
+                    OlusturmaTarihi = amac.OlusturmaTarihi,
+                    //Yil=relations.StratejiYili.Yil
+            };
                 vMAmaclars.Add(vmamac);
             }
 
@@ -88,16 +92,14 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                //Veri tabanına ekleme işlemi.
-                _amaclar.AmacEkle(model);
-                return new ABBJsonResponse("Stratejik Amaç Başarıyla Eklendi");
+                return new JsonResult(_amaclar.AmacEkle(model));
             }
             catch(Exception e)
             {
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("UpdateAnAmac")]
+        [HttpPost("UpdateAnAmac")]
         public IActionResult AmacGuncelle(VMAmaclar guncellenecek)
         {
             
@@ -119,7 +121,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("DeleteAnAmac")]
+        [HttpPost("DeleteAnAmac")]
         public IActionResult AmacDelete(VMAmaclar guncellenecek)
         {
 

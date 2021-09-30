@@ -4,6 +4,7 @@ using BL.Abstract;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace BL.Concrete
 {
@@ -22,9 +23,9 @@ namespace BL.Concrete
             return Getir(amac => amac.Id == AmacId && amac.Deleted != true);
         }
 
-        public List<StAmaclar> Listele()
+        public List<StAmaclar> Listele(Expression<Func<StAmaclar, bool>> filter = null, params Expression<Func<StAmaclar, object>>[] includeProperties)
         {
-            return DetayliListe(amaclar => amaclar.Deleted!=true);
+            return GetList(filter,includeProperties);
         }
 
         public override void Validate(StAmaclar entity)
@@ -39,7 +40,7 @@ namespace BL.Concrete
 
                 guncellenece_amac.Deleted = true;
                 Guncelle(guncellenece_amac);
-                throw new NotImplementedException("Kayıt silme başarılı");
+                return true;
             }
             catch(Exception e)
             {
@@ -49,7 +50,7 @@ namespace BL.Concrete
             
         }
 
-        public bool AmacEkle(StAmaclar amac)
+        public int AmacEkle(StAmaclar amac)
         {
             int counted = Listele().Count + 1;
             amac.AmacId = counted;
@@ -61,7 +62,7 @@ namespace BL.Concrete
             {
 
                 Ekle(amac);
-                throw new NotImplementedException("Başarıyla Eklendi");
+                return (counted);
             }
             catch(Exception e)
             {
@@ -77,7 +78,7 @@ namespace BL.Concrete
             {
 
                 base.Guncelle(amac);
-                throw new NotImplementedException("Kayıt güncelleme başarılı");
+                return true;
             }
             catch (Exception e)
             {
