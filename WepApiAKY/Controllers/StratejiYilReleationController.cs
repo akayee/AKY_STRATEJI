@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace WepApiAKY.Controllers
 {
@@ -57,10 +55,38 @@ namespace WepApiAKY.Controllers
             }
         }
         [HttpGet("GetListofStratejiReleation")]
-        public JsonResult YilReleationListe()
+        public JsonResult YilReleationListe(int Yil, [FromQuery(Name = "Birimler")] int[] Birimler)
         {
             //Veritabanından StAmaclar tablosunun listesini almaişlemi.
-            List<StStratejireleation> amaclar = _yililiskiservice.DetayliListe();
+            List<StStratejireleation> amaclar = _yililiskiservice.StratejininYiliniListele(obj=>obj.StratejiYili.Yil ==Yil&& Array.BinarySearch(Birimler,obj.StratejiYili) > -1);
+            List<VMStratejiReleation> vMAmaclars = new List<VMStratejiReleation>();
+
+            foreach (StStratejireleation releation in amaclar)
+            {
+                VMStratejiReleation vmamac = new VMStratejiReleation()
+                {
+                    AmacId = (int)releation.AmacId,
+                    Deleted = releation.Deleted,
+                    FaaliyetId = (int)releation.FaaliyetId,
+                    HedefId = (int)releation.HedefId,
+                    Id = releation.Id,
+                    IsturuId = (int)releation.IsturuId,
+                    OlusturanKullanici = (int)releation.OlusturanKullanici,
+                    OlusturmaTarihi = releation.OlusturmaTarihi,
+                    PerformansId = (int)releation.PerformansId,
+                    StratejiYiliId = releation.StratejiYiliId,
+                    YillikHedefId = (int)releation.YillikHedefId
+                };
+                vMAmaclars.Add(vmamac);
+            }
+
+            return new JsonResult(vMAmaclars);
+        }
+        [HttpGet("GetListofYilBilgileri")]
+        public JsonResult BirimBilgileri(int Yil, [FromQuery(Name = "Birimler")] int[] Birimler)
+        {
+            //Veritabanından StAmaclar tablosunun listesini almaişlemi.
+            List<StStratejireleation> amaclar = _yililiskiservice.StratejininYiliniListele(obj => obj.StratejiYili.Yil == Yil, obj => obj.Hedef, k => k.Faaliyet, k => k.Amac, i => i.Isturu, l => l.Performans, m => m.StratejiYili, n => n.YillikHedef);
             List<VMStratejiReleation> vMAmaclars = new List<VMStratejiReleation>();
 
             foreach (StStratejireleation releation in amaclar)
