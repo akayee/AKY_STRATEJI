@@ -24,8 +24,9 @@ namespace WepApiAKY.Controllers
         private readonly IFaaliyetServices _faaliyetservices;
         private readonly IFaaliyetTurleriServices _faaliyetturleriservices;
         private readonly IBirimServis _birimler;
+        private readonly IHedeflerServices _hedefler;
 
-        public IslerController(ILogger<IslerController> logger, IIslerServices isler, IIsturleriServices isTurleri, IPerformanslarServices performanslarservices, IIsturleriServices isturleriservices, IFaaliyetServices faaliyetservices, IFaaliyetTurleriServices faaliyetturleriservices, IBirimServis birimler)
+        public IslerController(ILogger<IslerController> logger, IIslerServices isler, IIsturleriServices isTurleri, IPerformanslarServices performanslarservices, IIsturleriServices isturleriservices, IFaaliyetServices faaliyetservices, IFaaliyetTurleriServices faaliyetturleriservices, IBirimServis birimler,IHedeflerServices hedefler)
         {
             _logger = logger;
             _isler = isler;
@@ -34,6 +35,7 @@ namespace WepApiAKY.Controllers
             _faaliyetservices = faaliyetservices;
             _faaliyetturleriservices = faaliyetturleriservices;
             _birimler = birimler;
+            _hedefler = hedefler;
         }
 
         [HttpGet("GetAnIs")]
@@ -175,6 +177,8 @@ namespace WepApiAKY.Controllers
         {
             //faaliyet türleri
             List<VMFaaliyetTurleri> vmfaaliyetturleri = new List<VMFaaliyetTurleri>();
+            List<VMAmaclar> vMAmaclars = new List<VMAmaclar>();
+            List<VMHedefler> vMHedeflers = new List<VMHedefler>();
 
 
             //faaliyetler
@@ -204,6 +208,7 @@ namespace WepApiAKY.Controllers
 
             List<VMPerformanslar> vmperformanslar = new List<VMPerformanslar>();
             List<VMIsturleri> denemevm = _isTurleri.StratejiBilgileriHesapla(BirimId);
+            
 
             foreach (VMIsturleri isturu in denemevm)
             {              
@@ -274,10 +279,29 @@ namespace WepApiAKY.Controllers
                 {
                     vmperformanslar.Add(vmperformans);
                 }
+
+                StHedefler hedefler = _hedefler.TekHedefGetir(performanslar.HedeflerId,obj=>obj.Amaclar);
+                VMHedefler vmhedefler = new VMHedefler()
+                {
+                    AmaclarId = hedefler.Amaclar.AmacId,
+                    Deleted=(bool)hedefler.Deleted,
+                    id=hedefler.Id,
+                    OlusturmaTarihi= hedefler.OlusturmaTarihi,
+                    Tanim=hedefler.Tanim
+                };
+                vMHedeflers.Add(vmhedefler);
+                VMAmaclar vmamaclar = new VMAmaclar()
+                {
+                    Adi=hedefler.Amaclar.Adi,
+                    Deleted=(bool)hedefler.Amaclar.Deleted,
+                    id=hedefler.Amaclar.Id,
+                    OlusturmaTarihi=hedefler.Amaclar.OlusturmaTarihi
+                };
+                vMAmaclars.Add(vmamaclar);
             }
 
 
-            StratejiBilgileri Stratejibilgileri = new StratejiBilgileri() { Birim = birimi , BirimTipi=birimtipi,Isturleri= denemevm, Performanslar= vmperformanslar,Faaliyetler= vmfaaliyetler,VMFaaliyetTurleri= vmfaaliyetturleri};
+            StratejiBilgileri Stratejibilgileri = new StratejiBilgileri() {Hedefler=vMHedeflers,StratejikAmac=vMAmaclars, Birim = birimi , BirimTipi=birimtipi,Isturleri= denemevm, Performanslar= vmperformanslar,Faaliyetler= vmfaaliyetler,VMFaaliyetTurleri= vmfaaliyetturleri};
             //View Model tipinde liste oluşturuluyor. Güvenlik Amaçlı            
 
             return new JsonResult(Stratejibilgileri);

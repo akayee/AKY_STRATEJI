@@ -162,6 +162,7 @@ namespace BL.Concrete
                 base.Ekle(Iliski);
             } catch(Exception e)
             {
+                _logger.LogCritical(e, "ABBEntityServis Beklenmeyen Hata");
                 return false;
             }
             return true;

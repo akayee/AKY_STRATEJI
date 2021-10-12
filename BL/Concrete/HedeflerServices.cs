@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace BL.Concrete
@@ -17,9 +18,9 @@ namespace BL.Concrete
         {
             _logger = logger;
         }
-        public StHedefler TekHedefGetir(int HedefId)
+        public StHedefler TekHedefGetir(int HedefId, params Expression<Func<StHedefler, object>>[] includeProperties)
         {
-            return Getir(hedef => hedef.Id == HedefId && hedef.Deleted != true);
+            return Getir(hedef => hedef.Id == HedefId && hedef.Deleted != true, includeProperties);
         }
 
         public List<StHedefler> HedefleriListele()
