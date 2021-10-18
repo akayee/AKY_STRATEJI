@@ -173,12 +173,15 @@ namespace WepApiAKY.Controllers
             };
         }
         [HttpGet("GetListOfStrateji")]
-        public JsonResult StratejiBilgileriGetir(int BirimId)
+        public JsonResult StratejiBilgileriGetir([FromQuery(Name = "Birimler")]  int[] BirimId)
         {
             //faaliyet türleri
             List<VMFaaliyetTurleri> vmfaaliyetturleri = new List<VMFaaliyetTurleri>();
             List<VMAmaclar> vMAmaclars = new List<VMAmaclar>();
             List<VMHedefler> vMHedeflers = new List<VMHedefler>();
+            List<VMBirimler> vmBirimlers = new List<VMBirimler>();
+            List<VMPerformanslar> vmperformanslar = new List<VMPerformanslar>();
+            List<VMIsturleri> denemevm = new List<VMIsturleri>();
 
 
             //faaliyetler
@@ -186,126 +189,122 @@ namespace WepApiAKY.Controllers
 
             //İşler
             List<VMIsler> vmisler = new List<VMIsler>();
-            //Strateji Bilgilerini Birimine göre tek tek çekerek vm ile eşleştiriyoruz.
-            BrBirimler stbirim = _birimler.TekBirimGetir(BirimId);
-            VMBirimler birimi= new VMBirimler()
+            foreach(int birim in BirimId)
             {
-                Adi=stbirim.Adi,
-                Deleted= (bool?)stbirim.Deleted,
-                id=stbirim.Id,
-                BirimTipiId= (int?)stbirim.BirimTipiId,
-                OlusturmaTarihi=stbirim.OlustumraTarihi,
-                UstBirimId=(int?)stbirim.UstBirimId
-            };
-            int cekilecekbirimtipi = (int)stbirim.BirimTipiId;
-            BrBirimtipleri stbirimtipleri = stbirim.BirimTipi;
-            VMBirimTipleri birimtipi = new VMBirimTipleri()
-            {
-                Id=stbirimtipleri.Id,
-                Deleted=stbirimtipleri.Deleted,
-                BirimTipi=stbirimtipleri.BirimTipi
-            };
 
-            List<VMPerformanslar> vmperformanslar = new List<VMPerformanslar>();
-            List<VMIsturleri> denemevm = _isTurleri.StratejiBilgileriHesapla(BirimId);
-            
-
-            foreach (VMIsturleri isturu in denemevm)
-            {              
-
-                //FaaliyetTurleri işlemleri
-                StFaaliyetler stfaaliyetturleri = _faaliyetturleriservices.Getir(faaliyetturu => faaliyetturu.IsTuruId == isturu.id);
-                List<StIsler> stisler = _isler.IsleriListele(isler => isler.IsTuruId == isturu.id);
-
-                foreach(StIsler stis in stisler)
+                //Strateji Bilgilerini Birimine göre tek tek çekerek vm ile eşleştiriyoruz.
+                BrBirimler stbirim = _birimler.TekBirimGetir(birim);
+                VMBirimler birimi = new VMBirimler()
                 {
-                    VMIsler isgibi = new VMIsler()
-                    {
-                        BaslangicTarihi= stis.BaslangicTarihi,
-                        BitisTarihi= stis.BitisTarihi,
-                        Deger=stis.Deger,
-                        Deleted= (bool)stis.Deleted,
-                        id=stis.Id,
-                        Ilce= (AKYSTRATEJI.enums.Ilceler)stis.Ilce,
-                        IsturuId=stis.IsTuruId,
-                        Mahalle= (AKYSTRATEJI.enums.Mahalleler)stis.Mahalle
-                    };
-                    vmisler.Add(isgibi);
+                    Adi = stbirim.Adi,
+                    Deleted = (bool?)stbirim.Deleted,
+                    id = stbirim.Id,
+                    BirimTipiId = (int?)stbirim.BirimTipiId,
+                    OlusturmaTarihi = stbirim.OlustumraTarihi,
+                    UstBirimId = (int?)stbirim.UstBirimId,
+                    BirimTipiAdi= stbirim.BirimTipi.BirimTipi,
+                };
+                vmBirimlers.Add(birimi);
 
-                }
-
-                List<VMFaaliyetTurleri> denemefaaliyet = _faaliyetturleriservices.StratejiBilgileriHesapla(BirimId);
-                vmfaaliyetturleri = denemefaaliyet;
-
-                foreach (VMFaaliyetTurleri faaliyetimsi in denemefaaliyet)
+                foreach (VMIsturleri isturu in _isTurleri.StratejiBilgileriHesapla(birim))
                 {
+                    denemevm.Add(isturu);
+                    //FaaliyetTurleri işlemleri
+                    StFaaliyetler stfaaliyetturleri = _faaliyetturleriservices.Getir(faaliyetturu => faaliyetturu.IsTuruId == isturu.id);
+                    List<StIsler> stisler = _isler.IsleriListele(isler => isler.IsTuruId == isturu.id);
 
-                    //Faaliyet işlemleri
-                    List<StFaaliyet> stfaaliyet = _faaliyetservices.FaaliyetListele(faaliyet => faaliyet.FaaliyetlerId == faaliyetimsi.id);
-
-                    foreach (StFaaliyet faaliyet in stfaaliyet)
+                    foreach (StIsler stis in stisler)
                     {
-                        VMFaaliyet vmfaal = new VMFaaliyet()
+                        VMIsler isgibi = new VMIsler()
                         {
-                            Deger = faaliyet.Deger,
-                            Deleted = (bool)faaliyet.Deleted,
-                            FaaliyetlerId = faaliyet.FaaliyetlerId,
-                            id = faaliyet.Id,
-                            OlusturmaTarihi = faaliyet.OlusturmaTarihi
+                            BaslangicTarihi = stis.BaslangicTarihi,
+                            BitisTarihi = stis.BitisTarihi,
+                            Deger = stis.Deger,
+                            Deleted = (bool)stis.Deleted,
+                            id = stis.Id,
+                            Ilce = (AKYSTRATEJI.enums.Ilceler)stis.Ilce,
+                            IsturuId = stis.IsTuruId,
+                            Mahalle = (AKYSTRATEJI.enums.Mahalleler)stis.Mahalle
                         };
-                        vmfaaliyetler.Add(vmfaal);
+                        vmisler.Add(isgibi);
+
                     }
 
+                    List<VMFaaliyetTurleri> denemefaaliyet = _faaliyetturleriservices.StratejiBilgileriHesapla(birim);
+                    vmfaaliyetturleri = denemefaaliyet;
+
+                    foreach (VMFaaliyetTurleri faaliyetimsi in denemefaaliyet)
+                    {
+
+                        //Faaliyet işlemleri
+                        List<StFaaliyet> stfaaliyet = _faaliyetservices.FaaliyetListele(faaliyet => faaliyet.FaaliyetlerId == faaliyetimsi.id);
+
+                        foreach (StFaaliyet faaliyet in stfaaliyet)
+                        {
+                            VMFaaliyet vmfaal = new VMFaaliyet()
+                            {
+                                Deger = faaliyet.Deger,
+                                Deleted = (bool)faaliyet.Deleted,
+                                FaaliyetlerId = faaliyet.FaaliyetlerId,
+                                id = faaliyet.Id,
+                                OlusturmaTarihi = faaliyet.OlusturmaTarihi
+                            };
+                            vmfaaliyetler.Add(vmfaal);
+                        }
+
+                    }
+
+
+                    //Performans işlemleri
+                    StPerformanslar performanslar = _performanslarservices.TekPerformansGetir(isturu.PerformansId);
+
+                    VMPerformanslar vmperformans = new VMPerformanslar()
+                    {
+                        Adi = performanslar.Adi,
+                        Deleted = (bool)performanslar.Deleted,
+                        HedeflerId = performanslar.HedeflerId,
+                        id = performanslar.Id,
+                        OlusturmaTarihi = performanslar.OlusturmaTarihi,
+                        HedefAdi = performanslar.Hedefler.Tanim,
+                        AmaclarId = performanslar.Hedefler.AmaclarId,
+                        AmacAdi = performanslar.Hedefler.Amaclar.Adi
+                    };
+
+                    //Eğer performans listede var ise eklemiyor
+                    if (!vmperformanslar.Contains(vmperformans))
+                    {
+                        vmperformanslar.Add(vmperformans);
+                    }
+
+                    StHedefler hedefler = _hedefler.TekHedefGetir(performanslar.HedeflerId, obj => obj.Amaclar);
+                    VMHedefler vmhedefler = new VMHedefler()
+                    {
+                        AmaclarId = hedefler.Amaclar.AmacId,
+                        Deleted = (bool)hedefler.Deleted,
+                        id = hedefler.Id,
+                        OlusturmaTarihi = hedefler.OlusturmaTarihi,
+                        Tanim = hedefler.Tanim
+                    };
+                    vMHedeflers.Add(vmhedefler);
+                    VMAmaclar vmamaclar = new VMAmaclar()
+                    {
+                        Adi = hedefler.Amaclar.Adi,
+                        Deleted = (bool)hedefler.Amaclar.Deleted,
+                        id = hedefler.Amaclar.Id,
+                        OlusturmaTarihi = hedefler.Amaclar.OlusturmaTarihi
+                    };
+                    vMAmaclars.Add(vmamaclar);
                 }
-
-
-                //Performans işlemleri
-                StPerformanslar performanslar = _performanslarservices.TekPerformansGetir(isturu.PerformansId);
-
-                VMPerformanslar vmperformans = new VMPerformanslar()
-                {
-                    Adi=performanslar.Adi,
-                    Deleted= (bool)performanslar.Deleted,
-                    HedeflerId=performanslar.HedeflerId,
-                    id=performanslar.Id,
-                    OlusturmaTarihi=performanslar.OlusturmaTarihi,
-                    HedefAdi=performanslar.Hedefler.Tanim,
-                    AmaclarId=performanslar.Hedefler.AmaclarId,
-                    AmacAdi=performanslar.Hedefler.Amaclar.Adi
-                };
-
-                //Eğer performans listede var ise eklemiyor
-                if(!vmperformanslar.Contains(vmperformans))
-                {
-                    vmperformanslar.Add(vmperformans);
-                }
-
-                StHedefler hedefler = _hedefler.TekHedefGetir(performanslar.HedeflerId,obj=>obj.Amaclar);
-                VMHedefler vmhedefler = new VMHedefler()
-                {
-                    AmaclarId = hedefler.Amaclar.AmacId,
-                    Deleted=(bool)hedefler.Deleted,
-                    id=hedefler.Id,
-                    OlusturmaTarihi= hedefler.OlusturmaTarihi,
-                    Tanim=hedefler.Tanim
-                };
-                vMHedeflers.Add(vmhedefler);
-                VMAmaclar vmamaclar = new VMAmaclar()
-                {
-                    Adi=hedefler.Amaclar.Adi,
-                    Deleted=(bool)hedefler.Amaclar.Deleted,
-                    id=hedefler.Amaclar.Id,
-                    OlusturmaTarihi=hedefler.Amaclar.OlusturmaTarihi
-                };
-                vMAmaclars.Add(vmamaclar);
             }
 
 
-            StratejiBilgileri Stratejibilgileri = new StratejiBilgileri() {Hedefler=vMHedeflers,StratejikAmac=vMAmaclars, Birim = birimi , BirimTipi=birimtipi,Isturleri= denemevm, Performanslar= vmperformanslar,Faaliyetler= vmfaaliyetler,VMFaaliyetTurleri= vmfaaliyetturleri};
+            StratejiBilgileri Stratejibilgileri = new StratejiBilgileri() {Hedefler=vMHedeflers,StratejikAmac=vMAmaclars, YetkiliBirimler = vmBirimlers,Isturleri= denemevm, Performanslar= vmperformanslar,Faaliyetler= vmfaaliyetler,VMFaaliyetTurleri= vmfaaliyetturleri};
             //View Model tipinde liste oluşturuluyor. Güvenlik Amaçlı            
 
             return new JsonResult(Stratejibilgileri);
         }
+
+
 
     }
 }

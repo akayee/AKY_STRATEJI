@@ -7,8 +7,7 @@ namespace AKYSTRATEJI.ViewModals
 {
     public class StratejiBilgileri
     {
-        public VMBirimler Birim { get; set; }
-        public VMBirimTipleri BirimTipi { get; set; }
+        public List<VMBirimler> YetkiliBirimler { get; set; }
 
         public List<VMPerformanslar> Performanslar { get; set; }
         public List<VMAmaclar> StratejikAmac { get; set; }
