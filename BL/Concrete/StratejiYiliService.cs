@@ -24,7 +24,6 @@ namespace BL.Concrete
             try
             {
                 return base.DetayliListe(filter);
-                throw new NotImplementedException("StratejiYiliService/ Kayıt listeleme başarılı");
             }
             catch (Exception e)
             {
@@ -38,7 +37,6 @@ namespace BL.Concrete
             {
 
                 return base.Getir(yil => yil.Id == StratjeiyiliId && yil.Deleted != true);
-                throw new NotImplementedException("StratejiYiliService/ Tek Kayıt getirme başarılı");
             }
             catch (Exception e)
             {
@@ -52,7 +50,7 @@ namespace BL.Concrete
             {
 
                 base.Guncelle(yil);
-                throw new NotImplementedException("StratejiYiliService/ Kayıt güncelleme başarılı");
+                return true;
             }
             catch (Exception e)
             {
@@ -67,7 +65,7 @@ namespace BL.Concrete
 
                 yil.Deleted = true;
                 base.Guncelle(yil);
-                throw new NotImplementedException("StratejiYiliService/ Kayıt silme başarılı");
+                return true;
             }
             catch (Exception e)
             {
@@ -77,17 +75,17 @@ namespace BL.Concrete
 
         public override void Validate(StStratejiyili entity)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
-        public bool YeniStratejiYiliEkle(StStratejiyili yil)
+        public int YeniStratejiYiliEkle(StStratejiyili yil)
         {
             int counted = StratejiYiliListele().Count + 1;
             yil.Id = counted;
             try
             {
                 base.Ekle(yil);
-                throw new NotImplementedException("StratejiYiliService/ Kayır Başarıyla Eklendi");
+                return counted;
             }
             catch (Exception e)
             {

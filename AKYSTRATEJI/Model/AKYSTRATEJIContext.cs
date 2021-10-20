@@ -623,6 +623,8 @@ namespace AKYSTRATEJI.Model
                 entity.Property(e => e.Id)
                     .ValueGeneratedNever()
                     .HasColumnName("id");
+
+                entity.Property(e => e.OlusturmaTarihi).HasColumnType("date");
             });
 
             modelBuilder.Entity<StYillikhedef>(entity =>

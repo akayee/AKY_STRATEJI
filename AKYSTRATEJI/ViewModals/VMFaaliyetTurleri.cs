@@ -11,6 +11,7 @@ namespace AKYSTRATEJI.ViewModals
         public string Aciklama { get; set; }
         public string Adi { get; set; }
         public int OlcuBirimiId { get; set; }
+        public string OlcuBirimiTanimi { get; set; }
         public int YillikHedef { get; set; }
         public int PerformansId { get; set; }
         public int FaaliyetlerId { get; set; }

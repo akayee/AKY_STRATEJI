@@ -20,12 +20,16 @@ namespace WepApiAKY.Controllers
         private readonly ILogger<AmaclarController> _logger;
         //Stratejik Amaclar işlemlerini yaptığımız servis
         private readonly IAmaclarService _amaclar;
+        private readonly IPerformanslarServices _performanslar;
         private readonly IStratejiRelationServices _stratejiRelations;
-        public AmaclarController(ILogger<AmaclarController> logger, IAmaclarService amaclar ,IStratejiRelationServices relations)
+        private readonly IOlcuBirimiServices _olcubirimi;
+        public AmaclarController(ILogger<AmaclarController> logger, IAmaclarService amaclar ,IStratejiRelationServices relations, IPerformanslarServices performanslar,IOlcuBirimiServices olcubirimi)
         {
             _logger = logger;
             _amaclar = amaclar;
             _stratejiRelations = relations;
+            _performanslar = performanslar;
+            _olcubirimi = olcubirimi;
         }
 
         [HttpGet("GetAmac")]
@@ -78,6 +82,94 @@ namespace WepApiAKY.Controllers
             }
 
             return new JsonResult(vMAmaclars);
+        }
+        [HttpGet("GetListOfTumStrateji")]
+        public JsonResult TumStratejiyiListele()
+        {
+            //Veritabanından StAmaclar tablosunun listesini almaişlemi.
+            List<StAmaclar> amaclar = _amaclar.Listele(obj => obj.Deleted != true, obj => obj.StHedeflers);
+            List<VMAmaclar> vMAmaclars = new List<VMAmaclar>();
+            List<VMHedefler> vmHedeflers = new List<VMHedefler>();
+            List<VMPerformanslar> vMPerformanslars = new List<VMPerformanslar>();
+            List<VMFaaliyetTurleri> vMFaaliyetTurleris = new List<VMFaaliyetTurleri>();
+            List<VMIsturleri> vMIsturleris = new List<VMIsturleri>();
+            foreach (StAmaclar amac in amaclar)
+            {
+                //WARNING Hatalı
+                //StStratejireleation relations = _stratejiRelations.TekStratejiRelationGetir(obj => obj.Deleted != true && obj.Id == amac.StStratejireleations.ı, obj => obj.StratejiYili);
+                VMAmaclar vmamac = new VMAmaclar()
+                {
+                    Adi = amac.Adi,
+                    Deleted = (bool)amac.Deleted,
+                    id = amac.Id,
+                    OlusturmaTarihi = amac.OlusturmaTarihi,
+                    //Yil=relations.StratejiYili.Yil
+                };
+                vMAmaclars.Add(vmamac);
+                foreach(StHedefler hedef in amac.StHedeflers)
+                {
+                    VMHedefler vmhedef = new VMHedefler()
+                    {
+                        AmaclarId=hedef.AmaclarId,
+                        Deleted=(bool)hedef.Deleted,
+                        id=hedef.Id,
+                        OlusturmaTarihi=hedef.OlusturmaTarihi,
+                        Tanim=hedef.Tanim
+                    };
+                    vmHedeflers.Add(vmhedef);
+                }
+            }
+
+            List<StPerformanslar> stPerformanslars = _performanslar.Liste(obj => obj.Deleted != true, obj => obj.StFaaliyetlers, obj => obj.StIsturleris);
+            foreach(StPerformanslar performans in stPerformanslars)
+            {
+                VMPerformanslar vmperfor = new VMPerformanslar()
+                {
+                    Adi=performans.Adi,
+                    Deleted=(bool)performans.Deleted,
+                    id=performans.Id,
+                    HedeflerId=performans.HedeflerId,
+                    OlusturmaTarihi=performans.OlusturmaTarihi
+                };
+                vMPerformanslars.Add(vmperfor);
+                foreach(StFaaliyetler faaliyet in performans.StFaaliyetlers)
+                {
+                    VMFaaliyetTurleri vmfaaliyet = new VMFaaliyetTurleri()
+                    {
+                        Aciklama=faaliyet.Aciklama,
+                        Adi=faaliyet.Adi,
+                        BirimId=faaliyet.BirimId,
+                        Deleted=(bool)faaliyet.Deleted,
+                        id=faaliyet.Id,
+                        OlcuBirimiTanimi= _olcubirimi.TekOlcuBirimiGetir(faaliyet.OlcuBirimi).Tanim,
+                        PerformansId=faaliyet.PerformansId
+                    };
+                    vMFaaliyetTurleris.Add(vmfaaliyet);
+                }
+                foreach (StIsturleri isturu in performans.StIsturleris)
+                {
+                    VMIsturleri vmisturu = new VMIsturleri()
+                    {
+                        Aciklama = isturu.Aciklama,
+                        Adi = isturu.Adi,
+                        BirimId = isturu.BirimId,
+                        Deleted = (bool)isturu.Deleted,
+                        id = isturu.Id,
+                        OlcuBirimiTanimi = _olcubirimi.TekOlcuBirimiGetir(isturu.OlcuBirimi).Tanim,
+                        PerformansId=isturu.PerformansId,
+                    };
+                    vMIsturleris.Add(vmisturu);
+                }
+            }
+            StratejiBilgileri stratejibilgileri = new StratejiBilgileri()
+            {
+                VMFaaliyetTurleri = vMFaaliyetTurleris,
+                Hedefler = vmHedeflers,
+                StratejikAmac= vMAmaclars,
+                Isturleri=vMIsturleris,
+                Performanslar=vMPerformanslars
+            };
+            return new JsonResult(stratejibilgileri);
         }
         [HttpPost("AddNewAmac")]
         public IActionResult Ekle(VMAmaclar eklenecek)

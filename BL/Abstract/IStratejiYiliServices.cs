@@ -13,7 +13,7 @@ namespace BL.Abstract
         StStratejiyili TekStratejiYiliGetir(int StratjeiyiliId);
         List<StStratejiyili> StratejiYiliListele(Expression<Func<StStratejiyili, bool>> filter = null,
             params Expression<Func<StStratejiyili, object>>[] includeProperties);
-        bool YeniStratejiYiliEkle(StStratejiyili yil);
+        int YeniStratejiYiliEkle(StStratejiyili yil);
         bool TekStratejiYiliSil(StStratejiyili yil);
         bool TekStratejiYiliGuncelle(StStratejiyili yil);
     }

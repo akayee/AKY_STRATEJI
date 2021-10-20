@@ -76,7 +76,8 @@ namespace WepApiAKY.Controllers
             {
                 Id = eklenecek.id,
                 Deleted = (bool)eklenecek.Deleted,
-                Yil=eklenecek.yil
+                Yil = eklenecek.yil,
+                OlusturmaTarihi = DateTime.Now
             };
             try
             {

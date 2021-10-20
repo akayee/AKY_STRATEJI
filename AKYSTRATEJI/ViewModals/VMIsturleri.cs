@@ -22,6 +22,7 @@ namespace AKYSTRATEJI.ViewModals
         public int BirimId { get; set; }
         public int? Maaliyet { get; set; }
         public int OlcuBirimiId { get; set; }
+        public string  OlcuBirimiTanimi { get; set; }
         public DateTime OlusturmaTarihi { get; set; }
 
     }
