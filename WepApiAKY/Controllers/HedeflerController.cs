@@ -96,15 +96,14 @@ namespace WepApiAKY.Controllers
                 Tanim = eklenecek.Tanim,
                 OlusturmaTarihi = DateTime.Now,
                 AmaclarId=eklenecek.AmaclarId,
-                Amaclar=_amaclar.Getir(amac=> amac.Id==eklenecek.AmaclarId),
-                Deleted=false
+                Deleted=false,
+                
                 
             };
             try
             {
                 //Veri tabanına ekleme işlemi.
-                _hedefler.YeniHedefEkle(model);
-                return new ABBJsonResponse("Stratejik Hedef Başarıyla Eklendi");
+                return new JsonResult(_hedefler.YeniHedefEkle(model));
             }
             catch (Exception e)
             {

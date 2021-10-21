@@ -31,10 +31,10 @@ namespace BL.Concrete
         public override void Validate(StHedefler entity)
         {
             // veri eklemedeki "The method or operation is not implemented." hatası validate yüzünden geliyor.
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
-        public bool YeniHedefEkle(StHedefler hedef)
+        public int YeniHedefEkle(StHedefler hedef)
         {
             int counted = HedefleriListele().Count + 1;
             hedef.HedeflerId = counted;
@@ -45,7 +45,7 @@ namespace BL.Concrete
             {
 
                 Ekle(hedef);
-                throw new NotImplementedException("Başarıyla Eklendi");
+                return counted;
             }
             catch (Exception e)
             {
@@ -60,7 +60,7 @@ namespace BL.Concrete
 
                 hedef.Deleted = true;
                 Guncelle(hedef);
-                throw new NotImplementedException("Kayıt silme başarılı");
+                return true;
             }
             catch (Exception e)
             {
@@ -74,7 +74,7 @@ namespace BL.Concrete
             {
 
                 base.Guncelle(hedef);
-                throw new NotImplementedException("Kayıt güncelleme başarılı");
+                return true;
             }
             catch (Exception e)
             {

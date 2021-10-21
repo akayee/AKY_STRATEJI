@@ -12,7 +12,7 @@ namespace BL.Abstract
     {
         StHedefler TekHedefGetir(int HedefId, params Expression<Func<StHedefler, object>>[] includeProperties);
         List<StHedefler> HedefleriListele();
-        bool YeniHedefEkle(StHedefler hedef);
+        int YeniHedefEkle(StHedefler hedef);
         bool HedefSil(StHedefler hedef);
         bool HedefGuncelle(StHedefler hedef);
     }
