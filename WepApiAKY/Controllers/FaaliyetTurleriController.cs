@@ -45,7 +45,8 @@ namespace WepApiAKY.Controllers
                     IsturleriId = (int)faaliyetTuru.IsTuruId,
                     OlcuBirimiId = faaliyetTuru.OlcuBirimi,
                     PerformansId = faaliyetTuru.PerformansId,
-                    EkonomikSiniflandirma=(int)faaliyetTuru.EkonomikKod
+                    EkonomikSiniflandirma=(int)faaliyetTuru.EkonomikKod,
+                    
                 };
                 return new JsonResult(model);
             }
@@ -99,8 +100,8 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _faaliyetTurleri.YeniFaaliyetTuruEkle(model);
-                return new ABBJsonResponse("FaaliyetTurleriController/ Kayıt Başarıyla Eklendi");
+                
+                return new JsonResult(_faaliyetTurleri.YeniFaaliyetTuruEkle(model));
             }
             catch (Exception e)
             {

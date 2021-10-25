@@ -37,7 +37,8 @@ namespace BL.Concrete
         public int YeniHedefEkle(StHedefler hedef)
         {
             int counted = HedefleriListele().Count + 1;
-            hedef.HedeflerId = counted;
+            int nexthedefid = DetayliListe(obj=>obj.AmaclarId==hedef.AmaclarId).Count + 1;
+            hedef.HedeflerId = nexthedefid;
             hedef.Id = counted;
             //System.Diagnostics.Debug.WriteLine(amac.Adi);
 
@@ -45,7 +46,7 @@ namespace BL.Concrete
             {
 
                 Ekle(hedef);
-                return counted;
+                return nexthedefid;
             }
             catch (Exception e)
             {

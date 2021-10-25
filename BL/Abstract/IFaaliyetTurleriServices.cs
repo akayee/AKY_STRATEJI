@@ -14,7 +14,7 @@ namespace BL.Abstract
         StFaaliyetler FaaliyetTuruGetir(int FaaliyetId);
         List<StFaaliyetler> FaaliyetTurleriListele(Expression<Func<StFaaliyetler, bool>> filter = null,
             params Expression<Func<StFaaliyetler, object>>[] includeProperties);
-        bool YeniFaaliyetTuruEkle(StFaaliyetler FaaliyetTuru);
+        int YeniFaaliyetTuruEkle(StFaaliyetler FaaliyetTuru);
         bool TekFaaliyetTuruSil(StFaaliyetler FaaliyetTuru);
         bool TekFaaliyetTuruGuncelle(StFaaliyetler FaaliyetTuru);
 

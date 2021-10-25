@@ -102,8 +102,7 @@ namespace WepApiAKY.Controllers
             try
             {
                 //Veri tabanına ekleme işlemi.
-                _performanslar.YeniPerformansEkle(model);
-                return new ABBJsonResponse("Stratejik Performans Başarıyla Eklendi");
+                return new JsonResult(_performanslar.YeniPerformansEkle(model));
             }
             catch (Exception e)
             {

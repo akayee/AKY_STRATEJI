@@ -68,10 +68,11 @@ namespace BL.Concrete
             //throw new NotImplementedException();
         }
 
-        public bool YeniFaaliyetTuruEkle(StFaaliyetler FaaliyetTuru)
+        public int YeniFaaliyetTuruEkle(StFaaliyetler FaaliyetTuru)
         {
             int counted = FaaliyetTurleriListele().Count + 1;
-            FaaliyetTuru.FaaliyetlerId = counted;
+            int nextfaaliyetId = DetayliListe(obj=>obj.PerformansId==FaaliyetTuru.PerformansId).Count + 1;
+            FaaliyetTuru.FaaliyetlerId = nextfaaliyetId;
             FaaliyetTuru.Id = counted;
             //System.Diagnostics.Debug.WriteLine(amac.Adi);
 
@@ -79,7 +80,7 @@ namespace BL.Concrete
             {
 
                 Ekle(FaaliyetTuru);
-                throw new NotImplementedException("FaaliyetTuruService// Başarıyla Eklendi");
+                return nextfaaliyetId;
             }
             catch (Exception e)
             {

@@ -60,10 +60,11 @@ namespace BL.Concrete
             //throw new NotImplementedException();
         }
 
-        public bool YeniPerformansEkle(StPerformanslar performans)
+        public int YeniPerformansEkle(StPerformanslar performans)
         {
             int counted = PerformanslariListele().Count + 1;
-            performans.HedeflerId = counted;
+            int nextperformid = PerformanslariListele(obj=>obj.HedeflerId==performans.HedeflerId).Count + 1;
+            performans.PerformanslarId = nextperformid;
             performans.Id = counted;
             //System.Diagnostics.Debug.WriteLine(amac.Adi);
 
@@ -71,7 +72,7 @@ namespace BL.Concrete
             {
 
                 Ekle(performans);
-                return true;
+                return nextperformid;
             }
             catch (Exception e)
             {

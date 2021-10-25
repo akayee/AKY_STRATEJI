@@ -14,7 +14,7 @@ namespace BL.Abstract
         StIsturleri TekIsTuruGetir(int IsturuId);
         List<StIsturleri> IsTuruListele(Expression<Func<StIsturleri, bool>> filter = null,
             params Expression<Func<StIsturleri, object>>[] includeProperties);
-        bool YeniIsTuruEkle(StIsturleri isTuru);
+        int YeniIsTuruEkle(StIsturleri isTuru);
         bool IsTuruSil(StIsturleri isTuru);
         bool IsTuruGuncelle(StIsturleri IsTuru);
         public List<VMIsturleri> StratejiBilgileriHesapla(int birimid);

@@ -26,7 +26,7 @@ namespace BL.Concrete
             {
 
                 base.Guncelle(IsTuru);
-                throw new NotImplementedException("Kayıt güncelleme başarılı");
+                return true;
             }
             catch (Exception e)
             {
@@ -46,7 +46,7 @@ namespace BL.Concrete
 
                 isTuru.Deleted = true;
                 base.Guncelle(isTuru);
-                throw new NotImplementedException("Kayıt silme başarılı");
+                return true;
             }
             catch (Exception e)
             {
@@ -64,10 +64,11 @@ namespace BL.Concrete
             //throw new NotImplementedException();
         }
 
-        public bool YeniIsTuruEkle(StIsturleri isTuru)
+        public int YeniIsTuruEkle(StIsturleri isTuru)
         {
             int counted = IsTuruListele().Count + 1;
-            isTuru.IsTurleriId = counted;
+            int nextisturuId = DetayliListe(obj=>obj.PerformansId==isTuru.PerformansId).Count + 1;
+            isTuru.IsTurleriId = nextisturuId;
             isTuru.Id = counted;
             //System.Diagnostics.Debug.WriteLine(amac.Adi);
 
@@ -75,7 +76,7 @@ namespace BL.Concrete
             {
 
                 Ekle(isTuru);
-                throw new NotImplementedException("Başarıyla Eklendi");
+                return nextisturuId;
             }
             catch (Exception e)
             {

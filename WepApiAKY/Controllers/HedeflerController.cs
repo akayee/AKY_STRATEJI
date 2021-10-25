@@ -42,7 +42,8 @@ namespace WepApiAKY.Controllers
                     Tanim = hedefler.Tanim,
                     OlusturmaTarihi = hedefler.OlusturmaTarihi,
                     Deleted = (bool)hedefler.Deleted,
-                    AmaclarId = hedefler.AmaclarId
+                    AmaclarId = hedefler.AmaclarId,
+                    HedeflerId=hedefler.HedeflerId
                 };
 
                 return new JsonResult(model);
@@ -78,7 +79,8 @@ namespace WepApiAKY.Controllers
                     Tanim=hedef.Tanim,
                     AmaclarId=hedef.AmaclarId,
                     Deleted= (bool)hedef.Deleted,
-                    OlusturmaTarihi=hedef.OlusturmaTarihi
+                    OlusturmaTarihi=hedef.OlusturmaTarihi,
+                    HedeflerId=hedef.HedeflerId
                 });
             }
 
@@ -122,7 +124,8 @@ namespace WepApiAKY.Controllers
                 Id = guncellenecek.id,
                 Deleted = guncellenecek.Deleted,
                 AmaclarId = guncellenecek.AmaclarId,
-                Amaclar= _amaclar.Getir(amac => amac.Id == guncellenecek.AmaclarId)
+                Amaclar= _amaclar.Getir(amac => amac.Id == guncellenecek.AmaclarId),
+                HedeflerId=guncellenecek.HedeflerId
             };
             try
             {

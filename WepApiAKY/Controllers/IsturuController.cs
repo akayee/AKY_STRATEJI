@@ -42,7 +42,8 @@ namespace WepApiAKY.Controllers
                     OlusturmaTarihi = stIsturleri.OlusturmaTarihi,
                     Deleted = (bool)stIsturleri.Deleted,
                     OlcuBirimiId = stIsturleri.OlcuBirimi,
-                    PerformansId = stIsturleri.PerformansId
+                    PerformansId = stIsturleri.PerformansId,
+                    IsturleriId=stIsturleri.IsTurleriId
 
                 };
 
@@ -72,7 +73,8 @@ namespace WepApiAKY.Controllers
                     PerformansId = isturu.PerformansId,
                     Deleted = (bool)isturu.Deleted,
                     OlcuBirimiId=isturu.OlcuBirimi,
-                    OlusturmaTarihi = isturu.OlusturmaTarihi
+                    OlusturmaTarihi = isturu.OlusturmaTarihi,
+                    IsturleriId=isturu.IsTurleriId
                 });
             }
 
@@ -97,8 +99,8 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _isturleri.YeniIsTuruEkle(model);
-                return new ABBJsonResponse("Stratejik Isturu Başarıyla Eklendi");
+                
+                return new JsonResult(_isturleri.YeniIsTuruEkle(model));
             }
             catch (Exception e)
             {
@@ -117,7 +119,8 @@ namespace WepApiAKY.Controllers
                 Maaliyet = guncellenecek.Maaliyet,
                 OlcuBirimi=guncellenecek.OlcuBirimiId,
                 OlusturmaTarihi = guncellenecek.OlusturmaTarihi,
-                BirimId=guncellenecek.BirimId
+                BirimId=guncellenecek.BirimId,
+                IsTurleriId=guncellenecek.IsturleriId
             };
             try
             {
