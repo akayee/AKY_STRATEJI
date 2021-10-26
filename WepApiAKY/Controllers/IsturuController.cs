@@ -107,7 +107,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("UpdateAnIsTuru")]
+        [HttpPost("UpdateAnIsTuru")]
         public IActionResult IsturuGunceller(VMIsturleri guncellenecek)
         {
             var model = new StIsturleri()
@@ -132,7 +132,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("DeleteAnIsTuru")]
+        [HttpPost("DeleteAnIsTuru")]
         public IActionResult IsturuSil(VMIsturleri silinecek)
         {
             StIsturleri model =_isturleri.Getir(isturu => isturu.Id == silinecek.id);

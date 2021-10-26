@@ -14,7 +14,7 @@ namespace BL.Abstract
         StFaaliyet TekFaaliyetGetir(int FaaliyetId);
         List<StFaaliyet> FaaliyetListele(Expression<Func<StFaaliyet, bool>> filter = null,
             params Expression<Func<StFaaliyet, object>>[] includeProperties);
-        bool YeniFaaliyetEkle(StFaaliyet faaliyet);
+        int YeniFaaliyetEkle(StFaaliyet faaliyet);
         bool TekFaaliyetSil(StFaaliyet faaliyet);
         bool TekFaaliyetGuncelle(StFaaliyet faaliyet);
     }

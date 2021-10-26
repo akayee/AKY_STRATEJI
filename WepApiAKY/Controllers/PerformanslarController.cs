@@ -109,7 +109,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("UpdateaPerformance")]
+        [HttpPost("UpdateaPerformance")]
         public IActionResult PerformansGuncelle(VMPerformanslar guncellenecek)
         {
 
@@ -132,7 +132,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("DeleteaPerformans")]
+        [HttpPost("DeleteaPerformans")]
         public IActionResult PerformansDelete(VMPerformanslar guncellenecek)
         {
 

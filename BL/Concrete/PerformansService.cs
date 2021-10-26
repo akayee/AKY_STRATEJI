@@ -72,7 +72,7 @@ namespace BL.Concrete
             {
 
                 Ekle(performans);
-                return nextperformid;
+                return counted;
             }
             catch (Exception e)
             {

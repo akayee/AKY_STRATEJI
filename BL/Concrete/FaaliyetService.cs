@@ -22,7 +22,6 @@ namespace BL.Concrete
             try
             {
                 return base.DetayliListe(filter);
-                throw new NotImplementedException("FaaliyetService/ Kayıt listeleme başarılı");
             }
             catch (Exception e)
             {
@@ -36,7 +35,6 @@ namespace BL.Concrete
             {
 
                 return base.Getir(faaliyet => faaliyet.Id == FaaliyetId && faaliyet.Deleted != true);
-                throw new NotImplementedException("FaaliyetService/ Tek Kayıt getirme başarılı");
             }
             catch (Exception e)
             {
@@ -50,7 +48,7 @@ namespace BL.Concrete
             {
 
                 base.Guncelle(faaliyet);
-                throw new NotImplementedException("FaaliyetService/ Kayıt güncelleme başarılı");
+                return true;
             }
             catch (Exception e)
             {
@@ -65,7 +63,7 @@ namespace BL.Concrete
 
                 faaliyet.Deleted = true;
                 base.Guncelle(faaliyet);
-                throw new NotImplementedException("FaaliyetService/ Kayıt silme başarılı");
+                return true;
             }
             catch (Exception e)
             {
@@ -78,9 +76,10 @@ namespace BL.Concrete
             //throw new NotImplementedException();
         }
 
-        public bool YeniFaaliyetEkle(StFaaliyet faaliyet)
+        public int YeniFaaliyetEkle(StFaaliyet faaliyet)
         {
             int counted = FaaliyetListele().Count + 1;
+            int nextfaaliyetId = DetayliListe(obj=>obj.FaaliyetlerId==faaliyet.FaaliyetlerId).Count + 1;
             faaliyet.FaaliyetId = counted;
             faaliyet.Id = counted;
             //System.Diagnostics.Debug.WriteLine(amac.Adi);
@@ -89,7 +88,7 @@ namespace BL.Concrete
             {
 
                 base.Ekle(faaliyet);
-                throw new NotImplementedException("FaaliyetService/ Kayır Başarıyla Eklendi");
+                return counted;
             }
             catch (Exception e)
             {

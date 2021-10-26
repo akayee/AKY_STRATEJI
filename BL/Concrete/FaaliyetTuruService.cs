@@ -80,7 +80,7 @@ namespace BL.Concrete
             {
 
                 Ekle(FaaliyetTuru);
-                return nextfaaliyetId;
+                return counted;
             }
             catch (Exception e)
             {

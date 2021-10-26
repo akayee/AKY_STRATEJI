@@ -113,7 +113,7 @@ namespace WepApiAKY.Controllers
             }
         }
 
-        [HttpPut("UpdateaHedef")]
+        [HttpPost("UpdateaHedef")]
         public IActionResult HedefGuncelle(VMHedefler guncellenecek)
         {
 
@@ -138,7 +138,7 @@ namespace WepApiAKY.Controllers
             }
         }
 
-        [HttpPut("DeleteaHedef")]
+        [HttpPost("DeleteaHedef")]
         public IActionResult HedefDelete(VMHedefler guncellenecek)
         {
 

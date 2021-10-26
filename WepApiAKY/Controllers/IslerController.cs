@@ -98,7 +98,7 @@ namespace WepApiAKY.Controllers
                     BitisTarihi = isturu.BitisTarihi,
                     Ilce = (AKYSTRATEJI.enums.Ilceler)isturu.Ilce,
                     Mahalle = (AKYSTRATEJI.enums.Mahalleler)isturu.Mahalle,
-                    Deger = isturu.Deger,
+                    Deger = isturu.Deger
                 });
             }
 
@@ -125,15 +125,15 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _isler.YeniIsEkle(model);
-                return new ABBJsonResponse("IslerController Stratejik Isler Başarıyla Eklendi");
+                
+                return new JsonResult(_isler.YeniIsEkle(model));
             }
             catch (Exception e)
             {
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("UpdateAnIs")]
+        [HttpPost("UpdateAnIs")]
         public IActionResult IsGunceller(VMIsler guncellenecek)
         {
             var model = new StIsler()
@@ -143,7 +143,7 @@ namespace WepApiAKY.Controllers
                 Ilce = (int?)guncellenecek.Ilce,
                 Mahalle = (int?)guncellenecek.Mahalle,
                 Deger = guncellenecek.Deger,
-                IsTuruId = guncellenecek.IsturuId,
+                IsTuruId = _isTurleri.TekIsTuruGetir( guncellenecek.IsturuId).Id,
                 Deleted = guncellenecek.Deleted,
                 OlusturmaTarihi = DateTime.Now
             };
@@ -157,7 +157,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("DeleteAnIs")]
+        [HttpPost("DeleteAnIs")]
         public IActionResult IsSil(VMIsler silinecek)
         {
             StIsler model = _isler.Getir(isturu => isturu.Id == silinecek.id);

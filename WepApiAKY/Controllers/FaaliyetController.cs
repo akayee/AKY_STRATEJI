@@ -100,7 +100,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("UpdateaFaaliyet")]
+        [HttpPost("UpdateaFaaliyet")]
         public IActionResult FaaliyetGuncelle(VMFaaliyet guncellenecek)
         {
             var model = new StFaaliyet()
@@ -122,7 +122,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("DeleteaFaaliyet")]
+        [HttpPost("DeleteaFaaliyet")]
         public IActionResult FaaliyetSil(VMFaaliyet silinecek)
         {
             StFaaliyet model = _faaliyet.Getir(faaliyet => faaliyet.Id == silinecek.id);

@@ -76,7 +76,7 @@ namespace BL.Concrete
             {
 
                 Ekle(isTuru);
-                return nextisturuId;
+                return counted;
             }
             catch (Exception e)
             {

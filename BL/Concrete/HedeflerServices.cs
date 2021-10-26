@@ -46,7 +46,7 @@ namespace BL.Concrete
             {
 
                 Ekle(hedef);
-                return nexthedefid;
+                return counted;
             }
             catch (Exception e)
             {

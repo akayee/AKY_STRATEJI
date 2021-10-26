@@ -13,7 +13,7 @@ namespace BL.Abstract
         StIsler TekIsGetir(int IsId);
         List<StIsler> IsleriListele(Expression<Func<StIsler, bool>> filter = null,
             params Expression<Func<StIsler, object>>[] includeProperties);
-        bool YeniIsEkle(StIsler isler);
+        int YeniIsEkle(StIsler isler);
         bool IsSil(StIsler isler);
         bool IsGuncelle(StIsler isler);
     }

@@ -26,7 +26,7 @@ namespace BL.Concrete
             {
 
                 base.Guncelle(isler);
-                throw new NotImplementedException("IsService Kayıt güncelleme başarılı");
+                return true;
             }
             catch (Exception e)
             {
@@ -39,7 +39,6 @@ namespace BL.Concrete
             try
             {
                 return base.DetayliListe(filter);
-                throw new NotImplementedException("IsService Kayıt listeleme başarılı");
             }
             catch(Exception e)
             {
@@ -58,7 +57,7 @@ namespace BL.Concrete
                 //Kayıt silmiyoruz sadece Deleted parametresini true yapıyoruz.
                 isler.Deleted = true;
                 base.Guncelle(isler);
-                throw new NotImplementedException("IsServices Kayıt silme başarılı");
+                return true;
             }
             catch (Exception e)
             {
@@ -71,7 +70,6 @@ namespace BL.Concrete
             try
             {
                 return base.Getir(isTuru => isTuru.Id == IsId && isTuru.Deleted != true);
-                throw new NotImplementedException("IsServices tek kayıt listeleme başarılı");
             }
             catch(Exception e)
             {
@@ -84,17 +82,18 @@ namespace BL.Concrete
             //throw new NotImplementedException();
         }
         //Yeni is ekleme işlemi.
-        public bool YeniIsEkle(StIsler isler)
+        public int YeniIsEkle(StIsler isler)
         {
             int counted = base.DetayliListe().Count + 1;
-            isler.IslerId = counted;
+            int nextisId = base.DetayliListe(obj=>obj.IsTuruId==isler.IsTuruId).Count + 1;
+            isler.IslerId = nextisId;
             isler.Id = counted;
 
             try
             {
 
                 base.Ekle(isler);
-                throw new NotImplementedException("IsServis Kayıt Başarıyla Eklendi");
+                return counted;
             }
             catch (Exception e)
             {
