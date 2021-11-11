@@ -41,7 +41,7 @@ namespace WepApiAKY.Controllers
                     Adi = stIsturleri.Adi,
                     OlusturmaTarihi = stIsturleri.OlusturmaTarihi,
                     Deleted = (bool)stIsturleri.Deleted,
-                    OlcuBirimiId = stIsturleri.OlcuBirimi,
+                    OlcuBirimi = stIsturleri.OlcuBirimi,
                     PerformansId = stIsturleri.PerformansId,
                     IsturleriId=stIsturleri.IsTurleriId
 
@@ -72,7 +72,7 @@ namespace WepApiAKY.Controllers
                     Adi = isturu.Adi,
                     PerformansId = isturu.PerformansId,
                     Deleted = (bool)isturu.Deleted,
-                    OlcuBirimiId=isturu.OlcuBirimi,
+                    OlcuBirimi=isturu.OlcuBirimi,
                     OlusturmaTarihi = isturu.OlusturmaTarihi,
                     IsturleriId=isturu.IsTurleriId
                 });
@@ -93,8 +93,10 @@ namespace WepApiAKY.Controllers
                 PerformansId = eklenecek.PerformansId,
                 Deleted = eklenecek.Deleted,
                 Maaliyet = eklenecek.Maaliyet,
-                OlcuBirimi=eklenecek.OlcuBirimiId,
-                OlusturmaTarihi = DateTime.Now
+                OlcuBirimi=eklenecek.OlcuBirimi,
+                OlusturmaTarihi = DateTime.Now,
+                BirimId=eklenecek.BirimId,
+                Strateji=eklenecek.Strateji
                 
             };
             try
@@ -117,7 +119,7 @@ namespace WepApiAKY.Controllers
                 PerformansId = guncellenecek.PerformansId,
                 Deleted = guncellenecek.Deleted,
                 Maaliyet = guncellenecek.Maaliyet,
-                OlcuBirimi=guncellenecek.OlcuBirimiId,
+                OlcuBirimi=guncellenecek.OlcuBirimi,
                 OlusturmaTarihi = guncellenecek.OlusturmaTarihi,
                 BirimId=guncellenecek.BirimId,
                 IsTurleriId=guncellenecek.IsturleriId

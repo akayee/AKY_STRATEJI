@@ -14,6 +14,7 @@ namespace AKYSTRATEJI.ViewModals
         public int YillikHedef { get; set; }
         public int IsturleriId { get; set; }
         public int PerformansId { get; set; }
+        public bool Strateji { get; set; }
         public bool Deleted { get; set; }
         public int ToplamDeger { get; set; }
         public int FirstPart { get; set; }
@@ -22,7 +23,7 @@ namespace AKYSTRATEJI.ViewModals
         public int LastPart { get; set; }
         public int BirimId { get; set; }
         public int? Maaliyet { get; set; }
-        public int OlcuBirimiId { get; set; }
+        public int OlcuBirimi { get; set; }
         public string  OlcuBirimiTanimi { get; set; }
         public DateTime OlusturmaTarihi { get; set; }
 

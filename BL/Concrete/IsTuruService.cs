@@ -124,7 +124,7 @@ namespace BL.Concrete
                     Deleted= (bool)isturu.Deleted,
                     id=isturu.Id,
                     PerformansId=isturu.PerformansId,
-                    OlcuBirimiId=isturu.OlcuBirimi,
+                    OlcuBirimi=isturu.OlcuBirimi,
                     YillikHedef=yillikhedef.Hedef,
                     ToplamDeger=toplamdeger,
                     FirstPart=firstpart,

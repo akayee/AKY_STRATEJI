@@ -96,7 +96,7 @@ namespace BL.Concrete
                         Adi=relation.Isturu.Adi,
                         Deleted=(bool)relation.Isturu.Deleted,
                         id=relation.Isturu.Id,
-                        OlcuBirimiId=relation.Isturu.OlcuBirimi,
+                        OlcuBirimi=relation.Isturu.OlcuBirimi,
                         OlusturmaTarihi=relation.Isturu.OlusturmaTarihi,
                         PerformansId=relation.Isturu.PerformansId
                     };
