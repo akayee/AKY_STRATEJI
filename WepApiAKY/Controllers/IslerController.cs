@@ -205,6 +205,29 @@ namespace WepApiAKY.Controllers
                     BirimTipiAdi= stbirim.BirimTipi.BirimTipi,
                 };
                 vmBirimlers.Add(birimi);
+                List<VMFaaliyetTurleri> denemefaaliyet = _faaliyetturleriservices.StratejiBilgileriHesapla(birim);
+                vmfaaliyetturleri = denemefaaliyet;
+
+                foreach (VMFaaliyetTurleri faaliyetimsi in denemefaaliyet)
+                {
+
+                    //Faaliyet işlemleri
+                    List<StFaaliyet> stfaaliyet = _faaliyetservices.FaaliyetListele(faaliyet => faaliyet.FaaliyetlerId == faaliyetimsi.id);
+
+                    foreach (StFaaliyet faaliyet in stfaaliyet)
+                    {
+                        VMFaaliyet vmfaal = new VMFaaliyet()
+                        {
+                            Deger = faaliyet.Deger,
+                            Deleted = (bool)faaliyet.Deleted,
+                            FaaliyetlerId = faaliyet.FaaliyetlerId,
+                            id = faaliyet.Id,
+                            OlusturmaTarihi = faaliyet.OlusturmaTarihi
+                        };
+                        vmfaaliyetler.Add(vmfaal);
+                    }
+
+                }
 
                 foreach (VMIsturleri isturu in _isTurleri.StratejiBilgileriHesapla(birim))
                 {
@@ -230,29 +253,7 @@ namespace WepApiAKY.Controllers
 
                     }
 
-                    List<VMFaaliyetTurleri> denemefaaliyet = _faaliyetturleriservices.StratejiBilgileriHesapla(birim);
-                    vmfaaliyetturleri = denemefaaliyet;
-
-                    foreach (VMFaaliyetTurleri faaliyetimsi in denemefaaliyet)
-                    {
-
-                        //Faaliyet işlemleri
-                        List<StFaaliyet> stfaaliyet = _faaliyetservices.FaaliyetListele(faaliyet => faaliyet.FaaliyetlerId == faaliyetimsi.id);
-
-                        foreach (StFaaliyet faaliyet in stfaaliyet)
-                        {
-                            VMFaaliyet vmfaal = new VMFaaliyet()
-                            {
-                                Deger = faaliyet.Deger,
-                                Deleted = (bool)faaliyet.Deleted,
-                                FaaliyetlerId = faaliyet.FaaliyetlerId,
-                                id = faaliyet.Id,
-                                OlusturmaTarihi = faaliyet.OlusturmaTarihi
-                            };
-                            vmfaaliyetler.Add(vmfaal);
-                        }
-
-                    }
+                    
 
 
                     //Performans işlemleri
@@ -271,7 +272,7 @@ namespace WepApiAKY.Controllers
                     };
 
                     //Eğer performans listede var ise eklemiyor
-                    if (!vmperformanslar.Contains(vmperformans))
+                    if (!vmperformanslar.Any(item=>item.id== vmperformans.id && item.Adi==vmperformans.Adi))
                     {
                         vmperformanslar.Add(vmperformans);
                     }
@@ -285,7 +286,10 @@ namespace WepApiAKY.Controllers
                         OlusturmaTarihi = hedefler.OlusturmaTarihi,
                         Tanim = hedefler.Tanim
                     };
-                    vMHedeflers.Add(vmhedefler);
+                    if (!vMHedeflers.Any(item => item.id == vmhedefler.id && item.Tanim == vmhedefler.Tanim))
+                    {
+                        vMHedeflers.Add(vmhedefler);
+                    }
                     VMAmaclar vmamaclar = new VMAmaclar()
                     {
                         Adi = hedefler.Amaclar.Adi,
@@ -293,12 +297,15 @@ namespace WepApiAKY.Controllers
                         id = hedefler.Amaclar.Id,
                         OlusturmaTarihi = hedefler.Amaclar.OlusturmaTarihi
                     };
-                    vMAmaclars.Add(vmamaclar);
+                    if (!vMAmaclars.Any(item => item.id == vmamaclar.id && item.Adi == vmamaclar.Adi))
+                    {
+                        vMAmaclars.Add(vmamaclar);
+                    }
                 }
             }
 
 
-            StratejiBilgileri Stratejibilgileri = new StratejiBilgileri() {Hedefler=vMHedeflers,StratejikAmac=vMAmaclars, YetkiliBirimler = vmBirimlers,Isturleri= denemevm, Performanslar= vmperformanslar,Faaliyetler= vmfaaliyetler,VMFaaliyetTurleri= vmfaaliyetturleri};
+            StratejiBilgileri Stratejibilgileri = new StratejiBilgileri() {Hedefler=vMHedeflers,StratejikAmac=vMAmaclars, YetkiliBirimler = vmBirimlers,Isturleri= denemevm, Performanslar= vmperformanslar,Faaliyetler= vmfaaliyetler,VMFaaliyetTurleri= vmfaaliyetturleri,Isler= vmisler};
             //View Model tipinde liste oluşturuluyor. Güvenlik Amaçlı            
 
             return new JsonResult(Stratejibilgileri);

@@ -125,7 +125,7 @@ namespace BL.Concrete
                     id=isturu.Id,
                     PerformansId=isturu.PerformansId,
                     OlcuBirimi=isturu.OlcuBirimi,
-                    YillikHedef=yillikhedef.Hedef,
+                    YillikHedef=yillikhedef==null? 0:yillikhedef.Hedef,
                     ToplamDeger=toplamdeger,
                     FirstPart=firstpart,
                     SecondPart=secondpart,
