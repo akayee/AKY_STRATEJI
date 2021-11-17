@@ -57,7 +57,7 @@ namespace WepApiAKY.Controllers
         public JsonResult FaaliyetListele()
         {
             //Veritabanından StFaaliyet tablosunun listesini almaişlemi.
-            List<StFaaliyet> faaliyetler = _faaliyet.FaaliyetListele();
+            List<StFaaliyet> faaliyetler = _faaliyet.FaaliyetListele(obj=>obj.Deleted!=true);
             //View Model tipinde liste oluşturuluyor. Güvenlik Amaçlı
             List<VMFaaliyet> vmListe = new List<VMFaaliyet>();
             //İlgili Listeler birbirlerine mapleniyor ve relationlar çekilerek ekleniyor.

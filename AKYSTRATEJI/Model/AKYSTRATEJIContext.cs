@@ -405,9 +405,6 @@ namespace AKYSTRATEJI.Model
             {
                 entity.ToTable("ST_FAALIYETLER");
 
-                entity.HasIndex(e => e.IsTuruId, "FK_ST_FAALIYETLER")
-                    .IsUnique();
-
                 entity.Property(e => e.Id)
                     .ValueGeneratedNever()
                     .HasColumnName("id");
@@ -499,9 +496,6 @@ namespace AKYSTRATEJI.Model
             {
                 entity.ToTable("ST_ISTURLERI");
 
-                entity.HasIndex(e => e.FaaliyetlerId, "IX_ST_ISTURLERI")
-                    .IsUnique();
-
                 entity.Property(e => e.Id)
                     .ValueGeneratedNever()
                     .HasColumnName("id");
@@ -527,8 +521,8 @@ namespace AKYSTRATEJI.Model
                     .HasConstraintName("FK_ST_ISTURLERİ_BR_BIRIMLER");
 
                 entity.HasOne(d => d.Faaliyetler)
-                    .WithOne(p => p.StIsturleri)
-                    .HasForeignKey<StIsturleri>(d => d.FaaliyetlerId)
+                    .WithMany(p => p.StIsturleris)
+                    .HasForeignKey(d => d.FaaliyetlerId)
                     .HasConstraintName("FK_ST_ISTURLERI_ST_FAALIYETLER");
 
                 entity.HasOne(d => d.OlcuBirimiNavigation)

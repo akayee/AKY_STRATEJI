@@ -42,7 +42,6 @@ namespace WepApiAKY.Controllers
                     Deleted = (bool)faaliyetTuru.Deleted,
                     Adi = faaliyetTuru.Adi,
                     FaaliyetlerId = faaliyetTuru.FaaliyetlerId,
-                    IsturleriId = (int)faaliyetTuru.IsTuruId,
                     OlcuBirimiId = faaliyetTuru.OlcuBirimi,
                     PerformansId = faaliyetTuru.PerformansId,
                     EkonomikSiniflandirma=(int)faaliyetTuru.EkonomikKod,
@@ -59,7 +58,7 @@ namespace WepApiAKY.Controllers
         [HttpGet("GetListofFaaliyetTurleri")]
         public JsonResult FaaliyetTurleriListele()
         {
-            List<StFaaliyetler> faaliyetTurleri = _faaliyetTurleri.FaaliyetTurleriListele();
+            List<StFaaliyetler> faaliyetTurleri = _faaliyetTurleri.FaaliyetTurleriListele(obj=> obj.Deleted!=true);
             List<VMFaaliyetTurleri> vmListe = new List<VMFaaliyetTurleri>();
 
             foreach(StFaaliyetler faaliyetturu in faaliyetTurleri)
@@ -72,7 +71,6 @@ namespace WepApiAKY.Controllers
                     Deleted = (bool)faaliyetturu.Deleted,
                     Adi = faaliyetturu.Adi,
                     FaaliyetlerId = faaliyetturu.FaaliyetlerId,
-                    IsturleriId = (int)faaliyetturu.IsTuruId,
                     OlcuBirimiId = faaliyetturu.OlcuBirimi,
                     PerformansId = faaliyetturu.PerformansId,
                     EkonomikSiniflandirma=(int)faaliyetturu.EkonomikKod
@@ -92,7 +90,6 @@ namespace WepApiAKY.Controllers
                 BirimId = eklenecek.BirimId,
                 Deleted = eklenecek.Deleted,
                 FaaliyetlerId = eklenecek.FaaliyetlerId,
-                IsTuruId = eklenecek.IsturleriId,
                 OlcuBirimi = eklenecek.OlcuBirimiId,
                 OlusturmaTarihi = DateTime.Now,
                 PerformansId = eklenecek.PerformansId,
@@ -119,7 +116,6 @@ namespace WepApiAKY.Controllers
                 BirimId = guncellenecek.BirimId,
                 Deleted = guncellenecek.Deleted,
                 FaaliyetlerId = guncellenecek.FaaliyetlerId,
-                IsTuruId = guncellenecek.FaaliyetlerId,
                 OlcuBirimi = guncellenecek.OlcuBirimiId,
                 OlusturmaTarihi = guncellenecek.OlusturmaTarihi,
                 PerformansId = guncellenecek.PerformansId,

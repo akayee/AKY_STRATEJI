@@ -60,7 +60,7 @@ namespace WepApiAKY.Controllers
         public JsonResult AmacListe()
         {
             //Veritabanından StAmaclar tablosunun listesini almaişlemi.
-            List<StHedefler> hedefler = _hedefler.HedefleriListele();
+            List<StHedefler> hedefler = _hedefler.HedefleriListele(hedefler => hedefler.Deleted != true);
             //View Model tipinde liste oluşturuluyor. Güvenlik Amaçlı
             List<VMHedefler> vmListe = new List<VMHedefler>();
             //İlgili Listeler birbirlerine mapleniyor ve relationlar çekilerek ekleniyor.

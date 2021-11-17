@@ -23,9 +23,9 @@ namespace BL.Concrete
             return Getir(hedef => hedef.Id == HedefId && hedef.Deleted != true, includeProperties);
         }
 
-        public List<StHedefler> HedefleriListele()
+        public List<StHedefler> HedefleriListele(Expression<Func<StIsturleri, bool>> filter = null, params Expression<Func<StIsturleri, object>>[] includeProperties)
         {
-            return DetayliListe(hedefler => hedefler.Deleted != true);
+            return DetayliListe();
         }
 
         public override void Validate(StHedefler entity)

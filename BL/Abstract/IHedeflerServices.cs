@@ -11,7 +11,7 @@ namespace BL.Abstract
     public interface IHedeflerServices: IABBEntityServis<StHedefler>
     {
         StHedefler TekHedefGetir(int HedefId, params Expression<Func<StHedefler, object>>[] includeProperties);
-        List<StHedefler> HedefleriListele();
+        List<StHedefler> HedefleriListele(Expression<Func<StIsturleri, bool>> filter = null, params Expression<Func<StIsturleri, object>>[] includeProperties);
         int YeniHedefEkle(StHedefler hedef);
         bool HedefSil(StHedefler hedef);
         bool HedefGuncelle(StHedefler hedef);

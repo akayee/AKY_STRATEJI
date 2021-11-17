@@ -161,7 +161,6 @@ namespace BL.Concrete
                     SecondPart = secondpart,
                     ThirdPart = thirdpart,
                     LastPart = lastpart,
-                    IsturleriId=(int)isturu.IsTuruId,
                     OlusturmaTarihi=isturu.OlusturmaTarihi,
                     FaaliyetlerId=isturu.FaaliyetlerId
 

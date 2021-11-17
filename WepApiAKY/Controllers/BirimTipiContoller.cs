@@ -53,7 +53,7 @@ namespace WepApiAKY.Controllers
         public JsonResult BirimTipiListele()
         {
             //Veritabanından BrDonanimlar tablosunun listesini almaişlemi.
-            List<BrBirimtipleri> birimtipleri = _birimtipleri.BirimTipleriListele();
+            List<BrBirimtipleri> birimtipleri = _birimtipleri.BirimTipleriListele(obj=>obj.Deleted!=true);
             //View Model tipinde liste oluşturuluyor. Güvenlik Amaçlı
             List<VMBirimTipleri> vmListe = new List<VMBirimTipleri>();
             //İlgili Listeler birbirlerine mapleniyor ve relationlar çekilerek ekleniyor.

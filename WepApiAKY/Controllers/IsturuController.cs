@@ -56,10 +56,10 @@ namespace WepApiAKY.Controllers
             }            
         }
         [HttpGet("GetListofIsturleri")]
-        public JsonResult PerformansListele()
+        public JsonResult IsturuListele()
         {
             //Veritabanından StIsturleri tablosunun listesini almaişlemi.
-            List<StIsturleri> isTurleri = _isturleri.IsTuruListele();
+            List<StIsturleri> isTurleri = _isturleri.IsTuruListele(obj=>obj.Deleted!=true);
             //View Model tipinde liste oluşturuluyor. Güvenlik Amaçlı
             List<VMIsturleri> vmListe = new List<VMIsturleri>();
             //İlgili Listeler birbirlerine mapleniyor ve relationlar çekilerek ekleniyor.

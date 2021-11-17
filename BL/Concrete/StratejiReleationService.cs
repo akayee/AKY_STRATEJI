@@ -45,7 +45,6 @@ namespace BL.Concrete
                         EkonomikSiniflandirma = (int)relation.Faaliyet.EkonomikKod,
                         FaaliyetlerId = relation.Faaliyet.FaaliyetlerId,
                         id = relation.Faaliyet.Id,
-                        IsturleriId = (int)relation.Faaliyet.IsTuruId,
                         OlcuBirimiId = relation.Faaliyet.OlcuBirimi,
                         OlusturmaTarihi = relation.Faaliyet.OlusturmaTarihi,
                         PerformansId = relation.Faaliyet.PerformansId
