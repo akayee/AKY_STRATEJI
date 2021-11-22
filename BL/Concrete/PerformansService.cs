@@ -22,7 +22,7 @@ namespace BL.Concrete
             {
 
                 base.Guncelle(performans);
-                throw new NotImplementedException("Kayıt güncelleme başarılı");
+                return true;
             }
             catch (Exception e)
             {
@@ -42,7 +42,7 @@ namespace BL.Concrete
 
                 performans.Deleted = true;
                 Guncelle(performans);
-                throw new NotImplementedException("Kayıt silme başarılı");
+                return true;
             }
             catch (Exception e)
             {

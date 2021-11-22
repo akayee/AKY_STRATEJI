@@ -124,8 +124,8 @@ namespace WepApiAKY.Controllers
             };
             try
             {
-                _performanslar.PerformansGuncelle(model);
-                return new ABBJsonResponse("Stratejik Performans Başarıyla Güncellendi");
+
+                return new JsonResult(_performanslar.PerformansGuncelle(model));
             }
             catch (Exception e)
             {

@@ -141,6 +141,7 @@ namespace WepApiAKY.Controllers
                         BirimId=faaliyet.BirimId,
                         Deleted=(bool)faaliyet.Deleted,
                         id=faaliyet.Id,
+                        OlcuBirimiId=faaliyet.OlcuBirimi,
                         OlcuBirimiTanimi= _olcubirimi.TekOlcuBirimiGetir(faaliyet.OlcuBirimi).Tanim,
                         PerformansId=faaliyet.PerformansId
                     };
@@ -155,6 +156,7 @@ namespace WepApiAKY.Controllers
                         BirimId = isturu.BirimId,
                         Deleted = (bool)isturu.Deleted,
                         id = isturu.Id,
+                        OlcuBirimi=isturu.OlcuBirimi,
                         OlcuBirimiTanimi = _olcubirimi.TekOlcuBirimiGetir(isturu.OlcuBirimi).Tanim,
                         PerformansId=isturu.PerformansId,
                     };
@@ -206,7 +208,7 @@ namespace WepApiAKY.Controllers
             try
             {
                 _amaclar.AmacGuncelle(model);
-                return new ABBJsonResponse("Stratejik Amaç Başarıyla Güncellendi");
+                return new JsonResult("Stratejik Amaç Başarıyla Güncellendi");
             }
             catch (Exception e)
             {
