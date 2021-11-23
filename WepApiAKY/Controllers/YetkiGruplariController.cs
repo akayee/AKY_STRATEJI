@@ -90,7 +90,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("YetkiGruplariGuncelle")]
+        [HttpPost("YetkiGruplariGuncelle")]
         public IActionResult YetkiGruplariGuncelle(VMYetkiGruplari guncellenecek)
         {
             var model = new YtYetkigruplari()
@@ -110,7 +110,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("YetkiGrubuSil")]
+        [HttpPost("YetkiGrubuSil")]
         public IActionResult YetkiGrubuSil(VMYetkiGruplari silinecek)
         {
             YtYetkigruplari model = _yetkigrupServices.Getir(kullanici => kullanici.Id == silinecek.id);

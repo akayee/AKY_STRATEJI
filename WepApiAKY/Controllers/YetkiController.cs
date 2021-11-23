@@ -91,7 +91,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("YetkiGuncelle")]
+        [HttpPost("YetkiGuncelle")]
         public IActionResult YetkiGuncelle(VMYetkiler guncellenecek)
         {
             var model = new YtYetkiler()
@@ -112,7 +112,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("YetkiSil")]
+        [HttpPost("YetkiSil")]
         public IActionResult YetkiSil(VMYetkiler silinecek)
         {
             YtYetkiler model = _yetkiservices.Getir(yetki => yetki.Id == silinecek.id);

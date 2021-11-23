@@ -111,7 +111,8 @@ namespace WepApiAKY.Controllers
                 OlustumraTarihi = guncellenecek.OlusturmaTarihi,
                 BirimId = guncellenecek.id,
                 UstBirimId = (int)guncellenecek.UstBirimId,
-                BirimTipiId=guncellenecek.BirimTipiId
+                BirimTipiId=guncellenecek.BirimTipiId,
+                Id=guncellenecek.id
             };
             try
             {

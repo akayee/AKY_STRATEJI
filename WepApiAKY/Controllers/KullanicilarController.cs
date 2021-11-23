@@ -99,7 +99,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("UpdateaKullanici")]
+        [HttpPost("UpdateaKullanici")]
         public IActionResult KullaniciGuncelle(VMKullanicilar guncellenecek)
         {
             var model = new Kullanicilar()
@@ -121,7 +121,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("DeleteaKullanici")]
+        [HttpPost("DeleteaKullanici")]
         public IActionResult KullaniciSil(VMKullanicilar silinecek)
         {
             Kullanicilar model = _kullanici.Getir(kullanici => kullanici.Id == silinecek.id);

@@ -145,7 +145,8 @@ namespace WepApiAKY.Controllers
                 Deger = guncellenecek.Deger,
                 IsTuruId = _isTurleri.TekIsTuruGetir( guncellenecek.IsturuId).Id,
                 Deleted = guncellenecek.Deleted,
-                OlusturmaTarihi = DateTime.Now
+                OlusturmaTarihi = DateTime.Now,
+                Id=guncellenecek.id
             };
             try
             {
@@ -233,7 +234,6 @@ namespace WepApiAKY.Controllers
                 {
                     denemevm.Add(isturu);
                     //FaaliyetTurleri işlemleri
-                    StFaaliyetler stfaaliyetturleri = _faaliyetturleriservices.Getir(faaliyetturu => faaliyetturu.PerformansId == isturu.PerformansId);
                     List<StIsler> stisler = _isler.IsleriListele(isler => isler.IsTuruId == isturu.id);
 
                     foreach (StIsler stis in stisler)

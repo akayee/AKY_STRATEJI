@@ -110,7 +110,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("YillikHedefGuncelle")]
+        [HttpPost("YillikHedefGuncelle")]
         public IActionResult YillikHedefGuncelle(VMYillikHedefler guncellenecek)
         {
             var model = new StYillikhedef()
@@ -136,7 +136,7 @@ namespace WepApiAKY.Controllers
                 return new ABBErrorJsonResponse(e.Message);
             }
         }
-        [HttpPut("YillikHedefSil")]
+        [HttpPost("YillikHedefSil")]
         public IActionResult YillikHedefSil(VMYillikHedefler silinecek)
         {
             StYillikhedef model = _yillikhedefService.Getir(yillikhedef => yillikhedef.Id == silinecek.id);

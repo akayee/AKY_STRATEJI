@@ -122,7 +122,8 @@ namespace WepApiAKY.Controllers
                 OlcuBirimi=guncellenecek.OlcuBirimi,
                 OlusturmaTarihi = guncellenecek.OlusturmaTarihi,
                 BirimId=guncellenecek.BirimId,
-                IsTurleriId=guncellenecek.IsturleriId
+                IsTurleriId=guncellenecek.IsturleriId,
+                Id=guncellenecek.id
             };
             try
             {
