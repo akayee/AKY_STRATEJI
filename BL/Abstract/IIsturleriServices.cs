@@ -18,6 +18,7 @@ namespace BL.Abstract
         bool IsTuruSil(StIsturleri isTuru);
         bool IsTuruGuncelle(StIsturleri IsTuru);
         public List<VMIsturleri> StratejiBilgileriHesapla(int birimid);
+        public List<VMIsturleri> FaaliyetRaporuHesapla(int performansId);
 
 
 

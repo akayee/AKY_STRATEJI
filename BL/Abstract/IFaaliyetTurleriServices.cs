@@ -19,5 +19,7 @@ namespace BL.Abstract
         bool TekFaaliyetTuruGuncelle(StFaaliyetler FaaliyetTuru);
 
         public List<VMFaaliyetTurleri> StratejiBilgileriHesapla(int birimid);
+
+        public List<VMFaaliyetTurleri> FaaliyetRaporuHesapla(int performansId);
     }
 }

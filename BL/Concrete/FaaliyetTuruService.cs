@@ -170,6 +170,88 @@ namespace BL.Concrete
 
             return vmisturu;
         }
+        public List<VMFaaliyetTurleri> FaaliyetRaporuHesapla(int performansId)
+        {
+            List<VMFaaliyetTurleri> vmisturu = new List<VMFaaliyetTurleri>();
+            List<StFaaliyetler> isturleri = FaaliyetTurleriListele(i => i.Id == performansId && i.Deleted != true);
+            int toplamdeger = 0;
+            int firstpart = 0;
+            int secondpart = 0;
+            int thirdpart = 0;
+            int lastpart = 0;
+            foreach (StFaaliyetler isturu in isturleri)
+            {
+
+                List<StFaaliyet> islistesi = _faaliyetservices.FaaliyetListele(isler => isler.FaaliyetlerId == isturu.Id && isler.Deleted != true);
+                foreach (StFaaliyet hesaplanacak in islistesi)
+                {
+                    if (isturu.Maaliyet is not null)
+                    {
+                        toplamdeger += (hesaplanacak.Deger * (int)isturu.Maaliyet);
+                        if (hesaplanacak.OlusturmaTarihi.Month < 5)
+                        {
+                            firstpart += (hesaplanacak.Deger * (int)isturu.Maaliyet);
+                        }
+                        else if (hesaplanacak.OlusturmaTarihi.Month > 4 && hesaplanacak.OlusturmaTarihi.Month < 9)
+                        {
+                            secondpart += (hesaplanacak.Deger * (int)isturu.Maaliyet);
+                        }
+                        else if (hesaplanacak.OlusturmaTarihi.Month > 8 && hesaplanacak.OlusturmaTarihi.Month < 13)
+                        {
+                            thirdpart += (hesaplanacak.Deger * (int)isturu.Maaliyet);
+                        }
+                        else
+                        {
+                            lastpart += (hesaplanacak.Deger * (int)isturu.Maaliyet);
+                        }
+                    }
+                    else
+                    {
+                        toplamdeger += hesaplanacak.Deger;
+                        if (hesaplanacak.OlusturmaTarihi.Month < 5)
+                        {
+                            firstpart += hesaplanacak.Deger;
+                        }
+                        else if (hesaplanacak.OlusturmaTarihi.Month > 4 && hesaplanacak.OlusturmaTarihi.Month < 9)
+                        {
+                            secondpart += hesaplanacak.Deger;
+                        }
+                        else if (hesaplanacak.OlusturmaTarihi.Month > 8 && hesaplanacak.OlusturmaTarihi.Month < 13)
+                        {
+                            thirdpart += hesaplanacak.Deger;
+                        }
+                        else
+                        {
+                            lastpart += hesaplanacak.Deger;
+                        }
+                    }
+
+                }
+                var yillikhedef = _yillikhedefler.YillikHedefleriListele(i => i.Yil == DateTime.Today.Year && i.FaaliyetId == isturu.Id && i.Deleted != true).FirstOrDefault();
+                VMFaaliyetTurleri vmis = new VMFaaliyetTurleri()
+                {
+                    Aciklama = isturu.Aciklama,
+                    Adi = isturu.Adi,
+                    BirimId = isturu.BirimId,
+                    Deleted = (bool)isturu.Deleted,
+                    id = isturu.Id,
+                    PerformansId = isturu.PerformansId,
+                    OlcuBirimiId = isturu.OlcuBirimi,
+                    YillikHedef = yillikhedef == null ? 0 : yillikhedef.Hedef,
+                    ToplamDeger = toplamdeger,
+                    FirstPart = firstpart,
+                    SecondPart = secondpart,
+                    ThirdPart = thirdpart,
+                    LastPart = lastpart,
+                    OlusturmaTarihi = isturu.OlusturmaTarihi,
+                    FaaliyetlerId = isturu.FaaliyetlerId
+
+                };
+                vmisturu.Add(vmis);
+            }
+
+            return vmisturu;
+        }
 
 
     }
