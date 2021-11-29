@@ -26,7 +26,7 @@ namespace BL.Concrete
 
         public List<StFaaliyetler> FaaliyetTurleriListele(Expression<Func<StFaaliyetler, bool>> filter = null, params Expression<Func<StFaaliyetler, object>>[] includeProperties)
         {
-            return DetayliListe(filter);
+            return GetList(filter, includeProperties);
         }
 
         public StFaaliyetler FaaliyetTuruGetir(int FaaliyetId)

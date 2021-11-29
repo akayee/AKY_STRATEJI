@@ -206,14 +206,22 @@ namespace WepApiAKY.Controllers
                     BirimTipiAdi= stbirim.BirimTipi.BirimTipi,
                 };
                 vmBirimlers.Add(birimi);
-                List<VMFaaliyetTurleri> denemefaaliyet = _faaliyetturleriservices.StratejiBilgileriHesapla(birim);
-                vmfaaliyetturleri = denemefaaliyet;
+                List<StFaaliyetler> denemefaaliyet = _faaliyetturleriservices.FaaliyetTurleriListele(obj=>obj.BirimId== birim);
 
-                foreach (VMFaaliyetTurleri faaliyetimsi in denemefaaliyet)
+                foreach (StFaaliyetler faaliyetimsi in denemefaaliyet)
                 {
+                    List<VMFaaliyetTurleri> faaliyetRaporu =_faaliyetturleriservices.FaaliyetRaporuHesapla(faaliyetimsi.PerformansId);
+
+                    foreach(VMFaaliyetTurleri vmfaaliyet in faaliyetRaporu)
+                    {
+                        if(!vmfaaliyetturleri.Any(obj => obj.id != vmfaaliyet.id))
+                        {
+                            vmfaaliyetturleri.Add(vmfaaliyet);
+                        }
+                    }
 
                     //Faaliyet işlemleri
-                    List<StFaaliyet> stfaaliyet = _faaliyetservices.FaaliyetListele(faaliyet => faaliyet.FaaliyetlerId == faaliyetimsi.id);
+                    List<StFaaliyet> stfaaliyet = _faaliyetservices.FaaliyetListele(faaliyet => faaliyet.FaaliyetlerId == faaliyetimsi.Id);
 
                     foreach (StFaaliyet faaliyet in stfaaliyet)
                     {
@@ -232,7 +240,16 @@ namespace WepApiAKY.Controllers
 
                 foreach (VMIsturleri isturu in _isTurleri.StratejiBilgileriHesapla(birim))
                 {
-                    denemevm.Add(isturu);
+
+                    List<VMIsturleri> faaliyetRaporu = _isTurleri.FaaliyetRaporuHesapla(isturu.PerformansId);
+
+                    foreach (VMIsturleri vmisturu in faaliyetRaporu)
+                    {
+                        if (!vmfaaliyetturleri.Any(obj => obj.id != vmisturu.id))
+                        {
+                            denemevm.Add(vmisturu);
+                        }
+                    }
                     //FaaliyetTurleri işlemleri
                     List<StIsler> stisler = _isler.IsleriListele(isler => isler.IsTuruId == isturu.id);
 
