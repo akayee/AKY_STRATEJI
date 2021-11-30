@@ -210,14 +210,11 @@ namespace WepApiAKY.Controllers
 
                 foreach (StFaaliyetler faaliyetimsi in denemefaaliyet)
                 {
-                    List<VMFaaliyetTurleri> faaliyetRaporu =_faaliyetturleriservices.FaaliyetRaporuHesapla(faaliyetimsi.PerformansId);
+                    List<VMFaaliyetTurleri> faaliyetRaporu =_faaliyetturleriservices.FaaliyetRaporuHesapla(faaliyetimsi.Id);
 
                     foreach(VMFaaliyetTurleri vmfaaliyet in faaliyetRaporu)
                     {
-                        if(!vmfaaliyetturleri.Any(obj => obj.id != vmfaaliyet.id))
-                        {
                             vmfaaliyetturleri.Add(vmfaaliyet);
-                        }
                     }
 
                     //Faaliyet işlemleri
@@ -238,20 +235,17 @@ namespace WepApiAKY.Controllers
 
                 }
 
-                foreach (VMIsturleri isturu in _isTurleri.StratejiBilgileriHesapla(birim))
+                foreach (StIsturleri isturu in _isTurleri.IsTuruListele(obj => obj.BirimId == birim && obj.Deleted!=true))
                 {
 
-                    List<VMIsturleri> faaliyetRaporu = _isTurleri.FaaliyetRaporuHesapla(isturu.PerformansId);
+                    List<VMIsturleri> faaliyetRaporu = _isTurleri.FaaliyetRaporuHesapla(isturu.Id);
 
                     foreach (VMIsturleri vmisturu in faaliyetRaporu)
                     {
-                        if (!vmfaaliyetturleri.Any(obj => obj.id != vmisturu.id))
-                        {
                             denemevm.Add(vmisturu);
-                        }
                     }
                     //FaaliyetTurleri işlemleri
-                    List<StIsler> stisler = _isler.IsleriListele(isler => isler.IsTuruId == isturu.id);
+                    List<StIsler> stisler = _isler.IsleriListele(isler => isler.IsTuruId == isturu.Id);
 
                     foreach (StIsler stis in stisler)
                     {

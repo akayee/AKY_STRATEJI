@@ -244,11 +244,6 @@ namespace WepApiAKY.Controllers
                     }
 
                 }
-
-                foreach (VMIsturleri isturu in _isturleriServices.FaaliyetRaporuHesapla(performans.Id))
-                {
-                    vMIsturleris.Add(isturu);
-                }
                     
             }
             StratejiBilgileri stratejibilgileri = new StratejiBilgileri()
